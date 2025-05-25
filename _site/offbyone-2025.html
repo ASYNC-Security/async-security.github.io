@@ -20,7 +20,7 @@
 {"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Zavier Lee"},"headline":"OBO CTF 2025","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/offbyone-2025.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=8c2921d9e4e0caa4be5797a95f3dfb250e8aacc2">
+    <link rel="stylesheet" href="/assets/css/style.css?v=521fdc0a74146b50d9e92cbea865a0f35a1945cc">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -58,104 +58,135 @@
       <section>
 
       <style>
+.author-section {
+    padding: 16px 0;
+    margin: 20px 0;
+    border-bottom: 1px solid #444;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.author-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #555;
+}
+
+.author-name {
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    font-size: 1em;
+}
+
+.author-title {
+    color: #ccc;
+    font-size: 0.9em;
+    margin: 2px 0 0 0;
+}
+
+.author-links {
+    display: flex;
+    gap: 12px;
+    font-size: 0.9em;
+    margin-top: 6px;
+}
+
+.author-links a {
+    color: #4da6ff;
+    text-decoration: none;
+}
+
+.author-links a:hover {
+    color: #66b3ff;
+    text-decoration: underline;
+}
+
+.post-meta {
+    color: #ccc;
+    font-size: 0.9em;
+    margin-bottom: 12px;
+}
+
+.toc-container a {
+    text-decoration: none;
+}
+
+.toc-container a:hover {
+    text-decoration: underline;
+}
+
+.toc-toggle {
+    background: none;
+    border: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    padding: 10px 0;
+    color: inherit;
+}
+
+.toc-content {
+    display: none;
+    margin-top: 8px;
+}
+
+.toc-content.expanded {
+    display: block;
+}
+
+.toc-container ol {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.toc-container ul {
+    margin: 4px 0;
+    padding-left: 20px;
+}
+
+.toc-container li {
+    margin: 4px 0;
+}
+
+@media (max-width: 962px) {
     .author-section {
-        padding: 16px 0;
-        margin: 20px 0;
-        border-bottom: 1px solid #ddd;
-    }
-    
-    .author-info {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }
-    
-    .author-avatar {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #eee;
-    }
-    
-    .author-name {
-        font-weight: 600;
-        color: white;
-        margin: 0;
-        font-size: 1em;
-    }
-    
-    .author-title {
-        color: white;
-        font-size: 0.9em;
-        margin: 2px 0 0 0;
-    }
-    
-    .author-links {
-        display: flex;
-        gap: 12px;
-        font-size: 0.9em;
-        margin-top: 6px;
-    }
-    
-    .author-links a {
-        color: #007acc;
-        text-decoration: none;
-    }
-    
-    .author-links a:hover {
-        text-decoration: underline;
+        margin: 10px 0;
+        padding: 12px 0;
+        border-bottom: 1px solid #444;
+        border-top: none;
     }
     
     .post-meta {
-        color: #555;
-        font-size: 0.9em;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
     }
     
-    .toc-container a {
-        text-decoration: none;
+    h1 {
+        margin-top: 0;
+        margin-bottom: 10px;
     }
     
-    .toc-container a:hover {
-        text-decoration: underline;
+    section {
+        padding-top: 0 !important;
     }
     
-    .toc-toggle {
-        background: none;
-        border: none;
-        font-size: 1.1em;
-        font-weight: 500;
-        cursor: pointer;
-        width: 100%;
-        text-align: left;
-        padding: 10px 0;
-        color: inherit;
-    }
-    
-    .toc-content {
+    hr {
         display: none;
-        margin-top: 8px;
     }
     
-    .toc-content.expanded {
-        display: block;
+    .author-section::before {
+        display: none;
     }
-    
-    .toc-container ol {
-        margin: 0;
-        padding-left: 20px;
-    }
-    
-    .toc-container ul {
-        margin: 4px 0;
-        padding-left: 20px;
-    }
-    
-    .toc-container li {
-        margin: 4px 0;
-    }
-    </style>
+}
+</style>
 
 
 
@@ -256,9 +287,9 @@
 
 <p>The following was provided as the given context for the CTF:</p>
 
-<p><img src="/assets/img/3e3b060cd60728d5811e5191e441b61a.png" alt="" /></p>
+<p><img src="./assets/img/obo/3e3b060cd60728d5811e5191e441b61a.png" alt="" /></p>
 
-<p><img src="/assets/img/f5badd2663021ac0d1421edfd167230a.png" alt="" /></p>
+<p><img src="./assets/img/obo/f5badd2663021ac0d1421edfd167230a.png" alt="" /></p>
 
 <h3 id="required-tools">Required Tools</h3>
 
@@ -723,7 +754,7 @@ Reply from 10.2.10.9: bytes=32 time&lt;1ms TTL=64
 
 <p>In the context of this environment, the setup looks something like this:</p>
 
-<p><img src="/assets/img/pivot.png" alt="img" /></p>
+<p><img src="./assets/img/obo/pivot.png" alt="img" /></p>
 
 <p>The reverse port forward (<code class="language-plaintext highlighter-rouge">FwdRule1</code>) can be staged using <code class="language-plaintext highlighter-rouge">ssh</code> with the following syntax:</p>
 
@@ -957,8 +988,6 @@ ccca789d08f5872e6c892d49714f3a54
 </code></pre></div></div>
 
 <p>Similarly, the next machine is only accessible via the <code class="language-plaintext highlighter-rouge">WESTERN-OUTPOST</code> machine, so you will need to obtain a <code class="language-plaintext highlighter-rouge">sliver</code> pivot session on <code class="language-plaintext highlighter-rouge">WESTERN-OUTPOST</code>. This will not be shown in the writeup, but <a href="https://sliver.sh/docs?name=Pivots">these docs</a> should help.</p>
-
-
 
 
 <script>

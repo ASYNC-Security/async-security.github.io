@@ -76,9 +76,9 @@ This is a partial writeup (3/6) of the CTF that we organized during the [Off-By-
 
 The following was provided as the given context for the CTF:
 
-![](./assets/img/3e3b060cd60728d5811e5191e441b61a.png)
+![](./assets/img/obo/3e3b060cd60728d5811e5191e441b61a.png)
 
-![](./assets/img/f5badd2663021ac0d1421edfd167230a.png)
+![](./assets/img/obo/f5badd2663021ac0d1421edfd167230a.png)
 
 ### Required Tools
 
@@ -566,7 +566,7 @@ In order to facilitate a connection from the `Southern-Tower` (or any other inte
 
 In the context of this environment, the setup looks something like this:
 
-![img](./assets/img/pivot.png)
+![img](./assets/img/obo/pivot.png)
 
 The reverse port forward (`FwdRule1`) can be staged using `ssh` with the following syntax:
 
