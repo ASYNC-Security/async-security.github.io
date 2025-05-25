@@ -218,7 +218,7 @@ footer { width: 270px; float: left; position: fixed; bottom: 50px; -webkit-font-
 
 body { background-color: #1a1a1a; color: #e0e0e0; }
 
-h1, h2 { color: white; }
+h1, h2, h3, h4 { color: white; }
 
 .highlighter-rouge { color: #e8d3d3; }
 

