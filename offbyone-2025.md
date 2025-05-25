@@ -62,7 +62,7 @@ PING 10.2.30.51 (10.2.30.51) 56(84) bytes of data.
 
 To route our tools through the SSH tunnel, we can use the `-D` option with `ssh` to initiate a `SOCKS4` proxy on `127.0.0.1`, along with the `-N` flag to prevent an interactive shell from opening.
 
-A detailed explanation of the pivot setup can be found at [https://playtrv.async.sg/im_new](https://playtrv.async.sg/im_new), a local copy of the page is also available in this repository: [here](./im_new.md)
+A detailed explanation of the pivot setup can be found at [https://playtrv.async.sg/im_new](https://playtrv.async.sg/im_new), a local copy of the page is also available in this repository: [here](https://github.com/ASYNC-Security/RangeVillage-Conference-CTF-Writeups/blob/main/Off-By-One-2025/im_new.md)
 
 ```
 sshpass -p '8iP0TbO5mQmS' ssh svc_jmp@172.16.10.10 -D 1081 -N 
