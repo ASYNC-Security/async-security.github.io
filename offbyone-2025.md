@@ -9,6 +9,7 @@ This is a partial writeup (3/6) of the CTF that we organized during the [Off-By-
 For any questions about this writeup, feel free to reach out to [@gatari](https://x.com/gatariee) on the [Range Village Discord](https://discord.com/invite/r6pZRT8X2P). The following was provided as the given context for the CTF:
 
 ![](./assets/img/3e3b060cd60728d5811e5191e441b61a.png)
+
 ![](./assets/img/f5badd2663021ac0d1421edfd167230a.png)
 
 The following tools will most likely be used during the CTF:
