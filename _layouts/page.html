@@ -1,0 +1,160 @@
+---
+layout: default
+---
+
+<style>
+    .author-section {
+        padding: 16px 0;
+        margin: 20px 0;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .author-info {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    
+    .author-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #eee;
+    }
+    
+    .author-name {
+        font-weight: 600;
+        color: white;
+        margin: 0;
+        font-size: 1em;
+    }
+    
+    .author-title {
+        color: white;
+        font-size: 0.9em;
+        margin: 2px 0 0 0;
+    }
+    
+    .author-links {
+        display: flex;
+        gap: 12px;
+        font-size: 0.9em;
+        margin-top: 6px;
+    }
+    
+    .author-links a {
+        color: #007acc;
+        text-decoration: none;
+    }
+    
+    .author-links a:hover {
+        text-decoration: underline;
+    }
+    
+    .post-meta {
+        color: #555;
+        font-size: 0.9em;
+        margin-bottom: 12px;
+    }
+    
+    .toc-container a {
+        text-decoration: none;
+    }
+    
+    .toc-container a:hover {
+        text-decoration: underline;
+    }
+    
+    .toc-toggle {
+        background: none;
+        border: none;
+        font-size: 1.1em;
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        padding: 10px 0;
+        color: inherit;
+    }
+    
+    .toc-content {
+        display: none;
+        margin-top: 8px;
+    }
+    
+    .toc-content.expanded {
+        display: block;
+    }
+    
+    .toc-container ol {
+        margin: 0;
+        padding-left: 20px;
+    }
+    
+    .toc-container ul {
+        margin: 4px 0;
+        padding-left: 20px;
+    }
+    
+    .toc-container li {
+        margin: 4px 0;
+    }
+    </style>
+
+{% if page.date %}
+<small class="post-meta">{{ page.date | date: "%-d %B %Y" }}</small>
+{% endif %}
+
+{% if page.subtitle %}
+<p><em>{{ page.subtitle }}</em></p>
+{% endif %}
+
+{% if page.author or page.author_title or page.author_twitter or page.author_github %}
+<div class="author-section">
+<div class="author-info">
+{% if page.author_avatar %}
+<img src="{{ page.author_avatar }}" alt="{{ page.author }}" class="author-avatar">
+{% endif %}
+<div>
+<div class="author-name">{{ page.author | default: site.author }}</div>
+{% if page.author_title %}
+<div class="author-title">{{ page.author_title }}</div>
+{% endif %}
+{% if page.author_twitter or page.author_github %}
+<div class="author-links">
+{% if page.author_twitter %}
+<a href="{{ page.author_twitter }}" target="_blank">Twitter</a>
+{% endif %}
+{% if page.author_github %}
+<a href="{{ page.author_github }}" target="_blank">GitHub</a>
+{% endif %}
+</div>
+{% endif %}
+</div>
+</div>
+</div>
+{% endif %}
+
+{{ content }}
+
+{% if page.tags %}
+<div style="margin-top: 20px; padding-top: 12px; border-top: 1px solid #eee;">
+<small style="color: #666;">{{ page.tags | join: " • " }}</small>
+</div>
+{% endif %}
+
+<script>
+function toggleToc() {
+    const content = document.getElementById('tocContent');
+    const button = document.querySelector('.toc-toggle');
+    
+    if (content.classList.contains('expanded')) {
+        content.classList.remove('expanded');
+        button.innerHTML = 'Table of Contents ▼';
+    } else {
+        content.classList.add('expanded');
+        button.innerHTML = 'Table of Contents ▲';
+    }
+}
+</script>

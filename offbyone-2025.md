@@ -1,12 +1,15 @@
 ---
-layout: default
+layout: page
+author: "Zavier Lee"
+author_avatar: "./assets/img/authors/zavier.png"
+author_title: "Offensive Security Engineer"
+author_twitter: "https://x.com/gatariee"
+author_github: "https://github.com/gatariee"
 ---
 
 # OBO CTF 2025
 
 This is a partial writeup (3/6) of the CTF that we organized during the [Off-By-One Conference 2025](https://offbyone.sg/) in Singapore.
-
-For any questions about this writeup, feel free to reach out to [@gatari](https://x.com/gatariee) on the [Range Village Discord](https://discord.com/invite/r6pZRT8X2P).
 
 <style>
 .toc-container a {
@@ -113,6 +116,7 @@ For any questions about this writeup, feel free to reach out to [@gatari](https:
 </ol>
 </div>
 </div>
+<br>
 
 <script>
 function toggleToc() {
@@ -128,8 +132,6 @@ function toggleToc() {
     }
 }
 </script>
-
----
 
 ## Introduction
 
