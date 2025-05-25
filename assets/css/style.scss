@@ -1,0 +1,79 @@
+--- 
+--- 
+@import "{{ site.theme }}";
+
+.wrapper {
+    width: 90%;
+    max-width: none;
+}
+
+body {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+h1,
+h2 {
+    color: white;
+}
+
+.highlighter-rouge {
+    color: #e8d3d3;
+}
+
+a {
+    color: #4da6ff;
+}
+
+a:hover {
+    color: #66b3ff;
+    font-weight: normal;
+}
+
+a:focus {
+    color: #66b3ff;
+    transform: none !important;
+}
+
+.highlight {
+    background-color: #2d2d2d !important;
+}
+
+pre,
+code {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+}
+
+
+header {
+    width: 200px;
+    float: left;
+    position: relative;
+    margin-left: -20px;
+}
+
+
+section {
+    width: calc(100% - 220px);
+    float: right;
+    margin-left: 0;
+    padding-left: 20px;
+}
+
+footer {
+    display: none;
+}
+
+
+@media (max-width: 962px) {
+    header {
+        display: none;
+    }
+
+    section {
+        width: 100%;
+        float: none;
+        padding-left: 0;
+    }
+}
