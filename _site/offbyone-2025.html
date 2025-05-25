@@ -20,7 +20,7 @@
 {"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Zavier Lee"},"headline":"OBO CTF 2025","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/offbyone-2025.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=13c0c57469ad8856fd7aef406ffb38f431e81773">
+    <link rel="stylesheet" href="/assets/css/style.css?v=8c2921d9e4e0caa4be5797a95f3dfb250e8aacc2">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -191,54 +191,6 @@
 
 <p>This is a partial writeup (3/6) of the CTF that we organized during the <a href="https://offbyone.sg/">Off-By-One Conference 2025</a> in Singapore.</p>
 
-<style>
-.toc-container a {
-    text-decoration: none;
-}
-
-.toc-container a:hover {
-    text-decoration: underline;
-}
-
-.toc-container button {
-    color: white;
-}
-
-.toc-toggle {
-    background: none;
-    border: none;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
-    padding: 8px 0;
-}
-
-.toc-content {
-    display: none;
-    margin-top: 8px;
-}
-
-.toc-content.expanded {
-    display: block;
-}
-
-.toc-container ol {
-    margin: 0;
-    padding-left: 20px;
-}
-
-.toc-container ul {
-    margin: 4px 0;
-    padding-left: 20px;
-}
-
-.toc-container li {
-    margin: 4px 0;
-}
-</style>
-
 <div class="toc-container">
 <button class="toc-toggle" onclick="toggleToc()">Table of Contents ▼</button>
 <div class="toc-content" id="tocContent">
@@ -297,21 +249,6 @@
 </div>
 </div>
 <p><br /></p>
-
-<script>
-function toggleToc() {
-    const content = document.getElementById('tocContent');
-    const button = document.querySelector('.toc-toggle');
-    
-    if (content.classList.contains('expanded')) {
-        content.classList.remove('expanded');
-        button.innerHTML = 'Table of Contents ▼';
-    } else {
-        content.classList.add('expanded');
-        button.innerHTML = 'Table of Contents ▲';
-    }
-}
-</script>
 
 <h2 id="introduction">Introduction</h2>
 

@@ -11,54 +11,6 @@ author_github: "https://github.com/gatariee"
 
 This is a partial writeup (3/6) of the CTF that we organized during the [Off-By-One Conference 2025](https://offbyone.sg/) in Singapore.
 
-<style>
-.toc-container a {
-    text-decoration: none;
-}
-
-.toc-container a:hover {
-    text-decoration: underline;
-}
-
-.toc-container button {
-    color: white;
-}
-
-.toc-toggle {
-    background: none;
-    border: none;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
-    padding: 8px 0;
-}
-
-.toc-content {
-    display: none;
-    margin-top: 8px;
-}
-
-.toc-content.expanded {
-    display: block;
-}
-
-.toc-container ol {
-    margin: 0;
-    padding-left: 20px;
-}
-
-.toc-container ul {
-    margin: 4px 0;
-    padding-left: 20px;
-}
-
-.toc-container li {
-    margin: 4px 0;
-}
-</style>
-
 <div class="toc-container">
 <button class="toc-toggle" onclick="toggleToc()">Table of Contents ▼</button>
 <div class="toc-content" id="tocContent">
@@ -117,21 +69,6 @@ This is a partial writeup (3/6) of the CTF that we organized during the [Off-By-
 </div>
 </div>
 <br>
-
-<script>
-function toggleToc() {
-    const content = document.getElementById('tocContent');
-    const button = document.querySelector('.toc-toggle');
-    
-    if (content.classList.contains('expanded')) {
-        content.classList.remove('expanded');
-        button.innerHTML = 'Table of Contents ▼';
-    } else {
-        content.classList.add('expanded');
-        button.innerHTML = 'Table of Contents ▲';
-    }
-}
-</script>
 
 ## Introduction
 
