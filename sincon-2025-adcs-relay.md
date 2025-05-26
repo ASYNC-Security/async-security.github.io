@@ -7,14 +7,16 @@ author_twitter: "https://x.com/gatariee"
 author_github: "https://github.com/gatariee"
 ---
 
-# SINCON CTF 2025
+# SINCON CTF 2025: All Too Relayxing
 
 During [SINCON 2025](https://www.infosec-city.com/sin-25), we sponsored and organized an Active Directory CTF with the [Range Village](https://www.rangevillage.org/). We saw an incredible turnout with nearly 50 people joining us in person, including many newcomers who had never tackled Active Directory challenges before!
 
 This is the first part of a two-part series that will provide an overview of the more "challenging" part of the CTF, which involved exploiting ESC8 from a pivot in a restrictive environment by temporarily unbinding SMB ports.
 
+I found this part of the CTF especially interesting and worth sharing because it highlights a common attack path that's frequently overlooked. ADCS can often be a quick and easy win for those familiar with its common attack paths - particularly since Microsoft does not consider this attack path to have crossed a security boundary.
+
 <div class="toc-container">
-<button class="toc-toggle" onclick="toggleToc()">Table of Contents ▼</button>
+<button class="toc-toggle" onclick="toggleToc()">Table of Contents</button>
 <div class="toc-content" id="tocContent">
 <ol>
 <li>
@@ -171,7 +173,7 @@ Unlike protocols such as `SMB` and `LDAP` that support signing, the `HTTP` proto
 
 ## Why ESC8 Exists
 
-If some lightbulb hasn't gone off yet, the presence of this misoncifugration in an environment is usually a sign that domain compromise is soon to follow. This is because SMB authentication coercion is _native_ to Windows, and is not seen as a security risk by Microsoft. 
+If some lightbulb hasn't gone off yet, the presence of this misconfiguration in an environment is usually a sign that domain compromise is soon to follow. This is because SMB authentication coercion is _native_ to Windows, and is not seen as a security risk by Microsoft. 
 
 Additionally, the configuration required to enable ESC8 is vulnerable by default when installing `Web Enrollment` on the CA server. The following commands were run on a default installation of ADCS to enable the misconfiguration:
 

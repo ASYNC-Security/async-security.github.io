@@ -2,134 +2,251 @@
 layout: default
 ---
 <style>
-.author-section {
-    padding: 16px 0;
-    margin: 20px 0;
-    border-bottom: 1px solid #444;
-}
-
-.author-info {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.author-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #555;
-}
-
-.author-name {
-    font-weight: 600;
-    color: white;
-    margin: 0;
-    font-size: 1em;
-}
-
-.author-title {
-    color: #ccc;
-    font-size: 0.9em;
-    margin: 2px 0 0 0;
-}
-
-.author-links {
-    display: flex;
-    gap: 12px;
-    font-size: 0.9em;
-    margin-top: 6px;
-}
-
-.author-links a {
-    color: #4da6ff;
-    text-decoration: none;
-}
-
-.author-links a:hover {
-    color: #66b3ff;
-    text-decoration: underline;
-}
-
-.post-meta {
-    color: #ccc;
-    font-size: 0.9em;
-    margin-bottom: 12px;
-}
-
-.toc-container a {
-    text-decoration: none;
-}
-
-.toc-container a:hover {
-    text-decoration: underline;
-}
-
-.toc-toggle {
-    background: none;
-    border: none;
-    font-size: 1.1em;
-    font-weight: 500;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
-    padding: 10px 0;
-    color: inherit;
-}
-
-.toc-content {
-    display: none;
-    margin-top: 8px;
-}
-
-.toc-content.expanded {
-    display: block;
-}
-
-.toc-container ol {
-    margin: 0;
-    padding-left: 20px;
-}
-
-.toc-container ul {
-    margin: 4px 0;
-    padding-left: 20px;
-}
-
-.toc-container li {
-    margin: 4px 0;
-}
-
-@media (max-width: 962px) {
     .author-section {
-        margin: 10px 0;
-        padding: 12px 0;
-        border-bottom: 1px solid #444;
-        border-top: none;
+        padding: 14px;
+        margin: 16px 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #444;
+        border-radius: 6px;
+        position: relative;
     }
-    
+
+    .author-label {
+        position: absolute;
+        top: -8px;
+        left: 12px;
+        background: #1a1a1a;
+        color: #4da6ff;
+        font-size: 0.75em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0 6px;
+    }
+
+    .author-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .author-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 2px 6px rgba(77, 166, 255, 0.2);
+    }
+
+    .author-details {
+        flex: 1;
+    }
+
+    .author-name {
+        font-weight: 600;
+        color: white;
+        margin: 0 0 2px 0;
+        font-size: 0.95em;
+    }
+
+    .author-title {
+        color: #ccc;
+        font-size: 0.8em;
+        margin: 0 0 6px 0;
+        font-style: italic;
+    }
+
+    .author-links {
+        display: flex;
+        gap: 8px;
+    }
+
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: #333;
+        border-radius: 50%;
+        color: #ccc;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid #444;
+        font-size: 0.7em;
+    }
+
+    .social-link:hover {
+        color: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(77, 166, 255, 0.3);
+    }
+
     .post-meta {
-        margin-bottom: 8px;
+        color: #ccc;
+        font-size: 0.9em;
+        margin-bottom: 12px;
     }
-    
-    h1 {
-        margin-top: 0;
-        margin-bottom: 10px;
+
+    .toc-container {
+        margin: 24px 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #444;
+        border-radius: 6px;
+        overflow: hidden;
     }
-    
-    section {
-        padding-top: 0 !important;
+
+    .toc-toggle {
+        background: none;
+        border: none;
+        font-size: 1em;
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        padding: 16px;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.2s ease;
     }
-    
-    hr {
+
+    .toc-toggle:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .toc-toggle::after {
+        content: '▼';
+        color: #999;
+        transition: transform 0.3s ease;
+        font-size: 0.8em;
+    }
+
+    .toc-toggle.expanded::after {
+        transform: rotate(180deg);
+    }
+
+    .toc-content {
         display: none;
+        padding: 0 16px 16px 16px;
+        border-top: 1px solid #333;
+        background: rgba(0, 0, 0, 0.1);
     }
-    
-    .author-section::before {
-        display: none;
+
+    .toc-content.expanded {
+        display: block;
+        animation: slideDown 0.3s ease-out;
     }
-}
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .toc-container a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .toc-container a:hover {
+        color: #4da6ff;
+        text-decoration: underline;
+    }
+
+    .toc-container ol {
+        margin: 8px 0 0 0;
+        padding-left: 20px;
+        color: #ccc;
+    }
+
+    .toc-container ul {
+        margin: 4px 0;
+        padding-left: 20px;
+        color: #ccc;
+    }
+
+    .toc-container li {
+        margin: 6px 0;
+        line-height: 1.4;
+    }
+
+    @media (max-width: 962px) {
+        .toc-container {
+            margin: 16px 0;
+        }
+
+        .toc-toggle {
+            padding: 12px;
+            font-size: 0.95em;
+        }
+
+        .toc-content {
+            padding: 0 12px 12px 12px;
+        }
+    }
+
+    @media (max-width: 962px) {
+        .author-section {
+            margin: 16px 0;
+            padding: 16px;
+            border-radius: 6px;
+        }
+
+        .author-label {
+            top: -8px;
+            left: 12px;
+            font-size: 0.8em;
+        }
+
+        .author-info {
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-width: 2px;
+        }
+
+        .author-name {
+            font-size: 1em;
+        }
+
+        .author-title {
+            font-size: 0.9em;
+        }
+
+        .author-links {
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .post-meta {
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        section {
+            padding-top: 0 !important;
+        }
+
+        hr {
+            display: none;
+        }
+    }
 </style>
 
 {% if page.date %}
@@ -142,43 +259,55 @@ layout: default
 
 {% if page.author or page.author_title or page.author_twitter or page.author_github %}
 <div class="author-section">
-<div class="author-info">
-{% if page.author_avatar %}
-<img src="{{ page.author_avatar }}" alt="{{ page.author }}" class="author-avatar">
-{% endif %}
-<div>
-<div class="author-name">{{ page.author | default: site.author }}</div>
-{% if page.author_title %}
-<div class="author-title">{{ page.author_title }}</div>
-{% endif %}
-{% if page.author_twitter or page.author_github %}
-<div class="author-links">
-{% if page.author_twitter %}
-<a href="{{ page.author_twitter }}" target="_blank">Twitter</a>
-{% endif %}
-{% if page.author_github %}
-<a href="{{ page.author_github }}" target="_blank">GitHub</a>
-{% endif %}
-</div>
-{% endif %}
-</div>
-</div>
+    <div class="author-label">Author</div>
+    <div class="author-info">
+        {% if page.author_avatar %}
+        <img src="{{ page.author_avatar }}" alt="{{ page.author }}" class="author-avatar">
+        {% endif %}
+        <div class="author-details">
+            <div class="author-name">{{ page.author | default: site.author }}</div>
+            {% if page.author_title %}
+            <div class="author-title">{{ page.author_title }}</div>
+            {% endif %}
+            {% if page.author_twitter or page.author_github %}
+            <div class="author-links">
+                {% if page.author_twitter %}
+                <a href="{{ page.author_twitter }}" target="_blank" class="social-link twitter" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-twitter-x" viewBox="0 0 16 16">
+                        <path
+                            d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                    </svg></a>
+                {% endif %}
+                {% if page.author_github %}
+                <a href="{{ page.author_github }}" target="_blank" class="social-link github" aria-label="GitHub"> <svg
+                        width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg></a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
 {% endif %}
 
 {{ content }}
 
 <script>
-function toggleToc() {
-    const content = document.getElementById('tocContent');
-    const button = document.querySelector('.toc-toggle');
-    
-    if (content.classList.contains('expanded')) {
-        content.classList.remove('expanded');
-        button.innerHTML = 'Table of Contents ▼';
-    } else {
-        content.classList.add('expanded');
-        button.innerHTML = 'Table of Contents ▲';
+    function toggleToc() {
+        const content = document.getElementById('tocContent');
+        const button = document.querySelector('.toc-toggle');
+        
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            button.classList.remove('expanded');
+            button.innerHTML = 'Table of Contents';
+        } else {
+            content.classList.add('expanded');
+            button.classList.add('expanded');
+            button.innerHTML = 'Table of Contents';
+        }
     }
-}
 </script>
