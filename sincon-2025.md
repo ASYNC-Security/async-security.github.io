@@ -15,6 +15,58 @@ This post will provide an overview of the more "challenging" part of the CTF, wh
 
 [insert img here]
 
+<div class="toc-container">
+<button class="toc-toggle" onclick="toggleToc()">Table of Contents ▼</button>
+<div class="toc-content" id="tocContent">
+<ol>
+<li>
+<a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#context">Context</a></li>
+<li><a href="#network-topology">Network Topology</a></li>
+</ul>
+</li>
+<li>
+<a href="#pivots-and-c2">Pivots and C2</a>
+<ul>
+<li><a href="#command-and-control-c2">Command and Control (C2)</a></li>
+</ul>
+</li>
+<li>
+<a href="#scriptorium-esc8">SCRIPTORIUM (ESC8)</a>
+<ul>
+<li><a href="#enumerating-esc8">Enumerating ESC8</a></li>
+<li><a href="#esc8-a-tldr">ESC8, a TLDR</a></li>
+<li><a href="#the-ugly">The Ugly</a></li>
+<li><a href="#caveat">Caveat</a></li>
+</ul>
+</li>
+<li>
+<a href="#smb-unbinding">SMB Unbinding</a>
+</li>
+<li>
+<a href="#u2u2self">U2U2Self</a>
+</li>
+<li>
+<a href="#exploiting-esc8">Exploiting ESC8</a>
+<ul>
+<li><a href="#smb-coercion">SMB Coercion</a></li>
+<li><a href="#relay-to-ca">Relay to CA</a></li>
+<li><a href="#exchanging-for-ntlm">Exchanging for NTLM</a></li>
+<li><a href="#logon-dilemma">Logon Dilemma</a></li>
+</ul>
+</li>
+<li>
+<a href="#s4u2self">S4U2Self</a>
+</li>
+<li>
+<a href="#silver-ticket">Silver Ticket</a>
+</li>
+</ol>
+</div>
+</div>
+<br>
+
 ## Introduction
 
 The given scenario was an assumed breach via an exposed Wi-Fi access point with weak credentials (`RN-Lab`:`rangevillagelab`), which placed the attacker directly into the `jess.kingdom` Active Directory domain.

@@ -5,3 +5,7 @@ logo: /assets/img/logo.png
 title: " "
 description: " "
 show_downloads: false
+repository: ASYNC-Security/async-security.github.io
+github:
+  repository_name: async-security.github.io
+  owner_name: ASYNC-Security
