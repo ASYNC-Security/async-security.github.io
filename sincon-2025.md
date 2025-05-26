@@ -33,34 +33,34 @@ This post will provide an overview of the more "challenging" part of the CTF, wh
 </ul>
 </li>
 <li>
-<a href="#scriptorium-esc8">SCRIPTORIUM (ESC8)</a>
+<a href="#scriptorium-esc8">Scriptorium - ESC8</a>
 <ul>
 <li><a href="#enumerating-esc8">Enumerating ESC8</a></li>
 <li><a href="#esc8-a-tldr">ESC8, a TLDR</a></li>
-<li><a href="#the-ugly">The Ugly</a></li>
-<li><a href="#caveat">Caveat</a></li>
+<li><a href="#why-esc8-exists">Why ESC8 Exists</a></li>
+<li>
+<a href="#challenges-in-restricted-environment">Challenges in Restricted Environment</a>
+<ul>
+<li><a href="#smb-unbinding">SMB Unbinding</a></li>
 </ul>
 </li>
-<li>
-<a href="#smb-unbinding">SMB Unbinding</a>
-</li>
-<li>
-<a href="#u2u2self">U2U2Self</a>
-</li>
+<li><a href="#u2u2self">U2U2Self</a></li>
 <li>
 <a href="#exploiting-esc8">Exploiting ESC8</a>
 <ul>
 <li><a href="#smb-coercion">SMB Coercion</a></li>
 <li><a href="#relay-to-ca">Relay to CA</a></li>
 <li><a href="#exchanging-for-ntlm">Exchanging for NTLM</a></li>
-<li><a href="#logon-dilemma">Logon Dilemma</a></li>
 </ul>
 </li>
 <li>
-<a href="#s4u2self">S4U2Self</a>
+<a href="#logon-dilemma">Logon Dilemma</a>
+<ul>
+<li><a href="#s4u2self">S4U2Self</a></li>
+<li><a href="#silver-ticket">Silver Ticket</a></li>
+</ul>
 </li>
-<li>
-<a href="#silver-ticket">Silver Ticket</a>
+</ul>
 </li>
 </ol>
 </div>
@@ -127,7 +127,7 @@ After executing the payload, we can verify that we have a session established wi
 
 ![](./assets/img/sincon/bd64132ba6fc0d4ed8b81401bc0e544f.png)
 
-## SCRIPTORIUM (ESC8)
+## Scriptorium - ESC8
 
 After obtaining a pivot point at `TABULARIUM`, we can use tunnel our traffic through the beacon channel with `socks5` to hit `SCRIPTORIUM` and `PORTICUS`. This is done by setting up a `socks5` proxy on the Cobalt Strike beacon:
 
@@ -163,7 +163,7 @@ ESC8 is a vulnerability that is extremely common in many environments, and it bo
 
 Unlike protocols such as `SMB` and `LDAP` that support signing, the `HTTP` protocol does *not* have support for signing `NTLM` authentication so the attacker can relay any NTLM authentication to the `HTTP` web endpoint. As such, this attack is possible regardless of the signing configuration of the domain.
 
-## The Ugly
+## Why ESC8 Exists
 
 If some lightbulb hasn't gone off yet, the presence of this vulnerability in an environment is usually a sign that domain compromise is soon to follow. This is because SMB authentication coercion is _native_ to Windows, and is not seen as a security risk by Microsoft. 
 
@@ -176,7 +176,7 @@ Install-AdcsWebEnrollment -Force
 
 Mitigations, and additional caveats will be discussed later, but for now, let's focus on how to exploit this vulnerability.
 
-## Caveat
+## Challenges in Restricted Environment
 
 If you recall from the network topology diagram from earlier, the `SCRIPTORIUM` and `PORTICUS` machines are unable to directly communicate with our machine due to the firewall rules in place. This means that we cannot coerce authentication from either of these machines to our listener, and relay it to the CA directly.
 

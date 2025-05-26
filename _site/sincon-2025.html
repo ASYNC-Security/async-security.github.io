@@ -20,7 +20,7 @@
 {"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Zavier Lee"},"headline":"SINCON CTF 2025","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/sincon-2025.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=53a2a0495da3322fee2d39cd744398ce2d3c087e">
+    <link rel="stylesheet" href="/assets/css/style.css?v=a46ff626144ed2fa561663b711e4e836b094f425">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -244,34 +244,34 @@
 </ul>
 </li>
 <li>
-<a href="#scriptorium-esc8">SCRIPTORIUM (ESC8)</a>
+<a href="#scriptorium-esc8">Scriptorium - ESC8</a>
 <ul>
 <li><a href="#enumerating-esc8">Enumerating ESC8</a></li>
 <li><a href="#esc8-a-tldr">ESC8, a TLDR</a></li>
-<li><a href="#the-ugly">The Ugly</a></li>
-<li><a href="#caveat">Caveat</a></li>
+<li><a href="#why-esc8-exists">Why ESC8 Exists</a></li>
+<li>
+<a href="#challenges-in-restricted-environment">Challenges in Restricted Environment</a>
+<ul>
+<li><a href="#smb-unbinding">SMB Unbinding</a></li>
 </ul>
 </li>
-<li>
-<a href="#smb-unbinding">SMB Unbinding</a>
-</li>
-<li>
-<a href="#u2u2self">U2U2Self</a>
-</li>
+<li><a href="#u2u2self">U2U2Self</a></li>
 <li>
 <a href="#exploiting-esc8">Exploiting ESC8</a>
 <ul>
 <li><a href="#smb-coercion">SMB Coercion</a></li>
 <li><a href="#relay-to-ca">Relay to CA</a></li>
 <li><a href="#exchanging-for-ntlm">Exchanging for NTLM</a></li>
-<li><a href="#logon-dilemma">Logon Dilemma</a></li>
 </ul>
 </li>
 <li>
-<a href="#s4u2self">S4U2Self</a>
+<a href="#logon-dilemma">Logon Dilemma</a>
+<ul>
+<li><a href="#s4u2self">S4U2Self</a></li>
+<li><a href="#silver-ticket">Silver Ticket</a></li>
+</ul>
 </li>
-<li>
-<a href="#silver-ticket">Silver Ticket</a>
+</ul>
 </li>
 </ol>
 </div>
@@ -339,7 +339,7 @@ net localgroup Administrators gatari /add
 
 <p><img src="/assets/img/sincon/bd64132ba6fc0d4ed8b81401bc0e544f.png" alt="" /></p>
 
-<h2 id="scriptorium-esc8">SCRIPTORIUM (ESC8)</h2>
+<h2 id="scriptorium---esc8">Scriptorium - ESC8</h2>
 
 <p>After obtaining a pivot point at <code class="language-plaintext highlighter-rouge">TABULARIUM</code>, we can use tunnel our traffic through the beacon channel with <code class="language-plaintext highlighter-rouge">socks5</code> to hit <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code> and <code class="language-plaintext highlighter-rouge">PORTICUS</code>. This is done by setting up a <code class="language-plaintext highlighter-rouge">socks5</code> proxy on the Cobalt Strike beacon:</p>
 
@@ -373,7 +373,7 @@ net localgroup Administrators gatari /add
 
 <p>Unlike protocols such as <code class="language-plaintext highlighter-rouge">SMB</code> and <code class="language-plaintext highlighter-rouge">LDAP</code> that support signing, the <code class="language-plaintext highlighter-rouge">HTTP</code> protocol does <em>not</em> have support for signing <code class="language-plaintext highlighter-rouge">NTLM</code> authentication so the attacker can relay any NTLM authentication to the <code class="language-plaintext highlighter-rouge">HTTP</code> web endpoint. As such, this attack is possible regardless of the signing configuration of the domain.</p>
 
-<h2 id="the-ugly">The Ugly</h2>
+<h2 id="why-esc8-exists">Why ESC8 Exists</h2>
 
 <p>If some lightbulb hasn’t gone off yet, the presence of this vulnerability in an environment is usually a sign that domain compromise is soon to follow. This is because SMB authentication coercion is <em>native</em> to Windows, and is not seen as a security risk by Microsoft.</p>
 
@@ -385,7 +385,7 @@ Install-AdcsWebEnrollment -Force
 
 <p>Mitigations, and additional caveats will be discussed later, but for now, let’s focus on how to exploit this vulnerability.</p>
 
-<h2 id="caveat">Caveat</h2>
+<h2 id="challenges-in-restricted-environment">Challenges in Restricted Environment</h2>
 
 <p>If you recall from the network topology diagram from earlier, the <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code> and <code class="language-plaintext highlighter-rouge">PORTICUS</code> machines are unable to directly communicate with our machine due to the firewall rules in place. This means that we cannot coerce authentication from either of these machines to our listener, and relay it to the CA directly.</p>
 
