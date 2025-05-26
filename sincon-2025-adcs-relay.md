@@ -167,6 +167,10 @@ certipy find -u 'Doros_ARCHIVON' -p 'bO3n21E6rc' -target 'PALACE-DC.jess.kingdom
 
 ESC8 is a misconfiguration that is extremely common in many environments, and it boils down to allowing enrollment of certificates through the web endpoint of the Certificate Authority (i.e. `http://palace-dc.jess.kingdom/certsrv`). The attack occurs when an attacker is able to "coerce" authentication from a machine, or user and relay their credentials to the web endpoint and obtain either a `User` or `Machine` certificate.
 
+It is also worth nothing that both the default `User` and `Machine` templates are configured with `Client Authentication (OID 1.3.6.1.5.5.7.3.2)` and enabled, which allows any domain user to enroll for and use the certificate for authentication. The same technique can be used to request for another certificate template, including custom templates. 
+
+However, authentication is only supported by some EKUs (i.e. `Client Authentication`, `PKINIT Client Authentication`, `Smart Card Logon`, etc.).
+
 ![](./assets/img/sincon/ESC8.png)
 
 Unlike protocols such as `SMB` and `LDAP` that support signing, the `HTTP` protocol does *not* have support for signing `NTLM` authentication so the attacker can relay any NTLM authentication to the `HTTP` web endpoint. As such, this attack is possible regardless of the signing configuration of the domain.
@@ -228,9 +232,7 @@ Active Connections
 
 In the past, the go-to method for "unbinding" SMB is using [PortBender](https://github.com/praetorian-inc/PortBender) to forcefully redirect traffic on `TCP/445` using `WinDivert64.sys`. However, from my testing this seems to no longer be functional and/or maintained.
 
-Luckily, there's an alternative method to release the SMB service from port 445: just force-stop the user-space services that provide SMB functionality.
-
-Running the following commands in this order will release the port:
+Luckily, there's an alternative method to release the SMB service from port 445: just force-stop the user-space services that provide SMB functionality. Running the following commands in this order will release the port, this is a neat trick that was first released by [SpecterOps](https://posts.specterops.io/relay-your-heart-away-an-opsec-conscious-approach-to-445-takeover-1c9b4666c8ac).
 
 ```
 sc stop lanmanserver
@@ -317,6 +319,8 @@ This can be verified by running a `curl` against ourselves at `TCP/445` and catc
 #< CLIXML
 ```
 
+![](./assets/img/sincon/75f6b26be3a4ae9c2ca2d090d05ca231.png)
+
 ## U2U2Self
 
 The last portion of the ESC8 attack (after obtaining a `Machine` or `User` certificate) is to exchange the certificate for a `TGT` (Ticket Granting Ticket) for the `jess.kingdom` domain. 
@@ -324,8 +328,6 @@ The last portion of the ESC8 attack (after obtaining a `Machine` or `User` certi
 When a certificate is used to authenticate (PKINIT), the resultant ticket will include a `PAC_CREDENTIAL_INFO` structure that contains the NTLM hash of the user or machine account. The authenticating user's NTLM hash can then be recovered by performing a `S4U2Self` with a `U2U` extension.
 
 More details of this attack can be found here: [Unpac-The-Hash](https://www.thehacker.recipes/ad/movement/kerberos/unpac-the-hash)
-
-![](./assets/img/sincon/75f6b26be3a4ae9c2ca2d090d05ca231.png)
 
 ## Exploiting ESC8
 
@@ -501,7 +503,7 @@ In the breaking whitepaper by SpecterOps: [Certified Pre-Owned](https://spectero
 * Disable NTLM Authentication
 * Enable HTTPS and Enable Extended Protection for Authentication (EPA)
 
-In most environments, disabling NTLM authentication is not feasible, as it will break many legacy applications that rely on NTLM authentication.
+In most environments, disabling NTLM authentication is not feasible, as it will break many legacy applications that rely on NTLM authentication. Additionally, recent research has shown that [relaying Kerberos is also possible](https://www.synacktiv.com/en/publications/relaying-kerberos-over-smb-using-krbrelayx).
 
 ### HTTPS + EPA
 
