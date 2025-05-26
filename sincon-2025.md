@@ -13,8 +13,6 @@ During [SINCON 2025](https://www.infosec-city.com/sin-25), we sponsored and orga
 
 This is the first part of a two-part series that will provide an overview of the more "challenging" part of the CTF, which involved exploiting ESC8 from a pivot in a restrictive environment by temporarily unbinding SMB ports.
 
-[insert img here]
-
 <div class="toc-container">
 <button class="toc-toggle" onclick="toggleToc()">Table of Contents ▼</button>
 <div class="toc-content" id="tocContent">
@@ -32,8 +30,7 @@ This is the first part of a two-part series that will provide an overview of the
 <li><a href="#command-and-control-c2">Command and Control (C2)</a></li>
 </ul>
 </li>
-<li>
-<a href="#enumerating-esc8">Enumerating ESC8</a></li>
+<li><a href="#enumerating-esc8">Enumerating ESC8</a></li>
 <li><a href="#esc8-a-tldr">ESC8, a TLDR</a></li>
 <li><a href="#why-esc8-exists">Why ESC8 Exists</a></li>
 <li>
@@ -59,6 +56,20 @@ This is the first part of a two-part series that will provide an overview of the
 </ul>
 </li>
 <li><a href="#how-about-users">How about Users?</a></li>
+<li>
+<a href="#mitigations">Mitigations</a>
+<ul>
+<li><a href="#https--epa">HTTPS + EPA</a></li>
+</ul>
+</li>
+<li>
+<a href="#behind-the-scenes">Behind the Scenes</a>
+<ul>
+<li><a href="#disabling-spooler-service">Disabling Spooler Service</a></li>
+<li><a href="#rpc-filters">RPC Filters</a></li>
+<li><a href="#network-segmentation">Network Segmentation</a></li>
+</ul>
+</li>
 </ol>
 </div>
 </div>
@@ -595,3 +606,11 @@ And, no authentication is coerced from `KNIGHT-HALL` to `TABULARIUM`.
 ### Network Segmentation
 
 In order to prevent participants from simply spraying coercion cross the domain, and getting a hit on `SCRIPTORIUM.jess.kingdom`, we have placed `SCRIPTORIUM` on a separate network segment that is only accessible via `TABULARIUM`. This means that participants will minimally need to compromise `TABULARIUM` to access `SCRIPTORIUM`, which effectively places it as the entrypoint to the second-half of the CTF.
+
+### Conclusion
+
+ESC8 is one of the most common misconfigurations that I see in the wild, and it is often overlooked by many security professionals. And, it is one of the few misconfigurations that can be exploited to obtain a domain compromise from a basic domain user account.
+
+If the Certificate Authority is a non-Domain Controller (as is often the case), you would most likely be able to relay authentication from DCs and compromise the entire domain before lunch.
+
+On a more optimistic note, we're extremely happy to have been able to include this misconfiguration in the CTF, and we hope that participants were able to practice and learn about this attack path!
