@@ -33,6 +33,10 @@ layout: default
       <h3><a href="./offbyone-2025.html">Off-By-One 2025 Conference CTF</a></h3>
       <span class="post-date">2025</span>
     </article>
+        <article class="post-item">
+      <h3><a href="./BSidesAmman-2025-writeup.html">BSidesAmman-2025-writeup</a></h3>
+      <span class="post-date">2025</span>
+    </article>
   </div>
 </div>
 
