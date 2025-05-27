@@ -679,7 +679,7 @@ Aside from the [security considerations mentioned by Microsoft](https://learn.mi
 
 ### Regularly Review Role Capabilities
 
-In this writeup, the `Start-Process` commandlet was allowed on the JEA endpoint. While this was an exaggeration to demonstrate the attack vector, it is important to note that seemingly harmless commandlets such as `Get-Service` can be used to send SMB authentication to other machines, which can then be relayed to other machines in the domain.
+In this writeup, the `Start-Process` commandlet was allowed on the JEA endpoint. While this was an exaggeration to demonstrate the attack vector, it is important to note that seemingly harmless commandlets such as `Get-Service` can be used to send SMB authentication to other machines, which can then be chained to other attack vectors such as ESC8.
 
 If you ever have a purpose for these dangerous commandlets, it's highly recommended to restrict the parameters that can be used with them. For example, you can restrict the `Start-Process` commandlet to only allow the user to run an executable at `C:\Projects\HealthCheck.exe`.
 
