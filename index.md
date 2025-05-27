@@ -26,6 +26,10 @@ layout: default
 <div class="posts-section">
   <div class="posts-list">
     <article class="post-item">
+      <h3><a href="./sincon-2025-jea">SINCON 2025 Conference CTF (Part 2: JEA Bypass)</a></h3>
+      <span class="post-date">2025</span>
+    </article>
+    <article class="post-item">
       <h3><a href="./bsidesamman-2025-writeup.html">BSides Amman 2025 CTF Writeup</a></h3>
       <span class="post-date">2025</span>
     </article>

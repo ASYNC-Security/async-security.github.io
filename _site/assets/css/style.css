@@ -220,7 +220,43 @@ body { background-color: #1a1a1a; color: #e0e0e0; }
 
 h1, h2, h3, h4 { color: white; }
 
-.highlighter-rouge { color: #e8d3d3; }
+.highlighter-rouge, .highlighter-rouge .highlight { background-color: #1e1e1e !important; }
+
+.highlight pre { background-color: #1e1e1e !important; color: #d4d4d4 !important; }
+
+.highlight code { background-color: transparent !important; color: #d4d4d4 !important; }
+
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt, .highlight .kv { color: #569cd6 !important; }
+
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se, .highlight .sh, .highlight .si, .highlight .sx, .highlight .sr, .highlight .ss { color: #ce9178 !important; }
+
+.highlight .nf, .highlight .nb, .highlight .nc, .highlight .no, .highlight .ni, .highlight .ne, .highlight .nn, .highlight .nt, .highlight .nx { color: #dcdcaa !important; }
+
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi, .highlight .na { color: #9cdcfe !important; }
+
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cs, .highlight .cp, .highlight .cpf { color: #6a9955 !important; font-style: italic; }
+
+.highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .mo, .highlight .il { color: #b5cea8 !important; }
+
+.highlight .o, .highlight .ow, .highlight .p { color: #d4d4d4 !important; }
+
+.highlight .nl, .highlight .py, .highlight .w, .highlight .bp, .highlight .gh, .highlight .gp { color: #c586c0 !important; }
+
+.highlight .err { color: #f44747 !important; background-color: transparent !important; }
+
+.highlight .nd, .highlight .ni, .highlight .sd { color: #808080 !important; }
+
+.highlight .gd { color: #f44747 !important; background-color: rgba(255, 0, 0, 0.1) !important; }
+
+.highlight .gi { color: #b5cea8 !important; background-color: rgba(0, 255, 0, 0.1) !important; }
+
+.highlight .g, .highlight .l, .highlight .n, .highlight .x, .highlight .ge, .highlight .gr, .highlight .gs, .highlight .gu, .highlight .gt { color: #d4d4d4 !important; }
+
+.highlight ::selection { background-color: #264f78 !important; }
+
+.highlight .lineno { color: #858585 !important; }
+
+code.highlighter-rouge { background-color: #1e1e1e !important; color: #ce9178 !important; padding: 0.2em 0.4em; border-radius: 3px; }
 
 a { color: #4da6ff; }
 

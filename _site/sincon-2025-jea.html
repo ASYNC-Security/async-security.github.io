@@ -20,7 +20,7 @@
 {"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Zavier Lee"},"headline":"SINCON CTF 2025: Too Much Administration","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/sincon-2025-jea.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=b99973424b364da732c43665300e85039b4a5d7a">
+    <link rel="stylesheet" href="/assets/css/style.css?v=fde86962d8d0a4bdb9f85944633077c4486a98fa">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -310,6 +310,40 @@
 
 
 
+  
+  <div class="author-section">
+    <div class="author-label">Author</div>
+    <div class="author-info">
+      
+      <img src="./assets/img/authors/zavier.png" alt="Zavier Lee" class="author-avatar">
+      
+      <div class="author-details">
+        <div class="author-name">Zavier Lee</div>
+        
+        <div class="author-title">Offensive Security Engineer</div>
+        
+        <div class="author-links">
+          
+          <a href="https://x.com/gatariee" target="_blank" class="social-link twitter" aria-label="Twitter">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-twitter-x" viewBox="0 0 16 16">
+              <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+            </svg>
+          </a>
+          
+          
+          <a href="https://github.com/gatariee" target="_blank" class="social-link github" aria-label="GitHub">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            </svg>
+          </a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
 
 <h1 id="sincon-ctf-2025-too-much-administration">SINCON CTF 2025: Too Much Administration</h1>
 
@@ -317,11 +351,68 @@
 
 <p>In this writeup, I’ll be covering the solve path for Flag 8 - which involved bypassing <a href="https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5">Just Enough Administration (JEA)</a>. For many participants, this was their first time encountering WinRM endpoints protected by JEA, and you’ll rarely see this in engagements aside from some hardened environments. However, JEA can be a double-edged sword; if not properly configured, it opens up opportunities for abuse and privilege escalation.</p>
 
-<h2 id="introduction">Introduction</h2>
+<h2 id="introduction-and-scenario">Introduction and Scenario</h2>
 
 <p><img src="/assets/img/sincon-2/scenario.jpg" alt="" /></p>
 
-<p>The current scenario is explained in more depth in the first part of the writeup, but to summarize, we have compromised <code class="language-plaintext highlighter-rouge">TABULARIUM</code> and <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code>. Additionally, we have access to a <code class="language-plaintext highlighter-rouge">JESS\Doros_ARCHIVON</code> user from a previous attack path. The next target is <code class="language-plaintext highlighter-rouge">PORTICUS</code>.</p>
+<p>The current scenario is explained in more depth in the first part of the writeup, but to summarize, we have compromised <code class="language-plaintext highlighter-rouge">TABULARIUM</code> and <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code>. Additionally, we have access to a <code class="language-plaintext highlighter-rouge">JESS\Doros_ARCHIVON</code> user from a previous attack path. The next target is <code class="language-plaintext highlighter-rouge">PORTICUS</code>, which is also a <code class="language-plaintext highlighter-rouge">Windows Server 2022</code> machine.</p>
+
+<h2 id="enumerating-winrm">Enumerating WinRM</h2>
+
+<p>Using the <code class="language-plaintext highlighter-rouge">JESS\Doros_ARCHIVON</code> user, we can identify that we have access to the WinRM service on <code class="language-plaintext highlighter-rouge">PORTICUS</code>. Unlike the SMB protocol with <code class="language-plaintext highlighter-rouge">nxc</code>, the <code class="language-plaintext highlighter-rouge">(Pwn3d!)</code> message does not necessarily indicate that we have local administrator access.</p>
+
+<p><img src="./assets/img/sincon-2/99d0d121ca7824ee368ee159133be63e.png" alt="" /></p>
+
+<h3 id="failed-command-execution">Failed Command Execution</h3>
+
+<p>However, attempting to use the <code class="language-plaintext highlighter-rouge">-x</code> option with <code class="language-plaintext highlighter-rouge">nxc</code> shows that no output is retrieved by the command.</p>
+
+<p><img src="./assets/img/sincon-2/aa78ab2ce2d6b9ab2e6d255e8f57a276.png" alt="" /></p>
+
+<p>Running the same command with <code class="language-plaintext highlighter-rouge">--debug</code> shows that the internal executor is throwing an error that <code class="language-plaintext highlighter-rouge">Invoke-Expression</code> is not found as an available commandlet.</p>
+
+<p><img src="./assets/img/sincon-2/24808f1980a23763dde687a7cb838e49.png" alt="" /></p>
+
+<p>Similarly, attempting to connect to the WinRM service using <code class="language-plaintext highlighter-rouge">evil-winrm</code> results in the same error:</p>
+
+<p><img src="./assets/img/sincon-2//2a022b19db8bbdacdd2e3edda37a30e3.png" alt="" /></p>
+
+<p>These errors are occurring because the WinRM service on <code class="language-plaintext highlighter-rouge">PORTICUS</code> is configured with <a href="https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5">Just Enough Administration (JEA)</a>, which restricts the available commands and modules that can be executed by the user.</p>
+
+<h2 id="jea-a-tldr">JEA, a TLDR</h2>
+
+<p><a href="https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5">Just Enough Administration (JEA)</a> is a hardening mechanism in Windows that allows administrators to delegate specific administrative tasks to users without granting them full administrative privileges. It does this by restricting the available commands and modules that can be executed by the user, effectively creating a limited PowerShell environment.</p>
+
+<p>You can view the full documetation <a href="https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5">here</a>, and I strongly recommend reading it to understand how JEA works.</p>
+
+<p>According to the documentation, JEA is designed to:</p>
+<ol>
+  <li>Reduce the number of administrators on your machines</li>
+  <li>Limit what users run on your machines</li>
+  <li>Better understand what your users are doing on your machines</li>
+</ol>
+
+<p>If you’re more familiar with Linux, JEA is similar to the concept of <code class="language-plaintext highlighter-rouge">sudo</code> with restricted commands, where users can only execute specific commands as a privileged user.</p>
+
+<h3 id="role-capabilities">Role Capabilities</h3>
+
+<p>In JEA sessions, the available commands and modules are defined in a “role capability” file, which is a PowerShell module that specifies the commands and modules that are available to the user. Role capability files are typically stored in the <code class="language-plaintext highlighter-rouge">C:\Program Files\WindowsPowerShell\&lt;ROLE&gt;\RoleCapabilities</code> directory, where <code class="language-plaintext highlighter-rouge">&lt;ROLE&gt;</code> is the name of the role.</p>
+
+<p>This file defines the commands and modules that are available to the user, as well as any parameters that can be used with those commands. COnsider the following snippet from a role capability file in the documentation:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">VisibleFunctions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Get-TopProcess'</span><span class="w">
+
+</span><span class="n">FunctionDefinitions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@{</span><span class="w">
+    </span><span class="nx">Name</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s1">'Get-TopProcess'</span><span class="w">
+    </span><span class="nx">ScriptBlock</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="kr">param</span><span class="p">(</span><span class="nv">$Count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w">
+
+        </span><span class="n">Get-Process</span><span class="w"> </span><span class="o">|</span><span class="w">
+            </span><span class="n">Sort-Object</span><span class="w"> </span><span class="nt">-Property</span><span class="w"> </span><span class="nx">CPU</span><span class="w"> </span><span class="nt">-Descending</span><span class="w"> </span><span class="o">|</span><span class="w">
+            </span><span class="n">Microsoft.PowerShell.Utility\Select-Object</span><span class="w"> </span><span class="nt">-First</span><span class="w"> </span><span class="nv">$Count</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
 
 
 <script>
