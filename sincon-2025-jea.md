@@ -541,7 +541,7 @@ However, relaying `SMB` to `LDAP` is typically not possible as session signing i
 
 After relaying to LDAP, there are a number of things that we can do such as [Configuring RBCD](https://www.praetorian.com/blog/red-team-privilege-escalation-rbcd-based-privilege-escalation-part-2/) for an attacker-controlled computer account.
 
-![](./assets/img/sincon-2/ldap_relay.jpg)
+![](./assets/img/sincon-2/ldap_relay.png)
 
 #### Reverse Port Forwarding
 
