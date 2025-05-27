@@ -100,7 +100,7 @@ These errors are occurring because the WinRM service on `PORTICUS` is configured
 
 [Just Enough Administration (JEA)](https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5) is a hardening mechanism in Windows that allows administrators to delegate specific administrative tasks to users without granting them full administrative privileges. It does this by restricting the available commands and modules that can be executed by the user, effectively creating a limited PowerShell environment.
 
-You can view the full documetation [here](https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5), and I strongly recommend reading it to understand how JEA works.
+You can view the full documentation [here](https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5), and I strongly recommend reading it to understand how JEA works.
 
 According to the documentation, JEA is designed to:
 1. Reduce the number of administrators on your machines 
@@ -182,7 +182,7 @@ New-PSSessionConfigurationFile -Path "C:\JEA\Configuration.pssc" `
 }
 ```
 
-This flag can be ommitted to run the JEA session as a specific user, but in most cases if you are considering JEA - you are probably using it specifically for this functionality.
+This flag can be omitted to run the JEA session as a specific user, but in most cases if you are considering JEA - you are probably using it specifically for this functionality.
 
 ### ConfigurationName
 
