@@ -1,10 +1,11 @@
 ---
 layout: page
-author: "Zavier Lee"
-author_avatar: "./assets/img/authors/zavier.png"
-author_title: "Offensive Security Engineer"
-author_twitter: "https://x.com/gatariee"
-author_github: "https://github.com/gatariee"
+authors:
+  - name: "Zavier Lee"
+    avatar: "./assets/img/authors/zavier.png"
+    title: "Offensive Security Engineer"
+    twitter: "https://x.com/gatariee"
+    github: "https://github.com/gatariee"
 ---
 
 # SINCON CTF 2025: All Too Relayxing
