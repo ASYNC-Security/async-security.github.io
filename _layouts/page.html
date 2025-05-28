@@ -248,6 +248,15 @@ layout: default
         }
     }
 
+    .post-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
     .back-button {
         display: inline-flex;
         align-items: center;
@@ -261,8 +270,8 @@ layout: default
         font-size: 0.85em;
         font-weight: 500;
         transition: all 0.3s ease;
-        margin-bottom: 16px;
         width: fit-content;
+        outline: none;
     }
 
     .back-button:hover {
@@ -271,6 +280,12 @@ layout: default
         border-color: #4da6ff;
         transform: translateY(-1px);
         box-shadow: 0 2px 8px rgba(77, 166, 255, 0.2);
+        outline: none;
+    }
+
+    .back-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(77, 166, 255, 0.3);
     }
 
     .back-button svg {
@@ -283,9 +298,28 @@ layout: default
         transform: translateX(-2px);
     }
 
+    .post-meta {
+        color: #999;
+        font-size: 0.85em;
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        display: inline-block;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        margin: 0;
+    }
+
     @media (max-width: 962px) {
+        .post-header {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            gap: 8px;
+        }
+
         .back-button {
-            margin-bottom: 12px;
             margin-top: 12px;
             padding: 6px 10px;
             font-size: 0.8em;
@@ -295,19 +329,27 @@ layout: default
             width: 12px;
             height: 12px;
         }
+
+        .post-meta {
+            font-size: 0.8em;
+            padding: 5px 10px;
+        }
     }
 </style>
 
-<a href="/" class="back-button">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-    </svg>
-    Back
-</a>
+<div class="post-header">
+    <a href="/" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+        </svg>
+        Back
+    </a>
 
-{% if page.date %}
-<small class="post-meta">{{ page.date | date: "%-d %B %Y" }}</small>
-{% endif %}
+    {% if page.date %}
+    <small class="post-meta">{{ page.date | date: "%-d %B %Y" }}</small>
+    {% endif %}
+</div>
 
 {% if page.subtitle %}
 <p><em>{{ page.subtitle }}</em></p>
