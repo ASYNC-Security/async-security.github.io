@@ -68,6 +68,9 @@ In this writeup, I'll be covering the solve path for Flag 8 - which involved byp
 </ul>
 </li>
 <li>
+<a href="#configurationname-pitfalls">ConfigurationName Pitfalls</a>
+</li>
+<li>
 <a href="#mitigations--detections">Mitigations & Detections</a>
 <ul>
 <li><a href="#regularly-review-role-capabilities">Regularly Review Role Capabilities</a></li>
@@ -670,6 +673,39 @@ Then, we can exchange the acquired certificate for the NTLM hash of `PORTICUS`:
 ![](./assets/img/sincon-2/56d6fcc4e5c4cf05746764eccc1cd4d7.png)
 
 From here, there are lots of ways to compromise fully `PORTICUS`.
+
+## ConfigurationName Pitfalls
+
+In this lab, the JEA configured on `PORTICUS` was registered to overwrite all 4 default PowerShell session configurations.
+
+```powershell
+Register-PSSessionConfiguration -Name microsoft.powershell.workflow -Path $psscPath -Force 
+Register-PSSessionConfiguration -Name microsoft.powershell32 -Path $psscPath -Force 
+Register-PSSessionConfiguration -Name microsoft.windows.servermanagerworkflows -Path $psscPath -Force 
+Register-PSSessionConfiguration -Name Microsoft.PowerShell -Path $psscPath -Force 
+```
+
+Earlier, I mentioned that the `Microsoft.PowerShell` configuration is the default configuration used when connecting to a WinRM endpoint. However, it is also possible to connect to WinRM endpoints remotely using any of the other session configurations, such as `microsoft.powershell32`. 
+
+For example, the `gatari` user is a local administrator on `PALACE-DC` where they are able to connect to the WinRM endpoint using both `microsoft.powershell` and `microsoft.powershell32` configurations.
+
+![](./assets/img/sincon-2/6db2d306f1e3ac5819df35471873d048.png)
+
+The problem arises when the `Microsoft.PowerShell` configuration is overwritten with a custom JEA configuration, but the system administrator forgets to overwrite the other session configurations. This means that users can still connect to the WinRM endpoint using the other session configurations, which may not have the same restrictions as the JEA configuration.
+
+Consider the same configuration file used to register the JEA session configuration on `PORTICUS` was applied on `TABULARIUM` but only on the `Microsoft.PowerShell` configuration.
+
+```powershell
+Register-PSSessionConfiguration -Name Microsoft.PowerShell -Path $psscPath -Force 
+```
+
+Logically, the default connection to the WinRM endpoint will be protected by JEA.
+
+![](./assets/img/sincon-2/aeae44b3674607bc77fe516862e8bc7a.png)
+
+However attempting to use any other configuration, completely bypasses the JEA restrictions. Although, since these configurations are not configured with `-RunAsVirtualAccount`, the user will retain their own privileges on the remote machine, instead of local administrator privileges.
+
+![](./assets/img/sincon-2/11bffd9d604fd590fd838c8c8981538f.png)
 
 ## Mitigations & Detections
 

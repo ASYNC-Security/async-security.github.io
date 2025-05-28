@@ -20,7 +20,7 @@
 {"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Zavier Lee"},"headline":"SINCON CTF 2025: Too Much Administration","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/sincon-2025-jea.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=3dc1bcda1ebd623b27a3bb33a3f5aea65b5dc5e2">
+    <link rel="stylesheet" href="/assets/css/style.css?v=fff63d1af70c2b72ee813e40ba6651ee4309f3c1">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -403,6 +403,9 @@
 </ul>
 </li>
 </ul>
+</li>
+<li>
+<a href="#configurationname-pitfalls">ConfigurationName Pitfalls</a>
 </li>
 <li>
 <a href="#mitigations--detections">Mitigations &amp; Detections</a>
@@ -970,9 +973,40 @@ Impacket v0.13.0.dev0+20250516.105908.a63c652 - Copyright Fortra, LLC and its af
 
 <p>Then, we can exchange the acquired certificate for the NTLM hash of <code class="language-plaintext highlighter-rouge">PORTICUS</code>:</p>
 
-<p><img src="./assets/img/sincon-2/56d6fcc4e5c4cf05746764eccc1cd4d7.png" alt="" /></p>
+<p><img src="/assets/img/sincon-2/56d6fcc4e5c4cf05746764eccc1cd4d7.png" alt="" /></p>
 
 <p>From here, there are lots of ways to compromise fully <code class="language-plaintext highlighter-rouge">PORTICUS</code>.</p>
+
+<h2 id="configurationname-pitfalls">ConfigurationName Pitfalls</h2>
+
+<p>In this lab, the JEA configured on <code class="language-plaintext highlighter-rouge">PORTICUS</code> was registered to overwrite all 4 default PowerShell session configurations.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Register-PSSessionConfiguration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">microsoft.powershell.workflow</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="nv">$psscPath</span><span class="w"> </span><span class="nt">-Force</span><span class="w"> 
+</span><span class="n">Register-PSSessionConfiguration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">microsoft.powershell32</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="nv">$psscPath</span><span class="w"> </span><span class="nt">-Force</span><span class="w"> 
+</span><span class="n">Register-PSSessionConfiguration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">microsoft.windows.servermanagerworkflows</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="nv">$psscPath</span><span class="w"> </span><span class="nt">-Force</span><span class="w"> 
+</span><span class="n">Register-PSSessionConfiguration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">Microsoft.PowerShell</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="nv">$psscPath</span><span class="w"> </span><span class="nt">-Force</span><span class="w"> 
+</span></code></pre></div></div>
+
+<p>Earlier, I mentioned that the <code class="language-plaintext highlighter-rouge">Microsoft.PowerShell</code> configuration is the default configuration used when connecting to a WinRM endpoint. However, it is also possible to connect to WinRM endpoints remotely using any of the other session configurations, such as <code class="language-plaintext highlighter-rouge">microsoft.powershell32</code>.</p>
+
+<p>For example, the <code class="language-plaintext highlighter-rouge">gatari</code> user is a local administrator on <code class="language-plaintext highlighter-rouge">PALACE-DC</code> where they are able to connect to the WinRM endpoint using both <code class="language-plaintext highlighter-rouge">microsoft.powershell</code> and <code class="language-plaintext highlighter-rouge">microsoft.powershell32</code> configurations.</p>
+
+<p><img src="./assets/img/sincon-2/6db2d306f1e3ac5819df35471873d048.png" alt="" /></p>
+
+<p>The problem arises when the <code class="language-plaintext highlighter-rouge">Microsoft.PowerShell</code> configuration is overwritten with a custom JEA configuration, but the system administrator forgets to overwrite the other session configurations. This means that users can still connect to the WinRM endpoint using the other session configurations, which may not have the same restrictions as the JEA configuration.</p>
+
+<p>Consider the same configuration file used to register the JEA session configuration on <code class="language-plaintext highlighter-rouge">PORTICUS</code> was applied on <code class="language-plaintext highlighter-rouge">TABULARIUM</code> but only on the <code class="language-plaintext highlighter-rouge">Microsoft.PowerShell</code> configuration.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Register-PSSessionConfiguration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">Microsoft.PowerShell</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="nv">$psscPath</span><span class="w"> </span><span class="nt">-Force</span><span class="w"> 
+</span></code></pre></div></div>
+
+<p>Logically, the default connection to the WinRM endpoint will be protected by JEA.</p>
+
+<p><img src="./assets/img/sincon-2/aeae44b3674607bc77fe516862e8bc7a.png" alt="" /></p>
+
+<p>However attempting to use any other configuration, completely bypasses the JEA restrictions. Although, since these configurations are not configured with <code class="language-plaintext highlighter-rouge">-RunAsVirtualAccount</code>, the user will retain their own privileges on the remote machine, instead of local administrator privileges.</p>
+
+<p><img src="./assets/img/sincon-2/11bffd9d604fd590fd838c8c8981538f.png" alt="" /></p>
 
 <h2 id="mitigations--detections">Mitigations &amp; Detections</h2>
 
@@ -982,7 +1016,7 @@ Impacket v0.13.0.dev0+20250516.105908.a63c652 - Copyright Fortra, LLC and its af
 
 <h3 id="regularly-review-role-capabilities">Regularly Review Role Capabilities</h3>
 
-<p>In this writeup, the <code class="language-plaintext highlighter-rouge">Start-Process</code> commandlet was allowed on the JEA endpoint. While this was an exaggeration to demonstrate the attack vector, it is important to note that seemingly harmless commandlets such as <code class="language-plaintext highlighter-rouge">Get-Service</code> can be used to send SMB authentication to other machines, which can then be relayed to other machines in the domain.</p>
+<p>In this writeup, the <code class="language-plaintext highlighter-rouge">Start-Process</code> commandlet was allowed on the JEA endpoint. While this was an exaggeration to demonstrate the attack vector, it is important to note that seemingly harmless commandlets such as <code class="language-plaintext highlighter-rouge">Get-Service</code> can be used to send SMB authentication to other machines, which can then be chained to other attack vectors such as ESC8.</p>
 
 <p>If you ever have a purpose for these dangerous commandlets, it’s highly recommended to restrict the parameters that can be used with them. For example, you can restrict the <code class="language-plaintext highlighter-rouge">Start-Process</code> commandlet to only allow the user to run an executable at <code class="language-plaintext highlighter-rouge">C:\Projects\HealthCheck.exe</code>.</p>
 
