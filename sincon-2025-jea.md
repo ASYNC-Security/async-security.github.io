@@ -175,7 +175,7 @@ New-PSSessionConfigurationFile -Path "C:\JEA\Configuration.pssc" `
 }
 ```
 
-This configuration file can be used with the `Register-PSSessionConfiguration` to register a new session configuration that uses the specified role capabilities. 
+This configuration file can be used with the `Register-PSSessionConfiguration` cmdlet to register a new session configuration that uses the specified role capabilities. 
 
 ```powershell
 Register-PSSessionConfiguration -Name "Test_JEA" `
@@ -351,7 +351,7 @@ def execute_cmd(
     ...
 ```
 
-And, the `Client->execute_ps()` starts a `WinRM` session, with the default `microsoft.powershell` configuration, if unspecified and appends the `Invoke-Expression -Command {...}` to the command to be executed.
+And, the `Client->execute_ps()` starts a `WinRM` session, with the default `microsoft.powershell` configuration, if unspecified, and prepends `Invoke-Expression -Command {...}` to the command to be executed.
 
 ```python
 # pypsrp/client.py#L231
