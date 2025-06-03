@@ -214,24 +214,83 @@ footer { width: 270px; float: left; position: fixed; bottom: 50px; -webkit-font-
   .downloads { width: 99%; }
   .downloads li, .downloads li + li + li { width: 33%; } }
 @media print { body { padding: 0.4in; font-size: 12pt; color: #444; } }
+/* Layout */
 .wrapper { width: 70%; max-width: none; }
 
+/* Base dark theme */
 body { background-color: #1a1a1a; color: #e0e0e0; }
 
 h1, h2, h3, h4 { color: white; }
 
-.highlighter-rouge { color: #e8d3d3; }
-
+/* Links */
 a { color: #4da6ff; }
 
 a:hover { color: #66b3ff; font-weight: normal; }
 
 a:focus { color: #66b3ff; transform: none !important; }
 
-.highlight { background-color: #2d2d2d !important; }
+/* Code blocks - consistent background */
+.highlighter-rouge, .highlighter-rouge .highlight, .highlight, pre, code { background-color: #2d2d2d !important; color: #e0e0e0; }
 
-pre, code { background-color: #2d2d2d; color: #e0e0e0; }
+.highlight pre { background-color: transparent !important; color: #e0e0e0 !important; }
 
+.highlight code { background-color: transparent !important; color: inherit !important; }
+
+/* Inline code */
+code.highlighter-rouge { background-color: #2d2d2d !important; color: #e993bb !important; padding: 0.2em 0.4em; border-radius: 3px; font-size: 0.9em; }
+
+/* Syntax highlighting colors - optimized for Python and other languages */
+/* Keywords (def, class, if, for, import, etc.) */
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt, .highlight .kv { color: #ff79c6 !important; font-weight: bold; }
+
+/* Strings */
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se, .highlight .sh, .highlight .si, .highlight .sx, .highlight .sr, .highlight .ss { color: #f1fa8c !important; }
+
+/* Function names, classes, decorators */
+.highlight .nf, .highlight .nc, .highlight .nd { color: #50fa7b !important; }
+
+/* Built-in functions and constants */
+.highlight .nb, .highlight .bp { color: #8be9fd !important; }
+
+/* Variables, attributes */
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi, .highlight .na, .highlight .n { color: #f8f8f2 !important; }
+
+/* Comments */
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cs, .highlight .cp, .highlight .cpf, .highlight .ch { color: #6272a4 !important; font-style: italic; }
+
+/* Numbers */
+.highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .mo, .highlight .il { color: #bd93f9 !important; }
+
+/* Operators */
+.highlight .o, .highlight .ow { color: #ff79c6 !important; }
+
+/* Punctuation */
+.highlight .p { color: #f8f8f2 !important; }
+
+/* Module names, namespaces */
+.highlight .nn, .highlight .nx, .highlight .nt { color: #8be9fd !important; }
+
+/* Errors */
+.highlight .err { color: #ff5555 !important; background-color: transparent !important; }
+
+/* Special tokens */
+.highlight .ni { color: #ffb86c !important; }
+
+/* Git diff colors */
+.highlight .gd { color: #ff5555 !important; background-color: rgba(255, 0, 0, 0.1) !important; }
+
+.highlight .gi { color: #50fa7b !important; background-color: rgba(0, 255, 0, 0.1) !important; }
+
+/* Generic tokens and fallbacks */
+.highlight .g, .highlight .l, .highlight .x, .highlight .ge, .highlight .gr, .highlight .gs, .highlight .gu, .highlight .gt, .highlight .ne, .highlight .nl, .highlight .no, .highlight .py, .highlight .w, .highlight .gh, .highlight .gp { color: #f8f8f2 !important; }
+
+/* Selection */
+.highlight ::selection { background-color: #44475a !important; }
+
+/* Line numbers if used */
+.highlight .lineno { color: #6272a4 !important; }
+
+/* Layout adjustments */
 header { width: 200px; float: left; position: relative; margin-left: -20px; }
 
 section { width: calc(100% - 220px); float: right; margin-left: 0; padding-left: 20px; }

