@@ -30,10 +30,6 @@ layout: default
       <span class="post-date">2025</span>
     </article>
     <article class="post-item">
-      <h3><a href="./bsidesamman-2025-writeup.html">BSides Amman 2025 CTF Writeup</a></h3>
-      <span class="post-date">2025</span>
-    </article>
-    <article class="post-item">
       <h3><a href="./sincon-2025-adcs-relay.html">SINCON 2025 Conference CTF (Part 1: ADCS ESC8)</a></h3>
       <span class="post-date">2025</span>
     </article>

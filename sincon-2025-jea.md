@@ -11,7 +11,7 @@ authors:
 
 # SINCON CTF 2025: Too Much Administration
 
-This is the second, and final part of the SINCON CTF 2025 writeup series where I covered the more "challenging" parts of the CTF. I'd highly recommend reading the first part: [SINCON 2025: All Too Relayxing](https://blog.async.sg/sincon-2025-adcs-relay.html) as it provides a lot of necessary context for this writeup.
+This is the second, and final part of the SINCON CTF 2025 writeup series where I covered the more "challenging" parts of the CTF. I highly recommend reading the first part: [SINCON 2025: All Too Relayxing](https://blog.async.sg/sincon-2025-adcs-relay.html) as it provides a lot of necessary context for this writeup.
 
 In this writeup, I'll be covering the solve path for Flag 8 - which involved bypassing [Just Enough Administration (JEA)](https://learn.microsoft.com/en-us/powershell/scripting/security/remoting/jea/overview?view=powershell-7.5). For many participants, this was their first time encountering WinRM endpoints protected by JEA, and you'll rarely see this in engagements aside from some hardened environments. However, JEA can be a double-edged sword; if not properly configured, it opens up opportunities for abuse and privilege escalation.
 
@@ -427,7 +427,7 @@ The `shell->run()` method will attempt to execute a command, but of course `Invo
 
 ### Using `pypsrp` Directly
 
-Although the [pypysrp](https://github.com/jborean93/pypsrp) exposes the `execute_ps()` method, you can simply import the underlying classes (`WSMan`, `RunspacePool` and `PowerShell`) to create your own pseudo-shell that doesn't add any fluff.
+Although the [pypsrp](https://github.com/jborean93/pypsrp) exposes the `execute_ps()` method, you can simply import the underlying classes (`WSMan`, `RunspacePool` and `PowerShell`) to create your own pseudo-shell that doesn't add any fluff.
 
 ```python
 from pypsrp.wsman import WSMan
@@ -576,7 +576,7 @@ Firstly on `TABULARIUM`, we can set a reverse port forward to catch the HTTP aut
 
 #### Creating a Machine Account
 
-We need to have a machine account to set the `ms-DS-Allowed-To-Act-On-Behalf-Of-Other-Identity` attribute on, thankfully the domain has a `MachineAccountQuota` set to `10` (which is the default setting) - this allows us to create up to 10 machine accounts in the domain.
+We need to have a machine account to set the `msDS-AllowedToActOnBehalfOfOtherIdentity` attribute on, thankfully the domain has a `MachineAccountQuota` set to `10` (which is the default setting) - this allows us to create up to 10 machine accounts in the domain.
 
 ```
 ┌──(kali㉿kali)-[~/sincon]
