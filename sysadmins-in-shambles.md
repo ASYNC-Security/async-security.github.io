@@ -20,6 +20,43 @@ Both of which are default configurations in many Active Directory environments, 
 
 This post aims to highlight possible exploitation scenarios of this vulnerability, but will not go into detail about the vulnerability itself. For more information, please refer to the [synacktiv post](https://www.synacktiv.com/en/publications/ntlm-reflection-is-dead-long-live-ntlm-reflection-an-in-depth-analysis-of-cve-2025).
 
+<div class="toc-container">
+    <button class="toc-toggle" onclick="toggleToc()">Table of Contents</button>
+    <div class="toc-content" id="tocContent">
+        <ol>
+            <li>
+                <a href="#context">Context</a>
+            </li>
+            <li>
+                <a href="#reflecting-ntlm-to-self">Reflecting NTLM to Self</a>
+                <ul>
+                    <li><a href="#registering-dns">Registering DNS</a></li>
+                    <li><a href="#performing-the-relay">Performing the Relay</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#reflecting...-kerberos">Reflecting... Kerberos?</a>
+            </li>
+            <li>
+                <a href="#reflecting-to-http-adcs">Reflecting to HTTP (ADCS)</a>
+                <ul>
+                    <li><a href="#kerberos-authentication-coercion">Kerberos Authentication Coercion</a></li>
+                    <li><a href="#relay-to-esc8">Relay to ESC8</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#summary--patches">Summary & Patches</a>
+            </li>
+            <li>
+                <a href="#mitigations--detections">Mitigations & Detections</a>
+                <ul>
+                    <li><a href="#monitor-abnormal-dns-records">Monitor Abnormal DNS Records</a></li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+</div>
+
 ## Context
 
 The `PALACE-DC.jess.kingdom` domain controller has SMB signing enabled, and serves as the DNS server for the domain. The `SCRIPTORIUM.jess.kingdom` machine is a domain-joined machine that does not have SMB signing enabled. The attacker has the ability to create DNS records in the domain.
