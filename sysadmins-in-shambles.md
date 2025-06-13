@@ -41,15 +41,18 @@ This post aims to highlight possible exploitation scenarios of this vulnerabilit
                 <a href="#reflecting-to-http-adcs">Reflecting to HTTP (ADCS)</a>
                 <ul>
                     <li><a href="#reflecting-to-certificate-authority-self-relay">Reflecting to Certificate Authority (Self-Relay)</a></li>
+                    <li><a href="#relaying-to-domain-machines">Relaying to Domain Machines</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#summary--patches">Summary & Patches</a>
+                <ul>
+                    <li><a href="#detection-guidelines">Detection Guidelines</a></li>
+                </ul>
             </li>
         </ol>
     </div>
 </div>
-
 ## Context
 
 The `PALACE-DC.jess.kingdom` domain controller has SMB signing enabled, and serves as the DNS server for the domain. The `SCRIPTORIUM.jess.kingdom` machine is a domain-joined machine that does not have SMB signing enabled. The attacker has the ability to create DNS records in the domain.
@@ -224,7 +227,7 @@ Details can be found at these links:
 
 In order to mitigate this vulnerability, it is recommended to install the [latest security updates](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2025-33073) and enable SMB signing on all machines in the domain.
 
-### Detection
+### Detection Guidelines
 
 Thankfully this vulnerability, as well as the trick to coerce `Kerberos` authentication requires an attacker to create a relatively strange DNS record (ending with `1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA`). It is possible to hunt for the creation of such DNS records using the following PowerShell command:
 
