@@ -271,7 +271,7 @@ uid=0(root) gid=0(root) groups=0(root)
 
 ## Scenario 3: sAMAccount Name Confusion
 
-Based on the research by Ceri Coburn, it is clear that the `sssd` service interprets incoming authentication in a potentially confusing manner. After further testing, and inspired by a user named `lwo` on the [Vulnlab](https://www.vulnlab.com/) discored, we can also impersonate a user by simply creating a machine account with the `sAMAccountName` as any local user.
+Based on the research by Ceri Coburn, it is clear that the `sssd` service interprets incoming authentication in a potentially confusing manner. After further testing, and inspiration by a user named `lwo` on the [Vulnlab](https://www.vulnlab.com/) discord, I found that you could also impersonate a user by simply creating a machine account with the `sAMAccountName` of any local user.
 
 ### MachineAccountQuota
 
