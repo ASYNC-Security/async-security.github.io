@@ -85,7 +85,7 @@ $ hostname -f
 L-MGRT-APP001.mercury.local
 ```
 
-This domain was joined using the [`realm` command, and authentication services are handled by `SSSD`.](https://www.redhat.com/en/blog/linux-active-directory), and `Domain Admins` is the only group permitted to log in to the system.
+This domain was joined using the [`realm` command, authentication services are handled by `SSSD`](https://www.redhat.com/en/blog/linux-active-directory), and `Domain Admins` is the only group permitted to log in to the system.
 
 ```
 root@L-MGRT-APP001:/home# cat /etc/sssd/sssd.conf
