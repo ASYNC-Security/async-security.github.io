@@ -304,13 +304,6 @@ Password for root@MERCURY.LOCAL:
 uid=0(root) gid=0(root) groups=0(root)
 ```
 
-In this case, we can also authenticate with password authentication, as the `sAMAccountName` is used to look up the user in Active Directory.
-
-```
-~$ sshpass -p 'P@ssw0rd' ssh 'root'@L-MGRT-APP001.mercury.local id             
-uid=0(root) gid=0(root) groups=0(root)
-```
-
 ## History of the Issue
 
 An attack has been reported as [CVE-2020-25717](https://www.samba.org/samba/security/CVE-2020-25717.html) in Samba, which documents a similar vector; which has since been patched in [Samba 4.13.14](https://www.samba.org/samba/history/samba-4.13.14.html) and later.
