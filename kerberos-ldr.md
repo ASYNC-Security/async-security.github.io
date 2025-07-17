@@ -55,7 +55,7 @@ authors:
 
 Due to the demand for cross-platform authentication and [Single Sign-On (SSO) capabilities](https://docs.redhat.com/en/documentation/red_hat_satellite/6.16/html/configuring_authentication_for_red_hat_satellite_users/configuring-kerberos-sso-for-active-directory-users-in-project_authentication), Kerberos has become a critical component in modern authentication systems via intermediaries like [System Security Services Daemon (SSSD)](https://sssd.io/docs/krb/krb-introduction.html). This, however, has led to a situation where vendors have their own interpretations (and limitations) within the Kerberos protocol, resulting in a fragmented ecosystem.
 
-This post will specifically focus on the attacks associated with a domain-joined Linux system that supports [Kerberos SSO](https://docs.redhat.com/en/documentation/red_hat_satellite/6.16/html/configuring_authentication_for_red_hat_satellite_users/configuring-kerberos-sso-for-active-directory-users-in-project_authentication).
+This post will specifically focus on the attacks associated with a domain-joined Linux system that supports [Kerberos SSO](https://docs.redhat.com/en/documentation/red_hat_satellite/6.16/html/configuring_authentication_for_red_hat_satellite_users/configuring-kerberos-sso-for-active-directory-users-in-project_authentication). Additionally, the following tool: [sssd-spoof](https://github.com/ASYNC-Security/sssd-spoof) has been released alongside this blog post to automate the exploitation of the attacks covered.
 
 ## Linux Active Directory Integration
 
