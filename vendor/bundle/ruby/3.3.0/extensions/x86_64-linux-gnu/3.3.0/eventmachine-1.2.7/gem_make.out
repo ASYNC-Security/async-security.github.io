@@ -1,0 +1,19 @@
+current directory: /home/kali/git/async-security.github.io/vendor/bundle/ruby/3.3.0/gems/eventmachine-1.2.7/ext/fastfilereader
+/usr/bin/ruby3.3 -I/usr/lib/ruby/vendor_ruby extconf.rb
+creating Makefile
+
+current directory: /home/kali/git/async-security.github.io/vendor/bundle/ruby/3.3.0/gems/eventmachine-1.2.7/ext/fastfilereader
+make DESTDIR\= sitearchdir\=./.gem.20250907-110020-438mif sitelibdir\=./.gem.20250907-110020-438mif clean
+
+current directory: /home/kali/git/async-security.github.io/vendor/bundle/ruby/3.3.0/gems/eventmachine-1.2.7/ext/fastfilereader
+make DESTDIR\= sitearchdir\=./.gem.20250907-110020-438mif sitelibdir\=./.gem.20250907-110020-438mif
+compiling mapper.cpp
+compiling rubymain.cpp
+linking shared-object fastfilereaderext.so
+
+current directory: /home/kali/git/async-security.github.io/vendor/bundle/ruby/3.3.0/gems/eventmachine-1.2.7/ext/fastfilereader
+make DESTDIR\= sitearchdir\=./.gem.20250907-110020-438mif sitelibdir\=./.gem.20250907-110020-438mif install
+/usr/bin/install -c -m 0755 fastfilereaderext.so ./.gem.20250907-110020-438mif
+
+current directory: /home/kali/git/async-security.github.io/vendor/bundle/ruby/3.3.0/gems/eventmachine-1.2.7/ext/fastfilereader
+make DESTDIR\= sitearchdir\=./.gem.20250907-110020-438mif sitelibdir\=./.gem.20250907-110020-438mif clean
