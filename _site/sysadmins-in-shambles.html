@@ -11,17 +11,17 @@
 <meta property="og:title" content="Sysadmins in Shambles (CVE-2025-33073)" />
 <meta name="author" content="Zavier Lee" />
 <meta property="og:locale" content="en_US" />
-<link rel="canonical" href="http://localhost:4000/sysadmins-in-shambles.html" />
-<meta property="og:url" content="http://localhost:4000/sysadmins-in-shambles.html" />
+<link rel="canonical" href="http://0.0.0.0:4000/sysadmins-in-shambles.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/sysadmins-in-shambles.html" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2025-06-13T00:00:00-04:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Sysadmins in Shambles (CVE-2025-33073)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zavier Lee"},"dateModified":"2025-06-13T00:00:00-04:00","datePublished":"2025-06-13T00:00:00-04:00","headline":"Sysadmins in Shambles (CVE-2025-33073)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/sysadmins-in-shambles.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://localhost:4000/sysadmins-in-shambles.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zavier Lee"},"dateModified":"2025-06-13T00:00:00-04:00","datePublished":"2025-06-13T00:00:00-04:00","headline":"Sysadmins in Shambles (CVE-2025-33073)","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/sysadmins-in-shambles.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://0.0.0.0:4000/sysadmins-in-shambles.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=edfed2e8d4b67a714938b82b8968ff8e5624922f">
+    <link rel="stylesheet" href="/assets/css/style.css?v=75d6e3e17dd82047b78802147b2893447a331b11">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -40,7 +40,7 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1><a href="http://localhost:4000/"> </a></h1>
+        <h1><a href="http://0.0.0.0:4000/"> </a></h1>
 
         
           <img src="/assets/img/logo.png" alt="Logo" />
@@ -236,6 +236,193 @@
         line-height: 1.4;
     }
 
+    .mini-toc {
+        position: fixed;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 260px;
+        max-height: 70vh;
+        background: rgba(26, 26, 26, 0.95);
+        border: 1px solid #444;
+        border-radius: 8px;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mini-toc.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .mini-toc.minimized {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        max-height: none;
+        overflow: hidden;
+    }
+
+    .mini-toc-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        border-bottom: 1px solid #333;
+        flex-shrink: 0;
+    }
+
+    .mini-toc.minimized .mini-toc-header {
+        padding: 8px;
+        border-bottom: none;
+        justify-content: center;
+    }
+
+    .mini-toc-title {
+        font-size: 0.85em;
+        font-weight: 600;
+        color: #4da6ff;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0;
+    }
+
+    .mini-toc.minimized .mini-toc-title {
+        display: none;
+    }
+
+    .mini-toc-minimize {
+        background: none;
+        border: none;
+        color: #999;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+    }
+
+    .mini-toc-minimize:hover {
+        color: #4da6ff;
+        background: rgba(77, 166, 255, 0.1);
+    }
+
+    .mini-toc-minimize svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.3s ease;
+    }
+
+    .mini-toc.minimized .mini-toc-minimize svg {
+        transform: rotate(180deg);
+    }
+
+    .mini-toc-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+    }
+
+    .mini-toc.minimized .mini-toc-content {
+        display: none;
+    }
+
+    .mini-toc ul, .mini-toc ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .mini-toc li {
+        margin: 0;
+        padding: 0;
+        font-size: 1.12em;
+    }
+
+    .mini-toc a {
+        display: block;
+        color: #ccc;
+        text-decoration: none;
+        font-size: 0.8em;
+        line-height: 1.5;
+        padding: 6px 0;
+        transition: all 0.2s ease;
+        border-left: 2px solid transparent;
+        padding-left: 12px;
+        margin-left: -12px;
+        border-radius: 0 4px 4px 0;
+    }
+
+    .mini-toc a:hover {
+        color: #4da6ff;
+        border-left-color: #4da6ff;
+        background: rgba(77, 166, 255, 0.05);
+        padding-left: 16px;
+    }
+
+    .mini-toc a.active {
+        color: #4da6ff;
+        border-left-color: #4da6ff;
+        background: rgba(77, 166, 255, 0.1);
+        padding-left: 16px;
+        font-weight: 500;
+    }
+
+    .mini-toc ul ul,
+    .mini-toc ol ol,
+    .mini-toc ul ol,
+    .mini-toc ol ul {
+        margin-left: 16px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        padding-left: 8px;
+    }
+
+    .mini-toc ul ul a,
+    .mini-toc ol ol a,
+    .mini-toc ul ol a,
+    .mini-toc ol ul a {
+        font-size: 0.75em;
+        opacity: 0.9;
+    }
+
+    .mini-toc ul ul ul a,
+    .mini-toc ol ol ol a,
+    .mini-toc ul ol ol a,
+    .mini-toc ol ul ul a {
+        font-size: 0.7em;
+        opacity: 0.8;
+    }
+
+    .mini-toc-content::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .mini-toc-content::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 2px;
+    }
+
+    .mini-toc-content::-webkit-scrollbar-thumb {
+        background: #4da6ff;
+        border-radius: 2px;
+    }
+
+    .mini-toc-content::-webkit-scrollbar-thumb:hover {
+        background: #66b3ff;
+    }
+
     @media (max-width: 962px) {
         .toc-container {
             margin: 16px 0;
@@ -248,6 +435,23 @@
 
         .toc-content {
             padding: 0 12px 12px 12px;
+        }
+
+        .mini-toc {
+            display: none;
+        }
+    }
+
+    @media (max-width: 1400px) {
+        .mini-toc {
+            right: 10px;
+            width: 260px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .mini-toc {
+            width: 240px;
         }
     }
 
@@ -447,6 +651,18 @@
 </div>
 
 
+
+<div class="mini-toc" id="miniToc">
+    <div class="mini-toc-header">
+        <div class="mini-toc-title">Contents</div>
+        <button class="mini-toc-minimize" onclick="toggleMiniToc()" aria-label="Minimize TOC">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zM7.646 4.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 5.707V11.5a.5.5 0 0 1-1 0V5.707L6.354 6.854a.5.5 0 1 1-.708-.708l2-2z"/>
+            </svg>
+        </button>
+    </div>
+    <div class="mini-toc-content" id="miniTocContent"></div>
+</div>
 
 <h1 id="sysadmins-in-shambles-cve-2025-33073">Sysadmins in Shambles (CVE-2025-33073)</h1>
 
@@ -698,6 +914,143 @@ SCRIPTORIUM1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA.jess.kingdom. 180 IN A 1
             button.innerHTML = 'Table of Contents';
         }
     }
+
+    function toggleMiniToc() {
+        const miniToc = document.getElementById('miniToc');
+        miniToc.classList.toggle('minimized');
+    }
+
+    function initMiniToc() {
+        const miniToc = document.getElementById('miniToc');
+        const miniTocContent = document.getElementById('miniTocContent');
+        
+        const existingToc = document.querySelector('.toc-content');
+        
+        if (existingToc && existingToc.innerHTML.trim()) {
+            const tocClone = existingToc.cloneNode(true);
+            
+            tocClone.classList.remove('toc-content', 'expanded');
+            tocClone.removeAttribute('id');
+            
+            const links = tocClone.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const targetElement = document.querySelector(href);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            miniTocContent.appendChild(tocClone);
+            miniToc.classList.add('visible');
+            
+            setupActiveHighlighting(links);
+        } else {
+            generateTocFromHeadings();
+        }
+    }
+
+    function generateTocFromHeadings() {
+        const miniToc = document.getElementById('miniToc');
+        const miniTocContent = document.getElementById('miniTocContent');
+        const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        
+        if (headings.length === 0) {
+            return;
+        }
+
+        const ul = document.createElement('ul');
+        
+        headings.forEach((heading, index) => {
+            if (!heading.id) {
+                heading.id = `heading-${index}`;
+            }
+
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = `#${heading.id}`;
+            a.textContent = heading.textContent;
+            
+            li.appendChild(a);
+            ul.appendChild(li);
+        });
+
+        miniTocContent.appendChild(ul);
+        miniToc.classList.add('visible');
+
+        ul.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                const targetId = e.target.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+
+        setupActiveHighlighting(ul.querySelectorAll('a'));
+    }
+
+    function setupActiveHighlighting(links) {
+        const targets = Array.from(links).map(link => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                return {
+                    link: link,
+                    element: document.querySelector(href)
+                };
+            }
+            return null;
+        }).filter(item => item && item.element);
+
+        if (targets.length === 0) return;
+
+        function updateActiveSection() {
+            const scrollPosition = window.scrollY + 100;
+            let activeTarget = null;
+
+            targets.forEach(target => {
+                if (target.element.offsetTop <= scrollPosition) {
+                    activeTarget = target;
+                }
+            });
+
+            links.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            if (activeTarget) {
+                activeTarget.link.classList.add('active');
+            }
+        }
+
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateActiveSection();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        updateActiveSection();
+    }
+
+    document.addEventListener('DOMContentLoaded', initMiniToc);
 </script>
 
       </section>

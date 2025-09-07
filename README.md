@@ -3,5 +3,6 @@
 deploy locally!
 
 ```
-bundle exec jekyll serve --livereload
+bundle install 
+bundle exec jekyll serve --livereload --host 0.0.0.0
 ```
