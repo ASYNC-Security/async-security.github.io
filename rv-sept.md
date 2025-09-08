@@ -15,46 +15,6 @@ Last weekend, we sponsored an Active Directory lab that was showcased during the
 
 This blog post provides an overview of the lab, including the challenges, statistics, and solutions for each flag. There are multiple solutions for some of the flags, so if you have done the lab - do look out for the alternative methods covered in this post!
 
-- [Range Village CTF, September 2025](#range-village-ctf-september-2025)
-  - [Challenge Overview](#challenge-overview)
-  - [Solve Statistics](#solve-statistics)
-- [Flag 1: And, so it begins...](#flag-1-and-so-it-begins)
-  - [Path 1: Kerberoasting](#path-1-kerberoasting)
-    - [Roasting (The Easy Way)](#roasting-the-easy-way)
-    - [Roasting (The Hard Way)](#roasting-the-hard-way)
-  - [Path 2: Cross-Forest Enumeration](#path-2-cross-forest-enumeration)
-  - [Looting Shares](#looting-shares)
-- [Flag 2: Access (Un)controlled](#flag-2-access-uncontrolled)
-  - [Identifying Privileged Groups](#identifying-privileged-groups)
-  - [MachineAccountQuota](#machineaccountquota)
-  - [Abusing GenericAll on Group](#abusing-genericall-on-group)
-- [Flag 3: Moving Laterally](#flag-3-moving-laterally)
-- [Flag 4: Historical Scar](#flag-4-historical-scar)
-- [Flag 5: Silver](#flag-5-silver)
-  - [Path 1: Silver Ticket](#path-1-silver-ticket)
-    - [Understanding Kerberos](#understanding-kerberos)
-    - [Fetching the PAC](#fetching-the-pac)
-    - [Forging Tickets](#forging-tickets)
-    - [Accessing MSSQL as Administrator](#accessing-mssql-as-administrator)
-    - [Local Privilege Escalation](#local-privilege-escalation)
-  - [Path 2: S4u2self](#path-2-s4u2self)
-    - [S4u2self Extension](#s4u2self-extension)
-    - [Accessing MSSQL as Administrator](#accessing-mssql-as-administrator-1)
-  - [Path 3: RunAs](#path-3-runas)
-    - [UAC Bypass via computerdefaults.exe](#uac-bypass-via-computerdefaultsexe)
-  - [Path 4: Adding `svc_sql` to `senior-developers`](#path-4-adding-svc_sql-to-senior-developers)
-- [Flag 6: Antennae](#flag-6-antennae)
-  - [Dumping LSASS](#dumping-lsass)
-  - [DCSync Attack](#dcsync-attack)
-- [Flag 7: Privilege (De)escalation?](#flag-7-privilege-deescalation)
-  - [Cross-Forest Enumeration](#cross-forest-enumeration)
-  - [Finding Foreign Group Memberships](#finding-foreign-group-memberships)
-  - [DCSyncing natasha.lim](#dcsyncing-natashalim)
-  - [Foreign MAQ](#foreign-maq)
-  - [Abusing GenericAll on Group, again](#abusing-genericall-on-group-again)
-  - [Local Administrator](#local-administrator)
-
-
 <div class="toc-container">
   <button class="toc-toggle" onclick="toggleToc()">Table of Contents</button>
   <div class="toc-content" id="tocContent">
