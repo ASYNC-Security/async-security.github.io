@@ -1824,7 +1824,7 @@ Certipy v5.0.3 - by Oliver Lyak (ly4k)
 
 ```
 
-We'll find that, unlike `BackwardUser`, this template does **not** have the `Enrollee Supplies Subject` property set to `True`. We also notice that the `BACKWARD.RV\CA-Test` group is a non-default group that has been granted enrollment rights, and _Full Control_ on the template. 
+We'll find that, unlike `BackwardUser`, this template does not have the `Enrollee Supplies Subject` property set to `True`. We also notice that the `BACKWARD.RV\CA-Test` group is a non-default group that has been granted enrollment rights, and _Full Control_ on the template. 
 
 The `iqbal.hassan` user is a member of the `CA-Test` group, which grants him full control over the `BackwardDev` template.
 
