@@ -26,7 +26,7 @@ layout: default
 <div class="posts-section">
   <div class="posts-list">
     <article class="post-item">
-      <h3><a href="./rv-sept">Rnage Village CTF, September 2025</a></h3>
+      <h3><a href="./rv-sept">Range Village CTF, September 2025</a></h3>
       <span class="post-date">2025</span>
     </article>
     <article class="post-item">
